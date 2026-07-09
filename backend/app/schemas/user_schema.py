@@ -1,6 +1,6 @@
 from typing import Literal
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 # These role values are the only roles DhakaNest currently understands.
@@ -12,11 +12,54 @@ class UserRegister(BaseModel):
 
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    phone: str = Field(..., min_length=6, max_length=20)
-    password: str = Field(..., min_length=6, max_length=128)
+    phone: str = Field(..., min_length=11, max_length=11)
+    password: str = Field(..., min_length=8, max_length=72)
 
     # The service layer blocks public admin registration with a clear error.
     role: UserRole
+
+    @field_validator("phone")
+    @classmethod
+    def validate_bangladeshi_phone(cls, phone: str) -> str:
+        """Accept only valid Bangladeshi mobile numbers in local format."""
+        allowed_prefixes = ("013", "014", "015", "016", "017", "018", "019")
+
+        if not phone.isdigit():
+            raise ValueError("Phone number must contain digits only.")
+        if len(phone) != 11:
+            raise ValueError("Phone number must be exactly 11 digits long.")
+        if not phone.startswith(allowed_prefixes):
+            raise ValueError(
+                "Phone number must start with 013, 014, 015, 016, 017, 018, or 019."
+            )
+
+        return phone
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_strength(cls, password: str) -> str:
+        """Keep backend password rules the same as the register form."""
+        missing_rules = []
+
+        if len(password) < 8:
+            missing_rules.append("minimum 8 characters")
+        if len(password.encode("utf-8")) > 72:
+            missing_rules.append("maximum 72 bytes")
+        if not any(character.isupper() for character in password):
+            missing_rules.append("one uppercase letter")
+        if not any(character.islower() for character in password):
+            missing_rules.append("one lowercase letter")
+        if not any(character.isdigit() for character in password):
+            missing_rules.append("one number")
+        if not any(not character.isalnum() for character in password):
+            missing_rules.append("one special character")
+
+        if missing_rules:
+            raise ValueError(
+                "Password must include " + ", ".join(missing_rules) + "."
+            )
+
+        return password
 
 
 class UserLogin(BaseModel):
