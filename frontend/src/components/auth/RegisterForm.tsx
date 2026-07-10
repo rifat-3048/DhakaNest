@@ -128,19 +128,14 @@ export function RegisterForm() {
 
           <label className="block">
             <span className="text-sm font-medium text-slate-700">Phone</span>
-            <div className="mt-1 flex rounded-md border border-slate-300 bg-white focus-within:border-emerald-700">
-              <span className="flex items-center border-r border-slate-300 bg-slate-50 px-3 text-sm font-medium text-slate-700">
-                +880
-              </span>
-              <input
-                value={phone}
-                onChange={(event) => handlePhoneChange(event.target.value)}
-                required
-                inputMode="numeric"
-                placeholder="01609802468"
-                className="w-full rounded-r-md px-3 py-2 outline-none"
-              />
-            </div>
+            <input
+              value={phone}
+              onChange={(event) => handlePhoneChange(event.target.value)}
+              required
+              inputMode="numeric"
+              placeholder="01609802468"
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-emerald-700"
+            />
             <div className="mt-2 rounded-md bg-slate-50 p-3">
               <p className="text-xs font-semibold text-slate-700">
                 Phone number must include:
