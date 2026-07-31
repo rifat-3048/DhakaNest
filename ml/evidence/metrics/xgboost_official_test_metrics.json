@@ -1,0 +1,22 @@
+{
+  "project_name": "DhakaNest",
+  "model_name": "XGBoost",
+  "candidate_version": "1.0.0",
+  "target_strategy": "log1p",
+  "test_rows": 2291,
+  "test_accessed_at_utc": "2026-07-31T09:37:47.153069+00:00",
+  "winner_locked_before_test": true,
+  "test_used_for_model_selection": false,
+  "test_used_for_tuning": false,
+  "candidate_model_sha256": "df6e32779624e35f06e926faa6bdd9ee07317e8f4606d20661d1be47cd60cc5e",
+  "metrics": {
+    "mae_bdt": 3193.6925590871465,
+    "rmse_bdt": 7667.502100825346,
+    "r2": 0.9000871520980268,
+    "mape_percent": 11.88352547382473,
+    "median_absolute_error_bdt": 1594.6683021346034,
+    "p90_absolute_error_bdt": 6070.577794003042,
+    "prediction_time_seconds": 0.15433161200007817,
+    "milliseconds_per_record": 0.06736430030557755
+  }
+}
