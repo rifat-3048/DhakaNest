@@ -1,12 +1,38 @@
-# DhakaNest ML
+# DhakaNest ML Workspace
 
-This folder will contain future machine learning work for DhakaNest.
+This directory contains the complete machine-learning workflow for the
+DhakaNest rent-prediction system.
 
-## Planned Contents
+## Dataset
 
-- `notebooks/` - Exploration and experiments.
-- `data/raw/` - Original datasets.
-- `data/processed/` - Cleaned and transformed datasets.
-- `exports/` - Future exported models or recommendation artifacts.
+The original dataset is stored at:
 
-No ML training code has been added yet.
+data/raw/houserentdhaka.csv
+
+The raw dataset must never be edited manually.
+
+## Notebooks
+
+- 00_DhakaNest_Data_Preparation.ipynb
+- 01_DhakaNest_Random_Forest.ipynb
+- 02_DhakaNest_XGBoost.ipynb
+- 03_DhakaNest_CatBoost.ipynb
+- 04_DhakaNest_Model_Comparison_and_Export.ipynb
+
+## Evaluation Metrics
+
+Rent-prediction candidates are evaluated using:
+
+- MAE
+- RMSE
+- R²
+- MAPE
+- Median Absolute Error
+- P90 Absolute Error
+
+## Fixed Configuration
+
+- Random state: 42
+- Training split: 70%
+- Validation split: 15%
+- Test split: 15%
