@@ -1,0 +1,31 @@
+{
+  "project_name": "DhakaNest",
+  "model_domain": "monthly_rent_prediction",
+  "currency": "BDT",
+  "random_state": 42,
+  "train_ratio": 0.7,
+  "validation_ratio": 0.15,
+  "test_ratio": 0.15,
+  "raw_dataset": "houserentdhaka.csv",
+  "feature_columns": [
+    "broad_area",
+    "model_micro_area",
+    "area_sqft",
+    "bedrooms",
+    "bathrooms"
+  ],
+  "target_column": "base_rent_bdt",
+  "candidate_models": [
+    "random_forest",
+    "xgboost",
+    "catboost"
+  ],
+  "regression_metrics": [
+    "MAE",
+    "RMSE",
+    "R2",
+    "MAPE",
+    "Median Absolute Error",
+    "P90 Absolute Error"
+  ]
+}

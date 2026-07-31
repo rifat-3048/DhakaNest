@@ -1,0 +1,63 @@
+{
+  "project_name": "DhakaNest",
+  "bundle_version": "1.0.0",
+  "created_at_utc": "2026-07-31T09:48:52.231540+00:00",
+  "winning_algorithm": "XGBoost",
+  "selection_metric": "validation_mae_bdt",
+  "target_strategy": "log1p",
+  "fixed_estimators": 468,
+  "production_training_rows": 12957,
+  "production_test_rows_used": 0,
+  "official_test_evaluation": {
+    "candidate_evaluated": true,
+    "evaluation_count": 1,
+    "test_rows": 2291,
+    "test_metrics_file": "reports/metrics/xgboost_official_test_metrics.json",
+    "test_used_for_selection": false,
+    "test_used_for_retraining": false
+  },
+  "artifacts": {
+    "primary_model": "primary_model/xgboost_primary_model.json",
+    "primary_preprocessor": "primary_model/primary_preprocessor.joblib",
+    "broad_area_model": "fallback_models/xgboost_broad_area_model.json",
+    "broad_area_preprocessor": "fallback_models/broad_area_preprocessor.joblib",
+    "dhaka_wide_model": "fallback_models/xgboost_dhaka_wide_model.json",
+    "dhaka_wide_preprocessor": "fallback_models/dhaka_wide_preprocessor.joblib",
+    "feature_schema": "metadata/feature_schema.json",
+    "routing_reference": "metadata/routing_reference.json",
+    "final_metrics": "metadata/final_metrics.json",
+    "inference_helper": "inference_helper.py",
+    "requirements": "requirements.txt",
+    "sample_input": "sample_input.json"
+  },
+  "checksums": {
+    "primary_model": "e63b4c21791a285dba4a3902799358964f3559c4fc73b8eb04479fdcaf9ebbc9",
+    "primary_preprocessor": "de79ae2aa98b3aa4b2e320ee384c4c93775617f263f279924af35d137138dca1",
+    "broad_area_model": "1a48ca08e2a7e1af855e39db3ae87183f354e4eeb6522d0c5985e37589fdb435",
+    "broad_area_preprocessor": "fa5473bdbc0639ca0588737695fbff1d754769864d48a9083468ec4e47a1de89",
+    "dhaka_wide_model": "c60d805b7458a59a5feb43c2e1e3b3c597566fa463573c0a487e758fbc2ac87b",
+    "dhaka_wide_preprocessor": "b7907e3e37f145cde41fbb7116e94762c75ce050fe4cab27d76c6e7ed54a88c0",
+    "feature_schema": "4f3e067c4d25e4f97c6a582c3043b557cf697ccbf01f0638b84d626fb5f4ae54",
+    "routing_reference": "7635df269cbcf2ae308d38fa7cb8d4a9dc564466e476209ca371642900d5b834",
+    "final_metrics": "f2d0c80476cb9a237c237e70b5ef96b61d118fa87919ab45d38c332a334af665",
+    "inference_helper": "1088abadaf00f2e47b750748a35f1991602dce7fc69728895649293df22c5317",
+    "requirements": "0244584c92c5151977e4ee22b5d7a3121428e2d9fe104b4d38adebe66288a2fd",
+    "sample_input": "45f322ed0948c71f37d4d0d29188a6cb9c7944b3dbc7dfc784efabdc593ca48d"
+  },
+  "verification": {
+    "primary_reload_verified": true,
+    "broad_fallback_reload_verified": true,
+    "dhaka_fallback_reload_verified": true,
+    "inference_helper_verified": true,
+    "fallback_routing_verified": true
+  },
+  "software_environment": {
+    "python": "3.12.13",
+    "xgboost": "3.3.0",
+    "scikit_learn": "1.6.1",
+    "joblib": "1.5.3",
+    "pandas": "2.2.2",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3"
+  }
+}

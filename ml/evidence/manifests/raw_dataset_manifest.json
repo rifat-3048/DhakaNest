@@ -1,0 +1,15 @@
+{
+  "filename": "houserentdhaka.csv",
+  "rows": 28800,
+  "columns": 6,
+  "column_names": [
+    "Unnamed: 0",
+    "Location",
+    "Area",
+    "Bed",
+    "Bath",
+    "Price"
+  ],
+  "sha256": "bcd4590a3520d072e8e9a091b832c03a110cbbe1a877bd5b0fab9f8a09f0078b",
+  "verified_at_utc": "2026-07-30T17:56:32.596911+00:00"
+}

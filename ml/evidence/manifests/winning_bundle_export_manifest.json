@@ -1,0 +1,9 @@
+{
+  "project_name": "DhakaNest",
+  "exported_at_utc": "2026-07-31T09:49:58.416601+00:00",
+  "zip_file": "exports/dhakanest_xgboost_winning_bundle.zip",
+  "zip_size_bytes": 1194072,
+  "zip_sha256": "d5275af7b737313d28617932f6d6ffd4cf845ca26f1310be9c2a7e3db639cb5d",
+  "bundle_version": "1.0.0",
+  "winning_algorithm": "XGBoost"
+}

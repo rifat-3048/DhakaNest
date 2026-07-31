@@ -1,0 +1,14 @@
+{
+  "project_name": "DhakaNest",
+  "selected_model": "XGBoost",
+  "selection_manifest": "winner_selection_manifest.json",
+  "test_file": "/content/drive/MyDrive/DhakaNest_ML/data/splits/test.csv",
+  "test_file_sha256": "05de67d08b0eeca17c7916324ce5a2e1cec1fe1fa060c5d54d1ea08787784f13",
+  "test_rows": 2291,
+  "first_access_at_utc": "2026-07-31T09:37:47.153069+00:00",
+  "official_evaluation_count": 1,
+  "test_used_for_model_selection": false,
+  "test_used_for_hyperparameter_tuning": false,
+  "metrics_file": "xgboost_official_test_metrics.json",
+  "predictions_file": "xgboost_official_test_predictions.csv"
+}

@@ -1,0 +1,38 @@
+{
+  "project_name": "DhakaNest",
+  "selection_timestamp_utc": "2026-07-31T09:37:08.364196+00:00",
+  "selection_dataset": "validation.csv",
+  "primary_selection_metric": "validation_mae_bdt",
+  "tie_breakers": [
+    "validation_rmse_bdt",
+    "validation_r2"
+  ],
+  "winning_model": "XGBoost",
+  "winning_validation_mae_bdt": 3571.573025262484,
+  "candidate_ranking": [
+    {
+      "model": "XGBoost",
+      "validation_mae_bdt": 3571.573025262484,
+      "validation_rmse_bdt": 8842.536407928113,
+      "validation_r2": 0.8415461748902432,
+      "validation_mape_percent": 12.681239714384551
+    },
+    {
+      "model": "CatBoost",
+      "validation_mae_bdt": 3635.5025364318585,
+      "validation_rmse_bdt": 9238.220266892775,
+      "validation_r2": 0.827047979428539,
+      "validation_mape_percent": 12.725463249020208
+    },
+    {
+      "model": "Random Forest",
+      "validation_mae_bdt": 3721.740994715749,
+      "validation_rmse_bdt": 9009.874607438265,
+      "validation_r2": 0.8354921948716862,
+      "validation_mape_percent": 13.600309328015262
+    }
+  ],
+  "official_test_loaded": false,
+  "official_test_used_for_selection": false,
+  "selection_locked": true
+}
