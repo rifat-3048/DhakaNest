@@ -5,12 +5,22 @@ export type RentalFurnishingStatus =
   | "semi_furnished"
   | "furnished";
 
-export type RentFairnessPreference =
-  | "all"
-  | "prefer_fair"
-  | "exclude_significantly_above";
-
 export type BudgetFlexibilityPercent = 0 | 5 | 10;
+
+export type PreferenceScore = 1 | 2 | 3 | 4 | 5;
+
+export interface PreferredMicroArea {
+  broad_area: string;
+  micro_area: string;
+}
+
+export interface ImportantDestinationPreference {
+  // Frontend-only identifier used for stable rendering and row deletion.
+  id: string;
+  destination: string;
+  preference: PreferenceScore | null;
+  max_commute_minutes: number | null;
+}
 
 export interface RecommendationPriorities {
   location: number;
@@ -22,10 +32,9 @@ export interface RecommendationPriorities {
 
 export interface TenantSearchPreferences {
   preferred_areas: string[];
-  preferred_micro_areas: string[];
+  preferred_micro_areas: PreferredMicroArea[];
   accept_nearby_areas: boolean;
-  commute_destination: string | null;
-  max_commute_minutes: number | null;
+  important_destinations: ImportantDestinationPreference[];
   minimum_rent_bdt: number | null;
   maximum_rent_bdt: number;
   over_budget_percent: BudgetFlexibilityPercent;
@@ -39,7 +48,6 @@ export interface TenantSearchPreferences {
   household_size: number | null;
   must_have_amenities: string[];
   nice_to_have_amenities: string[];
-  rent_fairness_preference: RentFairnessPreference;
   priorities: RecommendationPriorities;
 }
 
