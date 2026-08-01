@@ -3,7 +3,8 @@ import type {
   TenantSearchPreferences,
 } from "@/types/tenant-preference";
 
-const STORAGE_KEY = "dhakanest_tenant_search_preferences";
+const STORAGE_KEY = "dhakanest_tenant_search_preferences_v2";
+const LEGACY_STORAGE_KEY = "dhakanest_tenant_search_preferences";
 
 export function saveTenantPreferences(
   preferences: TenantSearchPreferences,
@@ -16,6 +17,7 @@ export function saveTenantPreferences(
     preferences,
     saved_at: new Date().toISOString(),
   };
+  sessionStorage.removeItem(LEGACY_STORAGE_KEY);
   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(storedValue));
   return storedValue;
 }
@@ -34,5 +36,8 @@ export function getSavedTenantPreferences(): StoredTenantPreference | null {
 }
 
 export function clearTenantPreferences(): void {
-  if (typeof window !== "undefined") sessionStorage.removeItem(STORAGE_KEY);
+  if (typeof window !== "undefined") {
+    sessionStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(LEGACY_STORAGE_KEY);
+  }
 }
