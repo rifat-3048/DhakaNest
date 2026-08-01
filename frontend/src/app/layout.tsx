@@ -4,8 +4,9 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
-  title: "DhakaNest",
-  description: "Location-aware rental home recommendation system for Dhaka City.",
+  title: "DhakaNest | Smarter Rental Discovery in Dhaka",
+  description:
+    "A location-aware rental home recommendation system for Dhaka City.",
 };
 
 export default function RootLayout({
