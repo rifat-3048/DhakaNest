@@ -65,7 +65,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
                     : "bg-slate-800 text-slate-200 hover:bg-slate-700",
                 ].join(" ")}
               >
-                Review Queue
+                Listings
               </Link>
             </nav>
             <button
