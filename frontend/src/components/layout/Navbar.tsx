@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 export function Navbar() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/landlord") || pathname.startsWith("/admin")) {
+  if (
+    pathname.startsWith("/tenant") ||
+    pathname.startsWith("/landlord") ||
+    pathname.startsWith("/admin")
+  ) {
     return null;
   }
 
