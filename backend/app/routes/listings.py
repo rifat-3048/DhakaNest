@@ -1,6 +1,6 @@
 """Landlord-only routes for creating and submitting rental listings."""
 
-from typing import Annotated, Any
+from typing import Any
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
 
@@ -154,10 +154,12 @@ async def update_my_listing(
 )
 async def upload_listing_images(
     listing_id: str,
-    files: Annotated[
-        list[UploadFile],
-        File(description="One to eight JPEG, PNG, or WebP property images."),
-    ],
+    files: list[UploadFile] = File(
+        ...,
+        description=(
+            "One to eight JPEG, PNG, or WebP property images."
+        ),
+    ),
     current_user: Any = Depends(get_current_user),
     database: Any = Depends(get_database),
 ) -> dict[str, Any]:
