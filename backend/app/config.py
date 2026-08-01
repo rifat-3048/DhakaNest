@@ -19,6 +19,15 @@ class Settings(BaseSettings):
     # How long a login token stays valid, in minutes.
     access_token_expire_minutes: int = 1440
 
+    # Cloudinary account credentials used for property image storage.
+    cloudinary_cloud_name: str
+    cloudinary_api_key: str
+    cloudinary_api_secret: str
+
+    # Validation limits for images attached to one rental listing.
+    listing_image_max_count: int = 8
+    listing_image_max_size_mb: int = 5
+
     # This tells pydantic-settings to also read values from a .env file.
     model_config = SettingsConfigDict(
         env_file=".env",
