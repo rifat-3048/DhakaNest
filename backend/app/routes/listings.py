@@ -2,7 +2,8 @@
 
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Query, UploadFile, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from starlette.datastructures import UploadFile as StarletteUploadFile
 
 from app.config import settings
 from app.core.dependencies import get_current_user
@@ -31,6 +32,36 @@ from app.services.listing_service import (
 
 
 router = APIRouter(prefix="/api/listings", tags=["Landlord Listings"])
+
+
+MULTIPLE_IMAGE_UPLOAD_OPENAPI = {
+    "requestBody": {
+        "required": True,
+        "content": {
+            "multipart/form-data": {
+                "schema": {
+                    "type": "object",
+                    "required": ["files"],
+                    "properties": {
+                        "files": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 8,
+                            "description": (
+                                "One to eight JPEG, PNG, "
+                                "or WebP property images."
+                            ),
+                            "items": {
+                                "type": "string",
+                                "format": "binary",
+                            },
+                        }
+                    },
+                }
+            }
+        },
+    }
+}
 
 
 def get_user_value(user: Any, field_name: str) -> Any:
@@ -151,18 +182,50 @@ async def update_my_listing(
     "/{listing_id}/images",
     status_code=status.HTTP_201_CREATED,
     summary="Upload one or multiple listing images",
+    openapi_extra=MULTIPLE_IMAGE_UPLOAD_OPENAPI,
 )
 async def upload_listing_images(
     listing_id: str,
-    files: list[UploadFile],
+    request: Request,
     current_user: Any = Depends(get_current_user),
     database: Any = Depends(get_database),
 ) -> dict[str, Any]:
     landlord_id = require_landlord(current_user)
+
+    # Parse multipart/form-data manually so Swagger and runtime agree on the
+    # array-of-binary-files request shape.
+    try:
+        form_data = await request.form()
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The multipart image request could not be read.",
+        ) from error
+
+    submitted_items = form_data.getlist("files")
+    files = [
+        item for item in submitted_items if isinstance(item, StarletteUploadFile)
+    ]
+
     if not files:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Select at least one image.",
+            detail="Select at least one valid image.",
+        )
+
+    if len(files) != len(submitted_items):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Every item in the files field must be an uploaded file.",
+        )
+
+    if len(files) > settings.listing_image_max_count:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=(
+                "You can upload no more than "
+                f"{settings.listing_image_max_count} images at once."
+            ),
         )
 
     try:
@@ -189,9 +252,12 @@ async def upload_listing_images(
     uploaded_images = []
     try:
         for file in files:
-            uploaded_images.append(
-                await upload_listing_image(file=file, listing_id=listing_id)
+            uploaded_image = await upload_listing_image(
+                file=file,
+                listing_id=listing_id,
             )
+            uploaded_images.append(uploaded_image)
+
         updated_listing = await add_listing_images(
             database=database,
             listing_id=listing_id,
@@ -199,7 +265,7 @@ async def upload_listing_images(
             uploaded_images=uploaded_images,
         )
     except Exception as error:
-        # Roll back Cloudinary uploads if validation or MongoDB persistence fails.
+        # Remove Cloudinary images when a later upload/database operation fails.
         for image in uploaded_images:
             try:
                 await delete_listing_image(image["public_id"])
