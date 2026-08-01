@@ -6,7 +6,10 @@ import ImportantDestinationsEditor from "@/components/tenant/ImportantDestinatio
 import PreferenceSection from "@/components/tenant/PreferenceSection";
 import PreferenceSummary from "@/components/tenant/PreferenceSummary";
 import PrioritySelector from "@/components/tenant/PrioritySelector";
-import { DHAKA_LOCATION_OPTIONS } from "@/data/location-options";
+import {
+  DHAKA_LOCATION_OPTIONS,
+  type AreaOption,
+} from "@/data/location-options";
 import {
   AMENITY_OPTIONS,
   FURNISHING_OPTIONS,
@@ -160,10 +163,15 @@ export default function TenantPreferenceForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [broadAreaSearch, setBroadAreaSearch] = useState("");
 
   useEffect(() => {
-    const saved = getSavedTenantPreferences();
-    if (saved) setPreferences(saved.preferences);
+    const timeoutId = window.setTimeout(() => {
+      const saved = getSavedTenantPreferences();
+      if (saved) setPreferences(saved.preferences);
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   const selectedLocationGroups = useMemo(
@@ -172,6 +180,25 @@ export default function TenantPreferenceForm() {
         preferences.preferred_areas.includes(option.broadArea),
       ),
     [preferences.preferred_areas],
+  );
+
+  const normalizedBroadAreaSearch = broadAreaSearch.trim().toLowerCase();
+  const broadAreaSearchHasMatch = useMemo(
+    () =>
+      !normalizedBroadAreaSearch ||
+      DHAKA_LOCATION_OPTIONS.some((option) =>
+        option.broadArea.toLowerCase().includes(normalizedBroadAreaSearch),
+      ),
+    [normalizedBroadAreaSearch],
+  );
+  const visibleLocationOptions = useMemo(
+    () =>
+      DHAKA_LOCATION_OPTIONS.filter(
+        (option) =>
+          preferences.preferred_areas.includes(option.broadArea) ||
+          option.broadArea.toLowerCase().includes(normalizedBroadAreaSearch),
+      ),
+    [normalizedBroadAreaSearch, preferences.preferred_areas],
   );
 
   function updatePreferences(
@@ -195,13 +222,6 @@ export default function TenantPreferenceForm() {
           : current.preferred_micro_areas,
       };
     });
-  }
-
-  function isMicroAreaSelected(broadArea: string, microArea: string): boolean {
-    return preferences.preferred_micro_areas.some(
-      (selected) =>
-        selected.broad_area === broadArea && selected.micro_area === microArea,
-    );
   }
 
   function togglePreferredMicroArea(broadArea: string, microArea: string) {
@@ -283,20 +303,46 @@ export default function TenantPreferenceForm() {
             </span>
           </div>
           <ErrorText message={errors.preferred_areas} />
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {DHAKA_LOCATION_OPTIONS.map((option) => {
-              const checked = preferences.preferred_areas.includes(option.broadArea);
-              const disabled = !checked && preferences.preferred_areas.length >= 3;
-              return (
-                <CheckboxChoice
-                  key={option.broadArea}
-                  label={option.broadArea}
-                  checked={checked}
-                  disabled={disabled}
-                  onChange={() => togglePreferredArea(option.broadArea)}
-                />
-              );
-            })}
+
+          <label htmlFor="broad-area-search" className="mt-4 block">
+            <span className="text-sm font-medium text-slate-700">
+              Search broad areas
+            </span>
+            <input
+              id="broad-area-search"
+              type="search"
+              value={broadAreaSearch}
+              placeholder="Search broad areas"
+              onChange={(event) => setBroadAreaSearch(event.target.value)}
+              className={fieldClass}
+            />
+          </label>
+
+          {!broadAreaSearchHasMatch && (
+            <p className="mt-3 text-sm text-slate-500">
+              No areas match your search
+            </p>
+          )}
+
+          <div className="mt-4 max-h-80 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {visibleLocationOptions.map((option) => {
+                const checked = preferences.preferred_areas.includes(
+                  option.broadArea,
+                );
+                const disabled =
+                  !checked && preferences.preferred_areas.length >= 3;
+                return (
+                  <CheckboxChoice
+                    key={option.broadArea}
+                    label={option.broadArea}
+                    checked={checked}
+                    disabled={disabled}
+                    onChange={() => togglePreferredArea(option.broadArea)}
+                  />
+                );
+              })}
+            </div>
           </div>
 
           <div className="mt-8">
@@ -322,38 +368,12 @@ export default function TenantPreferenceForm() {
             ) : (
               <div className="mt-4 space-y-5">
                 {selectedLocationGroups.map((location) => (
-                  <section
+                  <MicroAreaGroup
                     key={location.broadArea}
-                    className="rounded-lg border border-slate-200 p-4"
-                  >
-                    <h4 className="text-sm font-semibold text-slate-900">
-                      {location.broadArea}
-                    </h4>
-                    {location.microAreas.length === 0 ? (
-                      <p className="mt-3 text-sm text-slate-500">
-                        No specific micro-areas are currently configured for this area.
-                      </p>
-                    ) : (
-                      <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                        {location.microAreas.map((microArea) => (
-                          <CheckboxChoice
-                            key={`${location.broadArea}-${microArea}`}
-                            label={microArea}
-                            checked={isMicroAreaSelected(
-                              location.broadArea,
-                              microArea,
-                            )}
-                            onChange={() =>
-                              togglePreferredMicroArea(
-                                location.broadArea,
-                                microArea,
-                              )
-                            }
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </section>
+                    location={location}
+                    selectedMicroAreas={preferences.preferred_micro_areas}
+                    onToggle={togglePreferredMicroArea}
+                  />
                 ))}
               </div>
             )}
@@ -683,6 +703,109 @@ export default function TenantPreferenceForm() {
         onReset={handleReset}
       />
     </div>
+  );
+}
+
+const LARGE_MICRO_AREA_THRESHOLD = 12;
+
+function MicroAreaGroup({
+  location,
+  selectedMicroAreas,
+  onToggle,
+}: {
+  location: AreaOption;
+  selectedMicroAreas: PreferredMicroArea[];
+  onToggle: (broadArea: string, microArea: string) => void;
+}) {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [searchText, setSearchText] = useState("");
+  const normalizedSearch = searchText.trim().toLowerCase();
+  const selectedForArea = useMemo(
+    () =>
+      selectedMicroAreas.filter(
+        (selected) => selected.broad_area === location.broadArea,
+      ),
+    [location.broadArea, selectedMicroAreas],
+  );
+  const visibleMicroAreas = useMemo(
+    () =>
+      location.microAreas.filter(
+        (microArea) =>
+          selectedForArea.some((selected) => selected.micro_area === microArea) ||
+          microArea.toLowerCase().includes(normalizedSearch),
+      ),
+    [location.microAreas, normalizedSearch, selectedForArea],
+  );
+
+  function isSelected(microArea: string): boolean {
+    return selectedForArea.some((selected) => selected.micro_area === microArea);
+  }
+
+  return (
+    <section className="rounded-lg border border-slate-200 p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h4 className="text-sm font-semibold text-slate-900">
+            {location.broadArea}
+          </h4>
+          <p className="mt-1 text-xs font-medium text-emerald-700">
+            {selectedForArea.length} selected
+          </p>
+        </div>
+        <button
+          type="button"
+          aria-expanded={isExpanded}
+          aria-controls={`micro-areas-${location.broadArea.replace(/\s+/g, "-").toLowerCase()}`}
+          onClick={() => setIsExpanded((current) => !current)}
+          className="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+        >
+          {isExpanded ? "Hide micro-areas" : "Show micro-areas"}
+        </button>
+      </div>
+
+      {isExpanded && (
+        <div
+          id={`micro-areas-${location.broadArea.replace(/\s+/g, "-").toLowerCase()}`}
+          className="mt-4"
+        >
+          {location.microAreas.length >= LARGE_MICRO_AREA_THRESHOLD && (
+            <label className="block">
+              <span className="text-xs font-medium text-slate-700">
+                Search {location.broadArea} micro-areas
+              </span>
+              <input
+                type="search"
+                value={searchText}
+                placeholder={`Search ${location.broadArea} micro-areas`}
+                onChange={(event) => setSearchText(event.target.value)}
+                className={fieldClass}
+              />
+            </label>
+          )}
+
+          {location.microAreas.length === 0 ? (
+            <p className="text-sm text-slate-500">
+              No specific micro-areas are currently configured for this area.
+            </p>
+          ) : visibleMicroAreas.length === 0 ? (
+            <p className="mt-3 text-sm text-slate-500">
+              No micro-areas match your search.
+            </p>
+          ) : (
+            <div className="mt-3 grid max-h-72 gap-2 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3">
+              {visibleMicroAreas.map((microArea) => (
+                <CheckboxChoice
+                  key={`${location.broadArea}-${microArea}`}
+                  label={microArea}
+                  checked={isSelected(microArea)}
+                  onChange={() => onToggle(location.broadArea, microArea)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </section>
   );
 }
 
