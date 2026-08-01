@@ -72,13 +72,14 @@ export default function AdminListingCard({ listing }: { listing: RentalListing }
           <Fact label="Images" value={listing.images.length} />
         </div>
         <div className="mt-4 border-t pt-4 text-xs text-slate-500">
-          Submitted: {formatDate(listing.submitted_at)}
+          {listing.submitted_at ? "Submitted" : "Created"}: {" "}
+          {formatDate(listing.submitted_at ?? listing.created_at)}
         </div>
         <Link
           href={`/admin/listings/${listing.id}`}
           className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
         >
-          Review listing
+          {listing.status === "pending_review" ? "Review listing" : "View listing"}
         </Link>
       </div>
     </article>
