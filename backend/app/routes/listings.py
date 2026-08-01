@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
+from fastapi import APIRouter, Depends, HTTPException, Query, UploadFile, status
 
 from app.config import settings
 from app.core.dependencies import get_current_user
@@ -154,12 +154,7 @@ async def update_my_listing(
 )
 async def upload_listing_images(
     listing_id: str,
-    files: list[UploadFile] = File(
-        ...,
-        description=(
-            "One to eight JPEG, PNG, or WebP property images."
-        ),
-    ),
+    files: list[UploadFile],
     current_user: Any = Depends(get_current_user),
     database: Any = Depends(get_database),
 ) -> dict[str, Any]:
