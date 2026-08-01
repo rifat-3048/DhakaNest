@@ -143,3 +143,37 @@ export interface AdminActionResponse {
   listing?: RentalListing;
   rent_assessment?: RentAssessment;
 }
+
+export type AdminListingFilter =
+  | "all"
+  | "pending_review"
+  | "approved"
+  | "revision_requested"
+  | "rejected";
+
+export interface AdminListingSummary {
+  all_listings: number;
+  pending_review: number;
+  approved: number;
+  revision_requested: number;
+  rejected: number;
+  fairness_check_required: number;
+  fairness_checked: number;
+  above_estimated_range: number;
+}
+
+export interface AdminListingsResponse {
+  count: number;
+  skip: number;
+  limit: number;
+  active_status: AdminListingFilter;
+  summary: AdminListingSummary;
+  listings: RentalListing[];
+}
+
+export interface AdminListingsQuery {
+  status?: AdminListingFilter;
+  search?: string;
+  skip?: number;
+  limit?: number;
+}
