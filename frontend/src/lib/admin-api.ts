@@ -2,6 +2,8 @@ import { getAccessToken } from "@/lib/auth";
 import type {
   AdminActionResponse,
   AdminDecisionPayload,
+  AdminListingsQuery,
+  AdminListingsResponse,
   AdminPendingListingsResponse,
   RentalListing,
 } from "@/types/listing";
@@ -155,6 +157,22 @@ function normalizeListingResponse(payload: unknown): RentalListing {
 export async function getPendingAdminListings(): Promise<AdminPendingListingsResponse> {
   return normalizePendingResponse(
     await adminRequest<unknown>("/api/admin/listings/pending"),
+  );
+}
+
+export async function getAdminListings(
+  options: AdminListingsQuery = {},
+): Promise<AdminListingsResponse> {
+  const query = new URLSearchParams();
+  query.set("status", options.status ?? "all");
+  query.set("skip", String(options.skip ?? 0));
+  query.set("limit", String(options.limit ?? 100));
+
+  const cleanedSearch = options.search?.trim();
+  if (cleanedSearch) query.set("search", cleanedSearch);
+
+  return adminRequest<AdminListingsResponse>(
+    `/api/admin/listings?${query.toString()}`,
   );
 }
 
