@@ -53,3 +53,48 @@ export function logoutUser() {
 export function getDashboardPath(role: UserRole) {
   return `/${role}/dashboard`;
 }
+
+export type StoredUserRole = "tenant" | "landlord" | "admin";
+
+export interface StoredAuthUser {
+  id?: string;
+  _id?: string;
+  email?: string;
+  name?: string;
+  full_name?: string;
+  role: StoredUserRole;
+}
+
+export function getAccessToken(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function getStoredUser(): StoredAuthUser | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const storedValue = localStorage.getItem(USER_KEY);
+  if (!storedValue) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedValue) as StoredAuthUser;
+  } catch {
+    return null;
+  }
+}
+
+export function clearStoredAuth(): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+}
