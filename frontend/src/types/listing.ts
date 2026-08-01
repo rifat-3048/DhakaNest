@@ -125,3 +125,21 @@ export interface ListingImageUploadResponse {
   uploaded_images: ListingImage[];
   listing: RentalListing;
 }
+
+export type AdminDecision = "approve" | "request_revision" | "reject";
+
+export interface AdminDecisionPayload {
+  decision: AdminDecision;
+  notes: string | null;
+}
+
+export interface AdminPendingListingsResponse {
+  count: number;
+  listings: RentalListing[];
+}
+
+export interface AdminActionResponse {
+  message?: string;
+  listing?: RentalListing;
+  rent_assessment?: RentAssessment;
+}
