@@ -55,6 +55,52 @@ export default function PreferenceSummary({
           label="Preferred areas"
           value={preferences.preferred_areas.join(", ") || "Not selected"}
         />
+        <SummaryItem
+          label="Preferred micro-areas"
+          value={
+            preferences.preferred_micro_areas.length === 0
+              ? "No specific micro-area"
+              : preferences.preferred_micro_areas
+                  .map(
+                    (location) =>
+                      `${location.micro_area}, ${location.broad_area}`,
+                  )
+                  .join(", ")
+          }
+        />
+        <div className="py-3">
+          <dt className="text-xs font-medium uppercase text-slate-500">
+            Important destinations
+          </dt>
+          <dd className="mt-2 space-y-2">
+            {preferences.important_destinations.filter((destination) =>
+              destination.destination.trim(),
+            ).length === 0 ? (
+              <span className="text-sm font-semibold text-slate-900">
+                Not entered
+              </span>
+            ) : (
+              preferences.important_destinations
+                .filter((destination) => destination.destination.trim())
+                .map((destination) => (
+                  <div
+                    key={destination.id}
+                    className="rounded-lg bg-slate-50 p-3"
+                  >
+                    <p className="text-sm font-semibold text-slate-900">
+                      {destination.destination}
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Importance: {destination.preference ?? "Not selected"}/5
+                      {destination.max_commute_minutes
+                        ? ` | Maximum ${destination.max_commute_minutes} minutes`
+                        : " | No commute limit"}
+                    </p>
+                  </div>
+                ))
+            )}
+          </dd>
+        </div>
         <SummaryItem label="Monthly budget" value={budget} />
         <SummaryItem
           label="Property"
