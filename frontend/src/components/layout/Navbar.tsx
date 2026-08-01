@@ -1,6 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/landlord")) {
+    return null;
+  }
+
   return (
     <header className="border-b border-slate-200 bg-white">
       <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
