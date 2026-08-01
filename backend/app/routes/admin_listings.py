@@ -1,6 +1,6 @@
 """Admin-only routes for reviewing and deciding submitted listings."""
 
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
@@ -8,6 +8,7 @@ from app.core.dependencies import get_current_user
 from app.database import get_database
 from app.schemas.listing_schema import AdminDecisionRequest, RentAssessmentResponse
 from app.services.listing_service import (
+    get_admin_listings,
     get_listing_raw,
     get_pending_listings,
     save_admin_decision,
@@ -46,6 +47,35 @@ def require_admin(current_user: Any) -> str:
             detail="Invalid authenticated user.",
         )
     return str(user_id)
+
+
+@router.get(
+    "",
+    summary="Get all admin listings with optional status filtering",
+)
+async def list_admin_listings(
+    status_filter: Literal[
+        "all",
+        "pending_review",
+        "approved",
+        "revision_requested",
+        "rejected",
+    ] = Query(default="all", alias="status"),
+    search: str | None = Query(default=None, max_length=120),
+    skip: int = Query(default=0, ge=0),
+    limit: int = Query(default=100, ge=1, le=100),
+    current_user: Any = Depends(get_current_user),
+    database: Any = Depends(get_database),
+) -> dict[str, Any]:
+    """List records for the admin dashboard using the existing admin guard."""
+    require_admin(current_user)
+    return await get_admin_listings(
+        database=database,
+        status_filter=status_filter,
+        search=search,
+        skip=skip,
+        limit=limit,
+    )
 
 
 @router.get("/pending", summary="Get pending listings")
