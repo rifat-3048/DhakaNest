@@ -1,10 +1,13 @@
 """MongoDB operations for the complete rental-listing review lifecycle."""
 
+import asyncio
+import re
 from datetime import date, datetime, timezone
-from typing import Any
+from typing import Any, Literal
 
 from bson import ObjectId
 from bson.errors import InvalidId
+from pymongo import DESCENDING
 
 from app.config import settings
 from app.services.rent_fairness_service import PREDICTION_RELEVANT_FIELDS
@@ -12,6 +15,13 @@ from app.services.rent_fairness_service import PREDICTION_RELEVANT_FIELDS
 
 COLLECTION_NAME = "listings"
 LANDLORD_EDITABLE_STATUSES = {"draft", "revision_requested"}
+AdminListingStatusFilter = Literal[
+    "all",
+    "pending_review",
+    "approved",
+    "revision_requested",
+    "rejected",
+]
 
 
 def utc_now() -> datetime:
@@ -381,6 +391,103 @@ async def get_pending_listings(
     return [serialize_document(document) async for document in cursor]
 
 
+async def get_admin_listings(
+    *,
+    database: Any,
+    status_filter: AdminListingStatusFilter = "all",
+    search: str | None = None,
+    skip: int = 0,
+    limit: int = 100,
+) -> dict[str, Any]:
+    """Return filtered listings together with global admin dashboard counts."""
+    collection = database[COLLECTION_NAME]
+    query: dict[str, Any] = {}
+
+    if status_filter != "all":
+        query["status"] = status_filter
+
+    cleaned_search = search.strip() if search else ""
+    if cleaned_search:
+        # Escaping keeps characters such as *, ? and [ as ordinary search text.
+        safe_pattern = re.escape(cleaned_search)
+        search_conditions: list[dict[str, Any]] = [
+            {"title": {"$regex": safe_pattern, "$options": "i"}},
+            {"broad_area": {"$regex": safe_pattern, "$options": "i"}},
+            {"model_micro_area": {"$regex": safe_pattern, "$options": "i"}},
+            {"address": {"$regex": safe_pattern, "$options": "i"}},
+        ]
+
+        # IDs are stored as ObjectIds, so valid ID searches use exact matches.
+        if ObjectId.is_valid(cleaned_search):
+            searched_id = ObjectId(cleaned_search)
+            search_conditions.extend(
+                [{"_id": searched_id}, {"landlord_id": searched_id}]
+            )
+
+        query["$or"] = search_conditions
+
+    total_matching = await collection.count_documents(query)
+    cursor = (
+        collection.find(query)
+        .sort([("submitted_at", DESCENDING), ("created_at", DESCENDING)])
+        .skip(skip)
+        .limit(limit)
+    )
+    documents = await cursor.to_list(length=limit)
+
+    (
+        all_count,
+        pending_count,
+        approved_count,
+        revision_count,
+        rejected_count,
+        fairness_required_count,
+        fairness_checked_count,
+        above_range_count,
+    ) = await asyncio.gather(
+        collection.count_documents({}),
+        collection.count_documents({"status": "pending_review"}),
+        collection.count_documents({"status": "approved"}),
+        collection.count_documents({"status": "revision_requested"}),
+        collection.count_documents({"status": "rejected"}),
+        collection.count_documents(
+            {"status": "pending_review", "rent_assessment": None}
+        ),
+        collection.count_documents(
+            {"status": "pending_review", "rent_assessment": {"$ne": None}}
+        ),
+        collection.count_documents(
+            {
+                "status": "pending_review",
+                "rent_assessment.fairness_status": {
+                    "$in": [
+                        "above_estimated_range",
+                        "significantly_above_estimated_range",
+                    ]
+                },
+            }
+        ),
+    )
+
+    return {
+        "count": total_matching,
+        "skip": skip,
+        "limit": limit,
+        "active_status": status_filter,
+        "summary": {
+            "all_listings": all_count,
+            "pending_review": pending_count,
+            "approved": approved_count,
+            "revision_requested": revision_count,
+            "rejected": rejected_count,
+            "fairness_check_required": fairness_required_count,
+            "fairness_checked": fairness_checked_count,
+            "above_estimated_range": above_range_count,
+        },
+        "listings": [serialize_document(document) for document in documents],
+    }
+
+
 async def save_rent_assessment(
     *, database: Any, listing_id: str, assessment: dict[str, Any]
 ) -> dict[str, Any]:
@@ -440,5 +547,8 @@ async def ensure_listing_indexes(database: Any) -> None:
     """Create indexes used by landlord, review, and availability queries."""
     collection = database[COLLECTION_NAME]
     await collection.create_index([("landlord_id", 1), ("created_at", -1)])
-    await collection.create_index([("status", 1), ("submitted_at", 1)])
+    await collection.create_index(
+        [("status", 1), ("submitted_at", -1)],
+        name="admin_listing_status_submitted_at",
+    )
     await collection.create_index([("status", 1), ("is_available", 1)])
