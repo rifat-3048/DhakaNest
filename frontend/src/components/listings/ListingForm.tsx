@@ -2,6 +2,11 @@
 
 import { type FormEvent, useState } from "react";
 
+import {
+  isPropertyAmenity,
+  PROPERTY_AMENITIES,
+  PROPERTY_TYPE_OPTIONS,
+} from "@/data/property-options";
 import type {
   FurnishingStatus,
   ListingFormValues,
@@ -14,10 +19,6 @@ interface ListingFormProps {
   submitLabel: string;
   readOnly?: boolean;
   onSubmit: (values: ListingFormValues) => Promise<void>;
-}
-
-function buildAmenitiesText(amenities?: string[]): string {
-  return amenities?.join(", ") ?? "";
 }
 
 export default function ListingForm({
@@ -36,9 +37,11 @@ export default function ListingForm({
     setErrorMessage(null);
     setIsSubmitting(true);
     const formData = new FormData(event.currentTarget);
-    const amenities = String(formData.get("amenities") ?? "")
-      .split(",")
-      .map((item) => item.trim())
+    const amenities = [
+      ...formData.getAll("amenities"),
+      ...formData.getAll("legacy_amenities"),
+    ]
+      .map(String)
       .filter(Boolean);
     const availableFrom = String(formData.get("available_from") ?? "");
 
@@ -73,6 +76,11 @@ export default function ListingForm({
 
   const inputClassName =
     "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 disabled:cursor-not-allowed disabled:bg-slate-100";
+  const canonicalInitialAmenities =
+    initialValues?.amenities?.filter(isPropertyAmenity) ?? [];
+  const legacyAmenities =
+    initialValues?.amenities?.filter((amenity) => !isPropertyAmenity(amenity)) ??
+    [];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -124,10 +132,11 @@ export default function ListingForm({
               defaultValue={initialValues?.property_type ?? "apartment"}
               className={inputClassName}
             >
-              <option value="apartment">Apartment</option>
-              <option value="house">House</option>
-              <option value="sublet">Sublet</option>
-              <option value="room">Room</option>
+              {PROPERTY_TYPE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </label>
 
@@ -233,19 +242,42 @@ export default function ListingForm({
       <section className="rounded-lg border bg-white p-5 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-900">Additional details</h2>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
-          <label>
-            <span className="text-sm font-medium text-slate-700">Amenities</span>
-            <input
-              name="amenities"
-              disabled={readOnly}
-              defaultValue={buildAmenitiesText(initialValues?.amenities)}
-              placeholder="Lift, Generator, Parking"
-              className={inputClassName}
-            />
-            <span className="mt-1 block text-xs text-slate-500">
-              Separate amenities with commas.
-            </span>
-          </label>
+          <fieldset className="md:col-span-2">
+            <legend className="text-sm font-medium text-slate-700">Amenities</legend>
+            <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {PROPERTY_AMENITIES.map((amenity) => (
+                <label
+                  key={amenity.value}
+                  className="flex min-h-11 items-center gap-3 rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-700"
+                >
+                  <input
+                    type="checkbox"
+                    name="amenities"
+                    value={amenity.value}
+                    disabled={readOnly}
+                    defaultChecked={canonicalInitialAmenities.includes(amenity.value)}
+                    className="h-4 w-4 accent-emerald-700"
+                  />
+                  {amenity.label}
+                </label>
+              ))}
+            </div>
+            {legacyAmenities.length > 0 && (
+              <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
+                Existing custom amenities are preserved: {legacyAmenities.join(", ")}.
+                {" "}Choose canonical amenities above for future matching.
+                {!readOnly &&
+                  legacyAmenities.map((amenity) => (
+                    <input
+                      key={amenity}
+                      type="hidden"
+                      name="legacy_amenities"
+                      value={amenity}
+                    />
+                  ))}
+              </div>
+            )}
+          </fieldset>
           <label>
             <span className="text-sm font-medium text-slate-700">
               Available from
