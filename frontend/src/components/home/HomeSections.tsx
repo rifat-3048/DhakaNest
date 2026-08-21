@@ -3,7 +3,7 @@ import Link from "next/link";
 const benefits = [
   {
     title: "Location-aware matching",
-    description: "Broad areas, micro-areas, and important destinations.",
+    description: "Important destinations, commute limits, and travel priorities.",
     icon: "pin",
   },
   {
@@ -54,7 +54,7 @@ export default function HomeSections() {
             <ProcessStep
               number="01"
               title="Tell us what you need"
-              description="Choose preferred areas, budget, bedrooms, property requirements, and important destinations."
+              description="Share your budget, bedrooms, property requirements, and important destinations."
             />
             <ProcessStep
               number="02"
@@ -85,7 +85,7 @@ export default function HomeSections() {
               title="Search with your real priorities"
               description="Build a detailed preference profile before recommendation ranking is connected."
               points={[
-                "Choose preferred broad areas and micro-areas",
+                "Add important destinations and optional commute limits",
                 "Define budget and property requirements",
                 "Prioritize important destinations and commute limits",
                 "Prepare for ranked rental options",
