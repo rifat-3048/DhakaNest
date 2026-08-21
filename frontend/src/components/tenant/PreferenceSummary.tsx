@@ -5,7 +5,7 @@ const currencyFormatter = new Intl.NumberFormat("en-BD", {
 });
 
 const PRIORITY_LABELS: Record<keyof TenantSearchPreferences["priorities"], string> = {
-  location: "Location",
+  location: "Destination access",
   budget: "Budget",
   space: "Property size",
   amenities: "Amenities",
@@ -17,6 +17,10 @@ function words(value: string): string {
     .split("_")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+}
+
+function minimumRoomLabel(value: number): string {
+  return value === 6 ? "5+" : String(value);
 }
 
 interface PreferenceSummaryProps {
@@ -34,84 +38,78 @@ export default function PreferenceSummary({
   onFind,
   onReset,
 }: PreferenceSummaryProps) {
-  const highestValue = Math.max(...Object.values(preferences.priorities));
-  const highestPriorities = Object.entries(preferences.priorities)
-    .filter(([, value]) => value === highestValue)
-    .map(([key]) => PRIORITY_LABELS[key as keyof typeof PRIORITY_LABELS]);
-
   const budget = preferences.minimum_rent_bdt
     ? `BDT ${currencyFormatter.format(preferences.minimum_rent_bdt)} - ${currencyFormatter.format(preferences.maximum_rent_bdt)}`
     : `Up to BDT ${currencyFormatter.format(preferences.maximum_rent_bdt)}`;
+  const priorities = Object.entries(preferences.priorities)
+    .map(
+      ([key, value]) =>
+        `${PRIORITY_LABELS[key as keyof typeof PRIORITY_LABELS]} ${value}/5`,
+    )
+    .join(", ");
 
   return (
     <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm xl:sticky xl:top-6">
       <h2 className="text-lg font-semibold text-slate-950">Your Search Summary</h2>
       <p className="mt-1 text-sm text-slate-600">
-        This updates as you refine your preferences.
+        This updates as you refine your housing requirements.
       </p>
 
       <dl className="mt-6 divide-y divide-slate-100">
-        <SummaryItem
-          label="Preferred areas"
-          value={preferences.preferred_areas.join(", ") || "Not selected"}
-        />
-        <SummaryItem
-          label="Preferred micro-areas"
-          value={
-            preferences.preferred_micro_areas.length === 0
-              ? "No specific micro-area"
-              : preferences.preferred_micro_areas
-                  .map(
-                    (location) =>
-                      `${location.micro_area}, ${location.broad_area}`,
-                  )
-                  .join(", ")
-          }
-        />
-        <div className="py-3">
+        <div className="pb-3">
           <dt className="text-xs font-medium uppercase text-slate-500">
             Important destinations
           </dt>
           <dd className="mt-2 space-y-2">
-            {preferences.important_destinations.filter((destination) =>
-              destination.destination.trim(),
-            ).length === 0 ? (
-              <span className="text-sm font-semibold text-slate-900">
-                Not entered
-              </span>
-            ) : (
-              preferences.important_destinations
-                .filter((destination) => destination.destination.trim())
-                .map((destination) => (
-                  <div
-                    key={destination.id}
-                    className="rounded-lg bg-slate-50 p-3"
-                  >
-                    <p className="text-sm font-semibold text-slate-900">
-                      {destination.destination}
-                    </p>
-                    <p className="mt-1 text-xs text-slate-500">
-                      Importance: {destination.preference ?? "Not selected"}/5
-                      {destination.max_commute_minutes
-                        ? ` | Maximum ${destination.max_commute_minutes} minutes`
-                        : " | No commute limit"}
-                    </p>
-                  </div>
-                ))
-            )}
+            {preferences.important_destinations
+              .filter((destination) => destination.destination.trim())
+              .map((destination) => (
+                <div key={destination.id} className="rounded-lg bg-slate-50 p-3">
+                  <p className="text-sm font-semibold text-slate-900">
+                    {destination.destination}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Importance: {destination.preference ?? "Not selected"}/5
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Maximum commute:{" "}
+                    {destination.max_commute_minutes
+                      ? `${destination.max_commute_minutes} min`
+                      : "Flexible"}
+                  </p>
+                </div>
+              ))}
           </dd>
         </div>
-        <SummaryItem label="Monthly budget" value={budget} />
         <SummaryItem
-          label="Property"
-          value={`${preferences.property_types.map(words).join(", ") || "Not selected"} | ${preferences.minimum_bedrooms}+ bedrooms | ${preferences.minimum_bathrooms}+ bathrooms`}
+          label="Monthly budget"
+          value={`${budget}; ${preferences.over_budget_percent ? `up to ${preferences.over_budget_percent}% flexibility` : "no over-budget flexibility"}`}
         />
         <SummaryItem
-          label="Minimum area"
+          label="Property requirements"
+          value={`${preferences.property_types.map(words).join(", ") || "Not selected"}; ${minimumRoomLabel(preferences.minimum_bedrooms)} bedrooms minimum; ${minimumRoomLabel(preferences.minimum_bathrooms)} bathrooms minimum`}
+        />
+        <SummaryItem
+          label="Property size"
+          value={formatAreaRange(
+            preferences.minimum_area_sqft,
+            preferences.maximum_area_sqft,
+          )}
+        />
+        <SummaryItem
+          label="Household"
           value={
-            preferences.minimum_area_sqft
-              ? `${currencyFormatter.format(preferences.minimum_area_sqft)} sq ft`
-              : "No minimum"
+            preferences.household_size
+              ? `${preferences.household_size} people`
+              : "Not specified"
+          }
+        />
+        <SummaryItem
+          label="Furnishing"
+          value={
+            preferences.furnishing_statuses.length
+              ? preferences.furnishing_statuses.map(words).join(", ")
+              : "No restriction"
           }
         />
         <SummaryItem
@@ -123,13 +121,10 @@ export default function PreferenceSummary({
           value={preferences.must_have_amenities.join(", ") || "None selected"}
         />
         <SummaryItem
-          label="Flexibility"
-          value={`${preferences.accept_nearby_areas ? "Nearby areas allowed" : "Selected areas only"}; ${preferences.over_budget_percent ? `up to ${preferences.over_budget_percent}% over budget` : "no over-budget flexibility"}`}
+          label="Preferred amenities"
+          value={preferences.nice_to_have_amenities.join(", ") || "None selected"}
         />
-        <SummaryItem
-          label="Highest priorities"
-          value={highestPriorities.join(" and ")}
-        />
+        <SummaryItem label="Ranking priorities" value={priorities} />
       </dl>
 
       <button
@@ -159,6 +154,15 @@ export default function PreferenceSummary({
       </button>
     </aside>
   );
+}
+
+function formatAreaRange(minimum: number | null, maximum: number | null): string {
+  if (minimum && maximum) {
+    return `${currencyFormatter.format(minimum)} - ${currencyFormatter.format(maximum)} sq ft`;
+  }
+  if (minimum) return `${currencyFormatter.format(minimum)}+ sq ft`;
+  if (maximum) return `Up to ${currencyFormatter.format(maximum)} sq ft`;
+  return "No restriction";
 }
 
 function SummaryItem({ label, value }: { label: string; value: string }) {
