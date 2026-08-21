@@ -87,14 +87,14 @@ function ProductPreview() {
               Your preferences
             </p>
             <div className="mt-4">
-              <PreviewLabel>Preferred areas</PreviewLabel>
+              <PreviewLabel>Important destinations</PreviewLabel>
               <div className="mt-2 flex flex-wrap gap-2">
-                {['Dhanmondi', 'Uttara', 'Mohammadpur'].map((area) => (
+                {['University of Dhaka', 'Motijheel Office'].map((destination) => (
                   <span
-                    key={area}
+                    key={destination}
                     className="rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-semibold text-emerald-800"
                   >
-                    {area}
+                    {destination}
                   </span>
                 ))}
               </div>
