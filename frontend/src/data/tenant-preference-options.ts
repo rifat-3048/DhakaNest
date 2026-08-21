@@ -1,17 +1,7 @@
 import type {
+  MinimumRoomCount,
   RentalFurnishingStatus,
-  RentalPropertyType,
 } from "@/types/tenant-preference";
-
-export const PROPERTY_TYPE_OPTIONS: Array<{
-  value: RentalPropertyType;
-  label: string;
-}> = [
-  { value: "apartment", label: "Apartment" },
-  { value: "house", label: "House" },
-  { value: "sublet", label: "Sublet" },
-  { value: "room", label: "Room" },
-];
 
 export const FURNISHING_OPTIONS: Array<{
   value: RentalFurnishingStatus;
@@ -22,15 +12,11 @@ export const FURNISHING_OPTIONS: Array<{
   { value: "furnished", label: "Furnished" },
 ];
 
-export const AMENITY_OPTIONS = [
-  "Lift",
-  "Generator",
-  "Parking",
-  "Balcony",
-  "Security Guard",
-  "CCTV",
-  "Gas Connection",
-  "Air Conditioning",
-  "Backup Water Supply",
-  "Rooftop Access",
-] as const;
+export const MINIMUM_ROOM_OPTIONS = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+  { label: "5+", value: 6 },
+] as const satisfies ReadonlyArray<{ label: string; value: MinimumRoomCount }>;
