@@ -1,3 +1,7 @@
+import type { PropertyType } from "@/data/property-options";
+
+export type { PropertyType } from "@/data/property-options";
+
 export type ListingStatus =
   | "draft"
   | "pending_review"
@@ -5,8 +9,6 @@ export type ListingStatus =
   | "approved"
   | "rejected"
   | "rented";
-
-export type PropertyType = "apartment" | "house" | "sublet" | "room";
 
 export type FurnishingStatus =
   | "unfurnished"
