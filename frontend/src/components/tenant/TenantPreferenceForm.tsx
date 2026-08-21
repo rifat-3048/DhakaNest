@@ -1,20 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ImportantDestinationsEditor from "@/components/tenant/ImportantDestinationsEditor";
 import PreferenceSection from "@/components/tenant/PreferenceSection";
 import PreferenceSummary from "@/components/tenant/PreferenceSummary";
 import PrioritySelector from "@/components/tenant/PrioritySelector";
 import {
-  DHAKA_LOCATION_OPTIONS,
-  type AreaOption,
-} from "@/data/location-options";
-import {
-  AMENITY_OPTIONS,
   FURNISHING_OPTIONS,
-  PROPERTY_TYPE_OPTIONS,
+  MINIMUM_ROOM_OPTIONS,
 } from "@/data/tenant-preference-options";
+import {
+  PROPERTY_AMENITIES,
+  PROPERTY_TYPE_OPTIONS,
+  type PropertyAmenity,
+} from "@/data/property-options";
 import {
   clearTenantPreferences,
   getSavedTenantPreferences,
@@ -22,16 +22,13 @@ import {
 } from "@/lib/tenant-preference-storage";
 import type {
   BudgetFlexibilityPercent,
+  MinimumRoomCount,
   RecommendationPriorities,
-  PreferredMicroArea,
   TenantSearchPreferences,
 } from "@/types/tenant-preference";
 
 function createInitialPreferences(): TenantSearchPreferences {
   return {
-    preferred_areas: [],
-    preferred_micro_areas: [],
-    accept_nearby_areas: true,
     important_destinations: [
       {
         id: "destination-1",
@@ -83,11 +80,6 @@ function validatePreferences(
 ): Record<string, string> {
   const nextErrors: Record<string, string> = {};
 
-  if (values.preferred_areas.length === 0) {
-    nextErrors.preferred_areas = "Select at least one preferred area.";
-  } else if (values.preferred_areas.length > 3) {
-    nextErrors.preferred_areas = "Select no more than three preferred areas.";
-  }
   if (
     values.important_destinations.length < 1 ||
     values.important_destinations.length > 3
@@ -97,7 +89,10 @@ function validatePreferences(
   } else {
     const incompleteDestination = values.important_destinations.find(
       (destination) =>
-        !destination.destination.trim() || destination.preference === null,
+        !destination.destination.trim() ||
+        destination.preference === null ||
+        destination.preference < 1 ||
+        destination.preference > 5,
     );
     const invalidCommuteTime = values.important_destinations.find(
       (destination) =>
@@ -111,7 +106,7 @@ function validatePreferences(
 
     if (incompleteDestination) {
       nextErrors.important_destinations =
-        "Enter a name and select an importance score for every destination.";
+        "Enter a name and select an importance score from 1 to 5 for every destination.";
     } else if (invalidCommuteTime) {
       nextErrors.important_destinations =
         "Optional commute time must be between 1 and 240 minutes.";
@@ -163,7 +158,6 @@ export default function TenantPreferenceForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [broadAreaSearch, setBroadAreaSearch] = useState("");
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -174,79 +168,11 @@ export default function TenantPreferenceForm() {
     return () => window.clearTimeout(timeoutId);
   }, []);
 
-  const selectedLocationGroups = useMemo(
-    () =>
-      DHAKA_LOCATION_OPTIONS.filter((option) =>
-        preferences.preferred_areas.includes(option.broadArea),
-      ),
-    [preferences.preferred_areas],
-  );
-
-  const normalizedBroadAreaSearch = broadAreaSearch.trim().toLowerCase();
-  const broadAreaSearchHasMatch = useMemo(
-    () =>
-      !normalizedBroadAreaSearch ||
-      DHAKA_LOCATION_OPTIONS.some((option) =>
-        option.broadArea.toLowerCase().includes(normalizedBroadAreaSearch),
-      ),
-    [normalizedBroadAreaSearch],
-  );
-  const visibleLocationOptions = useMemo(
-    () =>
-      DHAKA_LOCATION_OPTIONS.filter(
-        (option) =>
-          preferences.preferred_areas.includes(option.broadArea) ||
-          option.broadArea.toLowerCase().includes(normalizedBroadAreaSearch),
-      ),
-    [normalizedBroadAreaSearch, preferences.preferred_areas],
-  );
-
   function updatePreferences(
     update: (current: TenantSearchPreferences) => TenantSearchPreferences,
   ) {
     setPreferences(update);
     setSuccessMessage(null);
-  }
-
-  function togglePreferredArea(broadArea: string) {
-    updatePreferences((current) => {
-      const isSelected = current.preferred_areas.includes(broadArea);
-      if (!isSelected && current.preferred_areas.length >= 3) return current;
-      return {
-        ...current,
-        preferred_areas: toggleArrayValue(current.preferred_areas, broadArea),
-        preferred_micro_areas: isSelected
-          ? current.preferred_micro_areas.filter(
-              (microArea) => microArea.broad_area !== broadArea,
-            )
-          : current.preferred_micro_areas,
-      };
-    });
-  }
-
-  function togglePreferredMicroArea(broadArea: string, microArea: string) {
-    updatePreferences((current) => {
-      const alreadySelected = current.preferred_micro_areas.some(
-        (selected) =>
-          selected.broad_area === broadArea && selected.micro_area === microArea,
-      );
-      const selectedValue: PreferredMicroArea = {
-        broad_area: broadArea,
-        micro_area: microArea,
-      };
-      return {
-        ...current,
-        preferred_micro_areas: alreadySelected
-          ? current.preferred_micro_areas.filter(
-              (selected) =>
-                !(
-                  selected.broad_area === broadArea &&
-                  selected.micro_area === microArea
-                ),
-            )
-          : [...current.preferred_micro_areas, selectedValue],
-      };
-    });
   }
 
   function handleFindRecommendedHomes() {
@@ -291,128 +217,19 @@ export default function TenantPreferenceForm() {
 
         <PreferenceSection
           number={1}
-          title="Preferred location"
-          description="Choose up to three broad areas, select optional micro-areas, and add your important destinations."
+          title="Important destinations"
+          description="Add the places you travel to regularly. DhakaNest will use these destinations together with your housing requirements to find suitable rental homes across Dhaka."
         >
-          <div className="flex items-center justify-between gap-4">
-            <h3 className="text-sm font-semibold text-slate-900">
-              Preferred areas <span className="text-red-600">*</span>
-            </h3>
-            <span className="text-xs font-semibold text-emerald-700">
-              {preferences.preferred_areas.length}/3 selected
-            </span>
-          </div>
-          <ErrorText message={errors.preferred_areas} />
-
-          <label htmlFor="broad-area-search" className="mt-4 block">
-            <span className="text-sm font-medium text-slate-700">
-              Search broad areas
-            </span>
-            <input
-              id="broad-area-search"
-              type="search"
-              value={broadAreaSearch}
-              placeholder="Search broad areas"
-              onChange={(event) => setBroadAreaSearch(event.target.value)}
-              className={fieldClass}
-            />
-          </label>
-
-          {!broadAreaSearchHasMatch && (
-            <p className="mt-3 text-sm text-slate-500">
-              No areas match your search
-            </p>
-          )}
-
-          <div className="mt-4 max-h-80 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {visibleLocationOptions.map((option) => {
-                const checked = preferences.preferred_areas.includes(
-                  option.broadArea,
-                );
-                const disabled =
-                  !checked && preferences.preferred_areas.length >= 3;
-                return (
-                  <CheckboxChoice
-                    key={option.broadArea}
-                    label={option.broadArea}
-                    checked={checked}
-                    disabled={disabled}
-                    onChange={() => togglePreferredArea(option.broadArea)}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <h3 className="text-sm font-semibold text-slate-900">
-                  Preferred micro-areas{" "}
-                  <span className="font-normal text-slate-500">(Optional)</span>
-                </h3>
-                <p className="mt-1 text-xs text-slate-500">
-                  Micro-areas are grouped under the broad areas you selected.
-                </p>
-              </div>
-              <span className="text-xs font-semibold text-emerald-700">
-                {preferences.preferred_micro_areas.length} selected
-              </span>
-            </div>
-
-            {selectedLocationGroups.length === 0 ? (
-              <div className="mt-4 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-5 text-sm text-slate-500">
-                Select at least one preferred broad area to see its micro-areas.
-              </div>
-            ) : (
-              <div className="mt-4 space-y-5">
-                {selectedLocationGroups.map((location) => (
-                  <MicroAreaGroup
-                    key={location.broadArea}
-                    location={location}
-                    selectedMicroAreas={preferences.preferred_micro_areas}
-                    onToggle={togglePreferredMicroArea}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          <label className="mt-8 flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-4">
-            <input
-              type="checkbox"
-              checked={preferences.accept_nearby_areas}
-              onChange={(event) =>
-                updatePreferences((current) => ({
-                  ...current,
-                  accept_nearby_areas: event.target.checked,
-                }))
-              }
-              className="mt-0.5 h-4 w-4 accent-emerald-700"
-            />
-            <span>
-              <span className="block text-sm font-semibold text-slate-900">
-                Accept nearby areas
-              </span>
-              <span className="mt-1 block text-xs text-slate-500">
-                Allow nearby locations when exact-area choices are limited.
-              </span>
-            </span>
-          </label>
-
-          <div className="mt-8 border-t border-slate-200 pt-8">
-            <ImportantDestinationsEditor
-              destinations={preferences.important_destinations}
-              errorMessage={errors.important_destinations}
-              onChange={(importantDestinations) =>
-                updatePreferences((current) => ({
-                  ...current,
-                  important_destinations: importantDestinations,
-                }))
-              }
-            />
-          </div>
+          <ImportantDestinationsEditor
+            destinations={preferences.important_destinations}
+            errorMessage={errors.important_destinations}
+            onChange={(importantDestinations) =>
+              updatePreferences((current) => ({
+                ...current,
+                important_destinations: importantDestinations,
+              }))
+            }
+          />
         </PreferenceSection>
 
         <PreferenceSection
@@ -506,7 +323,6 @@ export default function TenantPreferenceForm() {
             <SelectNumberField
               label="Minimum bedrooms"
               value={preferences.minimum_bedrooms}
-              maximum={6}
               onChange={(value) =>
                 updatePreferences((current) => ({
                   ...current,
@@ -517,7 +333,6 @@ export default function TenantPreferenceForm() {
             <SelectNumberField
               label="Minimum bathrooms"
               value={preferences.minimum_bathrooms}
-              maximum={5}
               onChange={(value) =>
                 updatePreferences((current) => ({
                   ...current,
@@ -671,7 +486,7 @@ export default function TenantPreferenceForm() {
           <div className="grid gap-4 md:grid-cols-2">
             {(
               [
-                ["location", "Preferred location", "How closely the area should match."],
+                ["location", "Destination access", "How strongly travel needs should affect ranking."],
                 ["budget", "Monthly budget", "How strongly rent should affect ranking."],
                 ["space", "Property size", "Bedrooms, bathrooms, and floor area."],
                 ["amenities", "Amenities", "Importance of selected property features."],
@@ -703,109 +518,6 @@ export default function TenantPreferenceForm() {
         onReset={handleReset}
       />
     </div>
-  );
-}
-
-const LARGE_MICRO_AREA_THRESHOLD = 12;
-
-function MicroAreaGroup({
-  location,
-  selectedMicroAreas,
-  onToggle,
-}: {
-  location: AreaOption;
-  selectedMicroAreas: PreferredMicroArea[];
-  onToggle: (broadArea: string, microArea: string) => void;
-}) {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [searchText, setSearchText] = useState("");
-  const normalizedSearch = searchText.trim().toLowerCase();
-  const selectedForArea = useMemo(
-    () =>
-      selectedMicroAreas.filter(
-        (selected) => selected.broad_area === location.broadArea,
-      ),
-    [location.broadArea, selectedMicroAreas],
-  );
-  const visibleMicroAreas = useMemo(
-    () =>
-      location.microAreas.filter(
-        (microArea) =>
-          selectedForArea.some((selected) => selected.micro_area === microArea) ||
-          microArea.toLowerCase().includes(normalizedSearch),
-      ),
-    [location.microAreas, normalizedSearch, selectedForArea],
-  );
-
-  function isSelected(microArea: string): boolean {
-    return selectedForArea.some((selected) => selected.micro_area === microArea);
-  }
-
-  return (
-    <section className="rounded-lg border border-slate-200 p-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h4 className="text-sm font-semibold text-slate-900">
-            {location.broadArea}
-          </h4>
-          <p className="mt-1 text-xs font-medium text-emerald-700">
-            {selectedForArea.length} selected
-          </p>
-        </div>
-        <button
-          type="button"
-          aria-expanded={isExpanded}
-          aria-controls={`micro-areas-${location.broadArea.replace(/\s+/g, "-").toLowerCase()}`}
-          onClick={() => setIsExpanded((current) => !current)}
-          className="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-        >
-          {isExpanded ? "Hide micro-areas" : "Show micro-areas"}
-        </button>
-      </div>
-
-      {isExpanded && (
-        <div
-          id={`micro-areas-${location.broadArea.replace(/\s+/g, "-").toLowerCase()}`}
-          className="mt-4"
-        >
-          {location.microAreas.length >= LARGE_MICRO_AREA_THRESHOLD && (
-            <label className="block">
-              <span className="text-xs font-medium text-slate-700">
-                Search {location.broadArea} micro-areas
-              </span>
-              <input
-                type="search"
-                value={searchText}
-                placeholder={`Search ${location.broadArea} micro-areas`}
-                onChange={(event) => setSearchText(event.target.value)}
-                className={fieldClass}
-              />
-            </label>
-          )}
-
-          {location.microAreas.length === 0 ? (
-            <p className="text-sm text-slate-500">
-              No specific micro-areas are currently configured for this area.
-            </p>
-          ) : visibleMicroAreas.length === 0 ? (
-            <p className="mt-3 text-sm text-slate-500">
-              No micro-areas match your search.
-            </p>
-          ) : (
-            <div className="mt-3 grid max-h-72 gap-2 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3">
-              {visibleMicroAreas.map((microArea) => (
-                <CheckboxChoice
-                  key={`${location.broadArea}-${microArea}`}
-                  label={microArea}
-                  checked={isSelected(microArea)}
-                  onChange={() => onToggle(location.broadArea, microArea)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </section>
   );
 }
 
@@ -910,25 +622,25 @@ function NumberField({
 function SelectNumberField({
   label,
   value,
-  maximum,
   onChange,
 }: {
   label: string;
-  value: number;
-  maximum: number;
-  onChange: (value: number) => void;
+  value: MinimumRoomCount;
+  onChange: (value: MinimumRoomCount) => void;
 }) {
   return (
     <label>
       <FieldHeading label={label} requirement="Required" />
       <select
         value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
+        onChange={(event) =>
+          onChange(Number(event.target.value) as MinimumRoomCount)
+        }
         className={fieldClass}
       >
-        {Array.from({ length: maximum }, (_, index) => index + 1).map((number) => (
-          <option key={number} value={number}>
-            {number}+
+        {MINIMUM_ROOM_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>
@@ -944,8 +656,8 @@ function AmenityGroup({
 }: {
   title: string;
   description: string;
-  selected: string[];
-  onToggle: (amenity: string) => void;
+  selected: PropertyAmenity[];
+  onToggle: (amenity: PropertyAmenity) => void;
 }) {
   return (
     <fieldset>
@@ -955,12 +667,12 @@ function AmenityGroup({
         {selected.length} selected
       </p>
       <div className="mt-3 space-y-2">
-        {AMENITY_OPTIONS.map((amenity) => (
+        {PROPERTY_AMENITIES.map((amenity) => (
           <CheckboxChoice
-            key={amenity}
-            label={amenity}
-            checked={selected.includes(amenity)}
-            onChange={() => onToggle(amenity)}
+            key={amenity.value}
+            label={amenity.label}
+            checked={selected.includes(amenity.value)}
+            onChange={() => onToggle(amenity.value)}
           />
         ))}
       </div>
