@@ -12,8 +12,8 @@ export default function TenantDashboardPage() {
             Find a home that fits your needs
           </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
-            Tell DhakaNest where you want to live, what you can afford, and
-            which property features matter most.
+            Tell DhakaNest about your housing needs, budget, and the places you
+            travel to regularly. Suitable homes across Dhaka will be evaluated later.
           </p>
         </div>
       </section>
