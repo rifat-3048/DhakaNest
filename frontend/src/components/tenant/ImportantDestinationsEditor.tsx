@@ -56,7 +56,8 @@ export default function ImportantDestinationsEditor({
             Important destinations <span className="text-red-600">*</span>
           </h3>
           <p className="mt-1 text-xs text-slate-500">
-            Add between one and three destinations. Commute time is optional.
+            Add one to three places you travel to regularly. DhakaNest will use
+            them to evaluate suitable homes across Dhaka. Commute time is optional.
           </p>
         </div>
         <span className="text-xs font-semibold text-emerald-700">
@@ -129,9 +130,9 @@ export default function ImportantDestinationsEditor({
                   className="mt-1 min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
                 >
                   <option value="">Select</option>
-                  <option value="5">5 - Essential</option>
-                  <option value="4">4 - Very important</option>
-                  <option value="3">3 - Important</option>
+                  <option value="5">5 - Very important</option>
+                  <option value="4">4 - High importance</option>
+                  <option value="3">3 - Medium</option>
                   <option value="2">2 - Somewhat important</option>
                   <option value="1">1 - Low importance</option>
                 </select>
