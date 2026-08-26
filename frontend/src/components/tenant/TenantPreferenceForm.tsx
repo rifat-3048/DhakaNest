@@ -18,6 +18,10 @@ import {
   getSavedTenantPreferences,
   saveTenantPreferences,
 } from "@/lib/tenant-preference-storage";
+import {
+  createImportantDestination,
+  validateImportantDestinations,
+} from "@/lib/tenant-destination";
 import type {
   BudgetFlexibilityPercent,
   MinimumRoomCount,
@@ -27,14 +31,7 @@ import type {
 
 function createInitialPreferences(): TenantSearchPreferences {
   return {
-    important_destinations: [
-      {
-        id: "destination-1",
-        destination: "",
-        preference: null,
-        max_commute_minutes: null,
-      },
-    ],
+    important_destinations: [createImportantDestination("destination-1")],
     minimum_rent_bdt: null,
     maximum_rent_bdt: 30000,
     over_budget_percent: 0,
@@ -78,41 +75,10 @@ function validatePreferences(
 ): Record<string, string> {
   const nextErrors: Record<string, string> = {};
 
-  if (
-    values.important_destinations.length < 1 ||
-    values.important_destinations.length > 3
-  ) {
-    nextErrors.important_destinations =
-      "Add between one and three important destinations.";
-  } else {
-    const incompleteDestination = values.important_destinations.find(
-      (destination) =>
-        !destination.destination.trim() ||
-        destination.preference === null ||
-        destination.preference < 1 ||
-        destination.preference > 5,
-    );
-    const invalidCommuteTime = values.important_destinations.find(
-      (destination) =>
-        destination.max_commute_minutes !== null &&
-        (destination.max_commute_minutes < 1 ||
-          destination.max_commute_minutes > 240),
-    );
-    const normalizedNames = values.important_destinations.map((destination) =>
-      destination.destination.trim().toLowerCase(),
-    );
-
-    if (incompleteDestination) {
-      nextErrors.important_destinations =
-        "Enter a name and select an importance score from 1 to 5 for every destination.";
-    } else if (invalidCommuteTime) {
-      nextErrors.important_destinations =
-        "Optional commute time must be between 1 and 240 minutes.";
-    } else if (new Set(normalizedNames).size !== normalizedNames.length) {
-      nextErrors.important_destinations =
-        "Do not add the same destination more than once.";
-    }
-  }
+  const destinationError = validateImportantDestinations(
+    values.important_destinations,
+  );
+  if (destinationError) nextErrors.important_destinations = destinationError;
   if (!Number.isFinite(values.maximum_rent_bdt) || values.maximum_rent_bdt <= 0) {
     nextErrors.maximum_rent_bdt = "Enter a valid maximum monthly rent.";
   }
