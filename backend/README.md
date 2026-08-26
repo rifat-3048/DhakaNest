@@ -55,3 +55,16 @@ admin.
 Never create an admin in MongoDB Compass using a plaintext password. The login
 system expects a secure value in `password_hash`; storing the original password
 would be insecure and would not produce a valid login.
+
+## Audit Listing Coordinates
+
+The recommendation inventory requires approved, available listings with valid
+latitude and longitude. To inspect existing listings without changing any data,
+run this command from the `backend` directory:
+
+```powershell
+python scripts/audit_listing_coordinates.py
+```
+
+The script reports readiness counts and identifies coordinate-incomplete records.
+It never guesses coordinates, changes listing statuses, or writes to MongoDB.
