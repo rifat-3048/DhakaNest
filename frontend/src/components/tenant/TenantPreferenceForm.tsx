@@ -6,11 +6,9 @@ import ImportantDestinationsEditor from "@/components/tenant/ImportantDestinatio
 import PreferenceSection from "@/components/tenant/PreferenceSection";
 import PreferenceSummary from "@/components/tenant/PreferenceSummary";
 import PrioritySelector from "@/components/tenant/PrioritySelector";
+import { MINIMUM_ROOM_OPTIONS } from "@/data/tenant-preference-options";
 import {
   FURNISHING_OPTIONS,
-  MINIMUM_ROOM_OPTIONS,
-} from "@/data/tenant-preference-options";
-import {
   PROPERTY_AMENITIES,
   PROPERTY_TYPE_OPTIONS,
   type PropertyAmenity,
