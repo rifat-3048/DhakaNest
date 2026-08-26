@@ -128,6 +128,15 @@ export function updateListing(
   );
 }
 
+export function markListingRented(
+  listingId: string,
+): Promise<ListingMutationResponse> {
+  return authenticatedRequest<ListingMutationResponse>(
+    `/api/listings/${listingId}/mark-rented`,
+    { method: "PATCH" },
+  );
+}
+
 export function uploadListingImages(
   listingId: string,
   files: File[],

@@ -86,6 +86,8 @@ export interface RentalListing {
   rent_assessment: RentAssessment | null;
   admin_review: AdminReview | null;
   submitted_at: string | null;
+  rented_at: string | null;
+  rented_by: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -150,7 +152,8 @@ export type AdminListingFilter =
   | "pending_review"
   | "approved"
   | "revision_requested"
-  | "rejected";
+  | "rejected"
+  | "rented";
 
 export interface AdminListingSummary {
   all_listings: number;
@@ -158,6 +161,7 @@ export interface AdminListingSummary {
   approved: number;
   revision_requested: number;
   rejected: number;
+  rented: number;
   fairness_check_required: number;
   fairness_checked: number;
   above_estimated_range: number;

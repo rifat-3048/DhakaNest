@@ -16,6 +16,7 @@ const EMPTY_SUMMARY: AdminListingSummary = {
   approved: 0,
   revision_requested: 0,
   rejected: 0,
+  rented: 0,
   fairness_check_required: 0,
   fairness_checked: 0,
   above_estimated_range: 0,
@@ -26,7 +27,8 @@ type StatusCountKey =
   | "pending_review"
   | "approved"
   | "revision_requested"
-  | "rejected";
+  | "rejected"
+  | "rented";
 
 interface StatusFilterOption {
   value: AdminListingFilter;
@@ -65,6 +67,12 @@ const STATUS_FILTERS: StatusFilterOption[] = [
     label: "Rejected",
     description: "Not approved",
     countKey: "rejected",
+  },
+  {
+    value: "rented",
+    label: "Rented",
+    description: "Unavailable retained records",
+    countKey: "rented",
   },
 ];
 
@@ -122,7 +130,8 @@ export default function AdminDashboardPage() {
   }, [activeStatus, debouncedSearch]);
 
   useEffect(() => {
-    void loadListings();
+    const timeoutId = window.setTimeout(() => void loadListings(), 0);
+    return () => window.clearTimeout(timeoutId);
   }, [loadListings]);
 
   const activeFilter =
@@ -141,7 +150,7 @@ export default function AdminDashboardPage() {
           </h1>
           <p className="mt-2 max-w-3xl text-sm text-slate-600">
             Review pending submissions and inspect approved,
-            revision-requested, and rejected listings.
+            revision-requested, rejected, and rented listings.
           </p>
         </div>
         <button
@@ -184,7 +193,7 @@ export default function AdminDashboardPage() {
         <p className="mt-1 text-sm text-slate-600">
           Select a status to view the corresponding listings.
         </p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
           {STATUS_FILTERS.map((filter) => {
             const isActive = activeStatus === filter.value;
             return (

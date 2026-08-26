@@ -9,6 +9,7 @@ import ListingImageManager from "@/components/listings/ListingImageManager";
 import ListingStatusBadge from "@/components/listings/ListingStatusBadge";
 import {
   getMyListing,
+  markListingRented,
   submitListingForReview,
   updateListing,
 } from "@/lib/listing-api";
@@ -21,6 +22,7 @@ export default function LandlordListingPage() {
   const [listing, setListing] = useState<RentalListing | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMarkingRented, setIsMarkingRented] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -39,7 +41,8 @@ export default function LandlordListingPage() {
   }, [listingId]);
 
   useEffect(() => {
-    void loadListing();
+    const timeoutId = window.setTimeout(() => void loadListing(), 0);
+    return () => window.clearTimeout(timeoutId);
   }, [loadListing]);
 
   async function handleUpdate(values: ListingFormValues) {
@@ -77,6 +80,34 @@ export default function LandlordListingPage() {
       );
     } finally {
       setIsSubmitting(false);
+    }
+  }
+
+  async function handleMarkRented() {
+    if (!listing || listing.status !== "approved") return;
+    if (
+      !window.confirm(
+        "Mark this listing as rented?\n\nIt will no longer be available to tenants or future recommendations.",
+      )
+    ) {
+      return;
+    }
+
+    setIsMarkingRented(true);
+    setErrorMessage(null);
+    setMessage(null);
+    try {
+      const response = await markListingRented(listing.id);
+      setListing(response.listing);
+      setMessage("Listing marked as rented and removed from active availability.");
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "The listing could not be marked as rented.",
+      );
+    } finally {
+      setIsMarkingRented(false);
     }
   }
 
@@ -125,6 +156,25 @@ export default function LandlordListingPage() {
       </p>
 
       <ListingStateNotice listing={listing} />
+
+      {listing.status === "approved" && listing.is_available && (
+        <section className="mt-6 border-y border-slate-200 bg-white py-5">
+          <h2 className="text-base font-semibold text-slate-900">
+            Listing availability
+          </h2>
+          <p className="mt-1 text-sm text-slate-600">
+            Mark this property as rented once it is no longer available.
+          </p>
+          <button
+            type="button"
+            disabled={isMarkingRented}
+            onClick={() => void handleMarkRented()}
+            className="mt-4 rounded-lg border border-red-300 px-4 py-2.5 text-sm font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isMarkingRented ? "Updating..." : "Mark as Rented"}
+          </button>
+        </section>
+      )}
 
       {message && (
         <div className="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
@@ -221,6 +271,17 @@ function ListingStateNotice({ listing }: { listing: RentalListing }) {
         <h2 className="font-semibold text-red-900">Listing rejected</h2>
         <p className="mt-2 text-sm text-red-800">
           {listing.admin_review?.notes ?? "The listing was not approved."}
+        </p>
+      </section>
+    );
+  }
+  if (listing.status === "rented") {
+    return (
+      <section className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-5">
+        <h2 className="font-semibold text-blue-900">Listing rented</h2>
+        <p className="mt-2 text-sm text-blue-800">
+          This listing remains available for your records but is no longer active
+          inventory.
         </p>
       </section>
     );

@@ -16,6 +16,7 @@ const filters: Array<{ value: ListingFilter; label: string }> = [
   { value: "revision_requested", label: "Needs Revision" },
   { value: "approved", label: "Approved" },
   { value: "rejected", label: "Rejected" },
+  { value: "rented", label: "Rented" },
 ];
 
 export default function LandlordDashboardPage() {
@@ -44,7 +45,8 @@ export default function LandlordDashboardPage() {
   }, []);
 
   useEffect(() => {
-    void loadListings();
+    const timeoutId = window.setTimeout(() => void loadListings(), 0);
+    return () => window.clearTimeout(timeoutId);
   }, [loadListings]);
 
   const filteredListings = useMemo(
