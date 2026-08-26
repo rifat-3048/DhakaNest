@@ -10,13 +10,14 @@ This folder contains the FastAPI backend for DhakaNest.
 - Authentication for tenant, landlord, and admin users.
 - Public registration for tenant and landlord users only.
 - JWT login, current-user lookup, and role-based support.
+- A complete landlord listing and admin review lifecycle.
+- Base recommendation eligibility and tenant hard-filter candidate retrieval.
 
 ## What Will Be Added Later
 
-- Rental listing APIs.
-- Recommendation APIs.
-- Database models and schemas.
-- Business services and utility helpers.
+- Destination-aware commute scoring.
+- Recommendation scoring and ranking.
+- Recommendation result persistence.
 
 ## Run Locally
 
@@ -83,3 +84,46 @@ email order, validates 12 varied listings through the backend schema, and stores
 real assessments from the existing rent model. A sparse development key prevents
 duplicates when the command is run again. Seed listings intentionally omit
 Cloudinary images because images are not part of backend recommendation eligibility.
+
+## Check Recommendation Candidates
+
+To run the read-only Recommendation Part 1 scenarios against the local database:
+
+```powershell
+python scripts/check_recommendation_candidates.py
+```
+
+The script reports base eligibility, every hard-filter diagnostic count, and
+the matching titles for five development requests. It does not rank results,
+persist recommendation runs, or modify listing data.
+
+## Recommendation Commute Routing
+
+`POST /api/recommendations/commute-candidates` extends the Part 1 hard-filter
+pipeline with road distance and estimated driving duration for every surviving
+listing and important destination. Supplied maximum commute times are enforced
+as hard constraints after routing.
+
+Development routing uses the OSRM Table API with these safe environment values:
+
+```env
+ROUTING_PROVIDER=osrm
+ROUTING_BASE_URL=https://router.project-osrm.org
+ROUTING_TIMEOUT_SECONDS=10
+ROUTING_USER_AGENT=DhakaNest-University-Development/0.1
+```
+
+The public OSRM server requires no API key and is a best-effort development
+service, not production infrastructure. Its driving-profile durations are road
+estimates only: they do not include live traffic, Dhaka congestion, public
+transport, or walking conditions. A production deployment should configure a
+self-hosted or contracted routing provider with an appropriate service level.
+
+To run the read-only commute scenarios against local listings:
+
+```powershell
+python scripts/check_recommendation_commutes.py
+```
+
+The script uses Nominatim-verified Dhaka destination coordinates, calls routing,
+prints aggregate and per-candidate measurements, and never changes MongoDB data.
