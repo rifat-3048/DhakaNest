@@ -9,6 +9,7 @@ from app.database import get_database
 from app.schemas.listing_schema import AdminDecisionRequest, RentAssessmentResponse
 from app.services.listing_service import (
     get_admin_listings,
+    get_missing_recommendation_data,
     get_listing_raw,
     get_pending_listings,
     save_admin_decision,
@@ -185,6 +186,16 @@ async def decide_listing(
         )
 
     if payload.decision == "approve":
+        missing_fields = get_missing_recommendation_data(listing)
+        if missing_fields:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail=(
+                    "This listing is missing recommendation data: "
+                    + ", ".join(missing_fields)
+                    + ". Request a revision before approval."
+                ),
+            )
         if not listing.get("rent_assessment"):
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
