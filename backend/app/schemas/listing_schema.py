@@ -38,6 +38,8 @@ class ListingCreateRequest(BaseModel):
         ..., min_length=1, max_length=150, examples=["Section 12"]
     )
     address: str = Field(..., min_length=5, max_length=500)
+    latitude: float | None = Field(default=None, ge=-90, le=90)
+    longitude: float | None = Field(default=None, ge=-180, le=180)
     area_sqft: float = Field(..., gt=0, le=20_000)
     bedrooms: int = Field(..., gt=0, le=20)
     bathrooms: int = Field(..., gt=0, le=20)
@@ -65,6 +67,12 @@ class ListingCreateRequest(BaseModel):
         ]
         return list(dict.fromkeys(cleaned_values))
 
+    @model_validator(mode="after")
+    def require_coordinate_pair(self) -> "ListingCreateRequest":
+        if (self.latitude is None) != (self.longitude is None):
+            raise ValueError("Latitude and longitude must be provided together.")
+        return self
+
 
 class ListingUpdateRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -78,6 +86,8 @@ class ListingUpdateRequest(BaseModel):
     broad_area: str | None = Field(default=None, min_length=1, max_length=100)
     model_micro_area: str | None = Field(default=None, min_length=1, max_length=150)
     address: str | None = Field(default=None, min_length=5, max_length=500)
+    latitude: float | None = Field(default=None, ge=-90, le=90)
+    longitude: float | None = Field(default=None, ge=-180, le=180)
     area_sqft: float | None = Field(default=None, gt=0, le=20_000)
     bedrooms: int | None = Field(default=None, gt=0, le=20)
     bathrooms: int | None = Field(default=None, gt=0, le=20)
@@ -115,6 +125,11 @@ class ListingUpdateRequest(BaseModel):
     def require_at_least_one_update(self) -> "ListingUpdateRequest":
         if not self.model_fields_set:
             raise ValueError("At least one field must be updated.")
+        coordinate_fields = {"latitude", "longitude"} & self.model_fields_set
+        if coordinate_fields and coordinate_fields != {"latitude", "longitude"}:
+            raise ValueError("Latitude and longitude must be updated together.")
+        if coordinate_fields and (self.latitude is None or self.longitude is None):
+            raise ValueError("Latitude and longitude cannot be empty.")
         return self
 
 
