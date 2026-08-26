@@ -1,3 +1,6 @@
+from typing import Literal
+
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,6 +30,12 @@ class Settings(BaseSettings):
     # Validation limits for images attached to one rental listing.
     listing_image_max_count: int = 8
     listing_image_max_size_mb: int = 5
+
+    # OSRM's public endpoint is suitable only for light local development use.
+    routing_provider: Literal["osrm"] = "osrm"
+    routing_base_url: str = "https://router.project-osrm.org"
+    routing_timeout_seconds: float = Field(default=10.0, gt=0, le=60)
+    routing_user_agent: str = "DhakaNest-University-Development/0.1"
 
     # This tells pydantic-settings to also read values from a .env file.
     model_config = SettingsConfigDict(
