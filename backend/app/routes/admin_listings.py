@@ -61,6 +61,7 @@ async def list_admin_listings(
         "approved",
         "revision_requested",
         "rejected",
+        "rented",
     ] = Query(default="all", alias="status"),
     search: str | None = Query(default=None, max_length=120),
     skip: int = Query(default=0, ge=0),
