@@ -68,3 +68,18 @@ python scripts/audit_listing_coordinates.py
 
 The script reports readiness counts and identifies coordinate-incomplete records.
 It never guesses coordinates, changes listing statuses, or writes to MongoDB.
+
+## Seed Recommendation Development Listings
+
+To create the idempotent development inventory, run this command from the
+`backend` directory:
+
+```powershell
+python scripts/seed_recommendation_listings.py
+```
+
+The script uses the first active landlord and admin accounts in deterministic
+email order, validates 12 varied listings through the backend schema, and stores
+real assessments from the existing rent model. A sparse development key prevents
+duplicates when the command is run again. Seed listings intentionally omit
+Cloudinary images because images are not part of backend recommendation eligibility.
