@@ -1,10 +1,16 @@
 import type {
+  ImportantDestinationPreference,
   StoredTenantPreference,
   TenantSearchPreferences,
 } from "@/types/tenant-preference";
+import {
+  isValidLatitude,
+  isValidLongitude,
+} from "./tenant-destination.ts";
 
-const STORAGE_KEY = "dhakanest_tenant_search_preferences_v3";
+const STORAGE_KEY = "dhakanest_tenant_search_preferences_v4";
 const PREVIOUS_STORAGE_KEYS = [
+  "dhakanest_tenant_search_preferences_v3",
   "dhakanest_tenant_search_preferences_v2",
   "dhakanest_tenant_search_preferences",
 ] as const;
@@ -18,7 +24,45 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-function migrateStoredValue(value: unknown): StoredTenantPreference | null {
+function migrateDestination(
+  value: unknown,
+  index: number,
+): ImportantDestinationPreference | null {
+  if (!isRecord(value)) return null;
+
+  const latitude =
+    typeof value.latitude === "number" ? value.latitude : null;
+  const longitude =
+    typeof value.longitude === "number" ? value.longitude : null;
+  const coordinatesAreValid =
+    isValidLatitude(latitude) && isValidLongitude(longitude);
+  const preference = value.preference;
+  const commute = value.max_commute_minutes;
+
+  return {
+    id:
+      typeof value.id === "string" && value.id
+        ? value.id
+        : `destination-${index + 1}`,
+    destination:
+      typeof value.destination === "string" ? value.destination : "",
+    latitude: coordinatesAreValid ? latitude : null,
+    longitude: coordinatesAreValid ? longitude : null,
+    preference:
+      typeof preference === "number" &&
+      Number.isInteger(preference) &&
+      preference >= 1 &&
+      preference <= 5
+        ? (preference as ImportantDestinationPreference["preference"])
+        : null,
+    max_commute_minutes:
+      typeof commute === "number" && Number.isFinite(commute) ? commute : null,
+  };
+}
+
+export function migrateStoredValue(
+  value: unknown,
+): StoredTenantPreference | null {
   if (!isRecord(value) || !isRecord(value.preferences)) return null;
 
   const rawPreferences = value.preferences;
@@ -33,12 +77,21 @@ function migrateStoredValue(value: unknown): StoredTenantPreference | null {
     return null;
   }
 
-  // Copy compatible fields only, silently dropping the old area preferences.
+  const importantDestinations = rawPreferences.important_destinations
+    .map(migrateDestination)
+    .filter(
+      (destination): destination is ImportantDestinationPreference =>
+        destination !== null,
+    );
+  if (importantDestinations.length === 0) return null;
+
+  // Copy compatible fields, drop obsolete area choices, and normalize destinations.
   const compatiblePreferences = Object.fromEntries(
     Object.entries(rawPreferences).filter(
       ([fieldName]) => !OBSOLETE_LOCATION_FIELDS.has(fieldName),
     ),
   ) as unknown as TenantSearchPreferences;
+  compatiblePreferences.important_destinations = importantDestinations;
 
   return {
     preferences: compatiblePreferences,
