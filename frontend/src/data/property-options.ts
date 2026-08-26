@@ -8,6 +8,14 @@ export const PROPERTY_TYPE_OPTIONS = [
 
 export type PropertyType = (typeof PROPERTY_TYPE_OPTIONS)[number]["value"];
 
+export const FURNISHING_OPTIONS = [
+  { value: "unfurnished", label: "Unfurnished" },
+  { value: "semi_furnished", label: "Semi-furnished" },
+  { value: "furnished", label: "Furnished" },
+] as const;
+
+export type FurnishingStatus = (typeof FURNISHING_OPTIONS)[number]["value"];
+
 export const PROPERTY_AMENITIES = [
   { value: "Lift", label: "Lift" },
   { value: "Generator", label: "Generator" },
