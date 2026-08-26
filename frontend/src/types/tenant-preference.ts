@@ -1,11 +1,11 @@
-import type { PropertyAmenity, PropertyType } from "@/data/property-options";
+import type {
+  FurnishingStatus,
+  PropertyAmenity,
+  PropertyType,
+} from "@/data/property-options";
 
 export type RentalPropertyType = PropertyType;
-
-export type RentalFurnishingStatus =
-  | "unfurnished"
-  | "semi_furnished"
-  | "furnished";
+export type RentalFurnishingStatus = FurnishingStatus;
 
 export type BudgetFlexibilityPercent = 0 | 5 | 10;
 
