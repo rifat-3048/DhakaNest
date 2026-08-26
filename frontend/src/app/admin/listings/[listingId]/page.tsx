@@ -44,6 +44,19 @@ function humanizeValue(value: string): string {
     .join(" ");
 }
 
+function hasValidCoordinates(listing: RentalListing): boolean {
+  return (
+    typeof listing.latitude === "number" &&
+    Number.isFinite(listing.latitude) &&
+    listing.latitude >= -90 &&
+    listing.latitude <= 90 &&
+    typeof listing.longitude === "number" &&
+    Number.isFinite(listing.longitude) &&
+    listing.longitude >= -180 &&
+    listing.longitude <= 180
+  );
+}
+
 export default function AdminListingReviewPage() {
   const params = useParams<{ listingId: string }>();
   const router = useRouter();
@@ -168,6 +181,8 @@ export default function AdminListingReviewPage() {
   }
 
   const isPending = listing.status === "pending_review";
+  const showCoordinateWarning =
+    listing.status === "approved" && !hasValidCoordinates(listing);
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Link
@@ -206,6 +221,17 @@ export default function AdminListingReviewPage() {
           <p className="mt-2 text-sm text-amber-800">
             The status is <strong>{humanizeValue(listing.status)}</strong>. Review
             actions have been disabled.
+          </p>
+        </section>
+      )}
+      {showCoordinateWarning && (
+        <section className="mt-6 rounded-lg border border-red-200 bg-red-50 p-5">
+          <h2 className="font-semibold text-red-900">
+            Location coordinates missing or invalid
+          </h2>
+          <p className="mt-2 text-sm text-red-800">
+            This listing cannot participate in recommendations until its location
+            coordinates are corrected.
           </p>
         </section>
       )}
