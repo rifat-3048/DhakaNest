@@ -91,7 +91,13 @@ class ListingRecommendationEligibilityTests(TestCase):
         )
 
     def test_nonapproved_statuses_are_ineligible(self) -> None:
-        for listing_status in ["draft", "pending_review"]:
+        for listing_status in [
+            "draft",
+            "pending_review",
+            "revision_requested",
+            "rejected",
+            "rented",
+        ]:
             with self.subTest(status=listing_status):
                 self.assertFalse(
                     is_recommendation_eligible(
