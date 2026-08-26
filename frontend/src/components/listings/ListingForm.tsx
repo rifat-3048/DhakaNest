@@ -3,6 +3,7 @@
 import { type FormEvent, useState } from "react";
 
 import {
+  FURNISHING_OPTIONS,
   isPropertyAmenity,
   PROPERTY_AMENITIES,
   PROPERTY_TYPE_OPTIONS,
@@ -55,6 +56,8 @@ export default function ListingForm({
       broad_area: String(formData.get("broad_area") ?? "").trim(),
       model_micro_area: String(formData.get("model_micro_area") ?? "").trim(),
       address: String(formData.get("address") ?? "").trim(),
+      latitude: Number(formData.get("latitude")),
+      longitude: Number(formData.get("longitude")),
       area_sqft: Number(formData.get("area_sqft")),
       bedrooms: Number(formData.get("bedrooms")),
       bathrooms: Number(formData.get("bathrooms")),
@@ -150,9 +153,11 @@ export default function ListingForm({
               defaultValue={initialValues?.furnishing_status ?? "unfurnished"}
               className={inputClassName}
             >
-              <option value="unfurnished">Unfurnished</option>
-              <option value="semi_furnished">Semi-furnished</option>
-              <option value="furnished">Furnished</option>
+              {FURNISHING_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </label>
         </div>
@@ -196,6 +201,30 @@ export default function ListingForm({
               className={inputClassName}
             />
           </label>
+          <CoordinateField
+            name="latitude"
+            label="Latitude"
+            min={-90}
+            max={90}
+            defaultValue={initialValues?.latitude}
+            placeholder="23.8103"
+            disabled={readOnly}
+            className={inputClassName}
+          />
+          <CoordinateField
+            name="longitude"
+            label="Longitude"
+            min={-180}
+            max={180}
+            defaultValue={initialValues?.longitude}
+            placeholder="90.4125"
+            disabled={readOnly}
+            className={inputClassName}
+          />
+          <p className="text-xs text-slate-500 md:col-span-2">
+            Enter the property coordinates so DhakaNest can evaluate travel to
+            tenant destinations later.
+          </p>
         </div>
       </section>
 
@@ -285,6 +314,7 @@ export default function ListingForm({
             <input
               name="available_from"
               type="date"
+              required
               disabled={readOnly}
               defaultValue={
                 initialValues?.available_from
@@ -307,6 +337,46 @@ export default function ListingForm({
         </button>
       )}
     </form>
+  );
+}
+
+interface CoordinateFieldProps {
+  name: "latitude" | "longitude";
+  label: string;
+  min: number;
+  max: number;
+  defaultValue?: number | null;
+  placeholder: string;
+  disabled: boolean;
+  className: string;
+}
+
+function CoordinateField({
+  name,
+  label,
+  min,
+  max,
+  defaultValue,
+  placeholder,
+  disabled,
+  className,
+}: CoordinateFieldProps) {
+  return (
+    <label>
+      <span className="text-sm font-medium text-slate-700">{label}</span>
+      <input
+        name={name}
+        type="number"
+        required
+        min={min}
+        max={max}
+        step="any"
+        disabled={disabled}
+        defaultValue={defaultValue ?? ""}
+        placeholder={placeholder}
+        className={className}
+      />
+    </label>
   );
 }
 
