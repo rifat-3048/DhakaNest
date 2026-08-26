@@ -1,4 +1,5 @@
 import type { TenantSearchPreferences } from "@/types/tenant-preference";
+import { hasResolvedCoordinates } from "@/lib/tenant-destination";
 
 const currencyFormatter = new Intl.NumberFormat("en-BD", {
   maximumFractionDigits: 0,
@@ -71,6 +72,11 @@ export default function PreferenceSummary({
                   <p className="mt-1 text-xs text-slate-500">
                     Importance: {destination.preference ?? "Not selected"}/5
                   </p>
+                  {!hasResolvedCoordinates(destination) && (
+                    <p className="mt-1 text-xs font-medium text-amber-700">
+                      Search and select this place again to confirm it.
+                    </p>
+                  )}
                   <p className="mt-1 text-xs text-slate-500">
                     Maximum commute:{" "}
                     {destination.max_commute_minutes
