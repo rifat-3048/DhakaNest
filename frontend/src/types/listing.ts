@@ -1,6 +1,6 @@
-import type { PropertyType } from "@/data/property-options";
+import type { FurnishingStatus, PropertyType } from "@/data/property-options";
 
-export type { PropertyType } from "@/data/property-options";
+export type { FurnishingStatus, PropertyType } from "@/data/property-options";
 
 export type ListingStatus =
   | "draft"
@@ -9,11 +9,6 @@ export type ListingStatus =
   | "approved"
   | "rejected"
   | "rented";
-
-export type FurnishingStatus =
-  | "unfurnished"
-  | "semi_furnished"
-  | "furnished";
 
 export type FairnessStatus =
   | "significantly_below_estimated_range"
@@ -77,6 +72,8 @@ export interface RentalListing {
   broad_area: string;
   model_micro_area: string;
   address: string;
+  latitude: number | null;
+  longitude: number | null;
   area_sqft: number;
   bedrooms: number;
   bathrooms: number;
@@ -101,6 +98,8 @@ export interface ListingFormValues {
   broad_area: string;
   model_micro_area: string;
   address: string;
+  latitude: number;
+  longitude: number;
   area_sqft: number;
   bedrooms: number;
   bathrooms: number;
