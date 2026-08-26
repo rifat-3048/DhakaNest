@@ -6,6 +6,7 @@ from app.routes.auth import router as auth_router
 from app.routes.admin_listings import router as admin_listings_router
 from app.routes.health import router as health_router
 from app.routes.listings import router as listings_router
+from app.routes.recommendations import router as recommendations_router
 from app.routes.rent_prediction import router as rent_prediction_router
 
 
@@ -52,3 +53,4 @@ app.include_router(auth_router)
 app.include_router(rent_prediction_router)
 app.include_router(listings_router)
 app.include_router(admin_listings_router)
+app.include_router(recommendations_router)
