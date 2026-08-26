@@ -1,7 +1,6 @@
 """MongoDB operations for the complete rental-listing review lifecycle."""
 
 import asyncio
-import math
 import re
 from datetime import date, datetime, timezone
 from typing import Any, Literal
@@ -11,6 +10,12 @@ from bson.errors import InvalidId
 from pymongo import DESCENDING
 
 from app.config import settings
+from app.services.listing_eligibility import (
+    BASE_RECOMMENDATION_QUERY,
+    get_invalid_listing_coordinate_fields,
+    get_listing_coordinate_issues,
+    is_recommendation_eligible,
+)
 from app.services.rent_fairness_service import PREDICTION_RELEVANT_FIELDS
 
 
@@ -81,31 +86,80 @@ def serialize_document(document: dict[str, Any] | None) -> dict[str, Any] | None
 
 def get_missing_recommendation_data(listing: dict[str, Any]) -> list[str]:
     """Return listing fields required before admin review and recommendations."""
-    missing_fields: list[str] = []
-    latitude = listing.get("latitude")
-    longitude = listing.get("longitude")
-
-    latitude_is_valid = (
-        isinstance(latitude, (int, float))
-        and not isinstance(latitude, bool)
-        and math.isfinite(float(latitude))
-        and -90 <= latitude <= 90
-    )
-    longitude_is_valid = (
-        isinstance(longitude, (int, float))
-        and not isinstance(longitude, bool)
-        and math.isfinite(float(longitude))
-        and -180 <= longitude <= 180
-    )
-
-    if not latitude_is_valid:
-        missing_fields.append("latitude")
-    if not longitude_is_valid:
-        missing_fields.append("longitude")
+    missing_fields = get_invalid_listing_coordinate_fields(listing)
     if not listing.get("available_from"):
         missing_fields.append("available_from")
 
     return missing_fields
+
+
+async def get_recommendation_eligible_listings(
+    *, database: Any, limit: int = 1_000
+) -> list[dict[str, Any]]:
+    """Return only the base inventory that a future recommender may consider."""
+    candidates: list[dict[str, Any]] = []
+    cursor = database[COLLECTION_NAME].find(BASE_RECOMMENDATION_QUERY)
+    async for document in cursor:
+        if not is_recommendation_eligible(document):
+            continue
+        serialized = serialize_document(document)
+        if serialized is not None:
+            candidates.append(serialized)
+        if len(candidates) >= limit:
+            break
+    return candidates
+
+
+async def audit_listing_coordinate_readiness(
+    *, database: Any
+) -> dict[str, Any]:
+    """Read approved, available listings and report coordinate problems only."""
+    issue_counts = {
+        "missing_latitude": 0,
+        "missing_longitude": 0,
+        "missing_both": 0,
+        "invalid_latitude": 0,
+        "invalid_longitude": 0,
+    }
+    approved_available = 0
+    recommendation_ready = 0
+    missing_coordinate_listings = 0
+    invalid_coordinate_listings = 0
+    problematic_listings: list[dict[str, str]] = []
+
+    cursor = database[COLLECTION_NAME].find(BASE_RECOMMENDATION_QUERY)
+    async for listing in cursor:
+        approved_available += 1
+        issues = get_listing_coordinate_issues(listing)
+        if not issues:
+            recommendation_ready += 1
+            continue
+
+        for issue in issues:
+            issue_counts[issue] += 1
+        if any(issue.startswith("missing_") for issue in issues):
+            missing_coordinate_listings += 1
+        if any(issue.startswith("invalid_") for issue in issues):
+            invalid_coordinate_listings += 1
+
+        problematic_listings.append(
+            {
+                "listing_id": str(listing.get("_id", "unknown")),
+                "title": str(listing.get("title", "Untitled listing")),
+                "landlord_id": str(listing.get("landlord_id", "unknown")),
+                "coordinate_issue": ", ".join(issues),
+            }
+        )
+
+    return {
+        "approved_available": approved_available,
+        "recommendation_ready": recommendation_ready,
+        "not_recommendation_ready": approved_available - recommendation_ready,
+        "missing_coordinate_listings": missing_coordinate_listings,
+        "invalid_coordinate_listings": invalid_coordinate_listings,
+        "issue_counts": issue_counts,
+        "problematic_listings": problematic_listings,
+    }
 
 
 async def create_listing(
