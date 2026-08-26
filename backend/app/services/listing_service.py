@@ -22,6 +22,7 @@ AdminListingStatusFilter = Literal[
     "approved",
     "revision_requested",
     "rejected",
+    "rented",
 ]
 
 
@@ -72,6 +73,9 @@ def serialize_document(document: dict[str, Any] | None) -> dict[str, Any] | None
     # Older listings predate coordinates; explicit nulls keep API responses stable.
     serialized.setdefault("latitude", None)
     serialized.setdefault("longitude", None)
+    serialized.setdefault("is_available", serialized.get("status") == "approved")
+    serialized.setdefault("rented_at", None)
+    serialized.setdefault("rented_by", None)
     return serialized
 
 
@@ -117,6 +121,8 @@ async def create_listing(
         "rent_assessment": None,
         "admin_review": None,
         "submitted_at": None,
+        "rented_at": None,
+        "rented_by": None,
         "created_at": now,
         "updated_at": now,
     }
@@ -417,6 +423,49 @@ async def submit_listing_for_review(
     return serialize_document(updated)
 
 
+async def mark_listing_rented(
+    *, database: Any, listing_id: str, landlord_id: str
+) -> dict[str, Any]:
+    """Move an owned, approved listing into the terminal rented state."""
+    listing = await get_landlord_listing_raw(
+        database=database, listing_id=listing_id, landlord_id=landlord_id
+    )
+    if listing is None:
+        raise LookupError("Listing not found.")
+    if listing.get("status") == "rented":
+        raise PermissionError("This listing is already marked as rented.")
+    if (
+        listing.get("status") != "approved"
+        or listing.get("is_available", True) is not True
+    ):
+        raise PermissionError(
+            "Only an approved and available listing can be marked as rented."
+        )
+
+    now = utc_now()
+    result = await database[COLLECTION_NAME].update_one(
+        {
+            "_id": listing["_id"],
+            "landlord_id": parse_object_id(landlord_id),
+            "status": "approved",
+        },
+        {
+            "$set": {
+                "status": "rented",
+                "is_available": False,
+                "rented_at": now,
+                "rented_by": landlord_id,
+                "updated_at": now,
+            }
+        },
+    )
+    if result.matched_count == 0:
+        raise PermissionError("The listing is no longer available to mark as rented.")
+
+    updated = await database[COLLECTION_NAME].find_one({"_id": listing["_id"]})
+    return serialize_document(updated)
+
+
 async def get_pending_listings(
     *, database: Any, limit: int = 50
 ) -> list[dict[str, Any]]:
@@ -479,6 +528,7 @@ async def get_admin_listings(
         approved_count,
         revision_count,
         rejected_count,
+        rented_count,
         fairness_required_count,
         fairness_checked_count,
         above_range_count,
@@ -488,6 +538,7 @@ async def get_admin_listings(
         collection.count_documents({"status": "approved"}),
         collection.count_documents({"status": "revision_requested"}),
         collection.count_documents({"status": "rejected"}),
+        collection.count_documents({"status": "rented"}),
         collection.count_documents(
             {"status": "pending_review", "rent_assessment": None}
         ),
@@ -518,6 +569,7 @@ async def get_admin_listings(
             "approved": approved_count,
             "revision_requested": revision_count,
             "rejected": rejected_count,
+            "rented": rented_count,
             "fairness_check_required": fairness_required_count,
             "fairness_checked": fairness_checked_count,
             "above_estimated_range": above_range_count,
