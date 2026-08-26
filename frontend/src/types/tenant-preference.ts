@@ -16,6 +16,8 @@ export interface ImportantDestinationPreference {
   // Frontend-only identifier used for stable rendering and row deletion.
   id: string;
   destination: string;
+  latitude: number | null;
+  longitude: number | null;
   preference: PreferenceScore | null;
   max_commute_minutes: number | null;
 }
