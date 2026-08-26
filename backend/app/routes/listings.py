@@ -22,6 +22,7 @@ from app.services.listing_service import (
     create_listing,
     get_landlord_listing_raw,
     get_landlord_listings,
+    mark_listing_rented,
     remove_listing_image_metadata,
     reorder_listing_images,
     serialize_document,
@@ -176,6 +177,27 @@ async def update_my_listing(
     except Exception as error:
         raise translate_listing_error(error) from error
     return {"message": "Listing updated.", "listing": listing}
+
+
+@router.patch(
+    "/{listing_id}/mark-rented",
+    summary="Mark an approved landlord-owned listing as rented",
+)
+async def mark_my_listing_rented(
+    listing_id: str,
+    current_user: Any = Depends(get_current_user),
+    database: Any = Depends(get_database),
+) -> dict[str, Any]:
+    landlord_id = require_landlord(current_user)
+    try:
+        listing = await mark_listing_rented(
+            database=database,
+            listing_id=listing_id,
+            landlord_id=landlord_id,
+        )
+    except Exception as error:
+        raise translate_listing_error(error) from error
+    return {"message": "Listing marked as rented.", "listing": listing}
 
 
 @router.post(
