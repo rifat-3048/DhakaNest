@@ -1,6 +1,7 @@
 """MongoDB operations for the complete rental-listing review lifecycle."""
 
 import asyncio
+import math
 import re
 from datetime import date, datetime, timezone
 from typing import Any, Literal
@@ -68,7 +69,39 @@ def serialize_document(document: dict[str, Any] | None) -> dict[str, Any] | None
 
     serialized = serialize_value(document)
     serialized["id"] = serialized.pop("_id")
+    # Older listings predate coordinates; explicit nulls keep API responses stable.
+    serialized.setdefault("latitude", None)
+    serialized.setdefault("longitude", None)
     return serialized
+
+
+def get_missing_recommendation_data(listing: dict[str, Any]) -> list[str]:
+    """Return listing fields required before admin review and recommendations."""
+    missing_fields: list[str] = []
+    latitude = listing.get("latitude")
+    longitude = listing.get("longitude")
+
+    latitude_is_valid = (
+        isinstance(latitude, (int, float))
+        and not isinstance(latitude, bool)
+        and math.isfinite(float(latitude))
+        and -90 <= latitude <= 90
+    )
+    longitude_is_valid = (
+        isinstance(longitude, (int, float))
+        and not isinstance(longitude, bool)
+        and math.isfinite(float(longitude))
+        and -180 <= longitude <= 180
+    )
+
+    if not latitude_is_valid:
+        missing_fields.append("latitude")
+    if not longitude_is_valid:
+        missing_fields.append("longitude")
+    if not listing.get("available_from"):
+        missing_fields.append("available_from")
+
+    return missing_fields
 
 
 async def create_listing(
@@ -362,6 +395,11 @@ async def submit_listing_for_review(
         )
     if sum(1 for image in images if image.get("is_primary")) != 1:
         raise ValueError("The listing must have exactly one primary image.")
+    missing_fields = get_missing_recommendation_data(listing)
+    if missing_fields:
+        raise ValueError(
+            "Complete these fields before submitting: " + ", ".join(missing_fields) + "."
+        )
 
     now = utc_now()
     await database[COLLECTION_NAME].update_one(
