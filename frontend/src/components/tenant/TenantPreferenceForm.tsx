@@ -6,7 +6,10 @@ import ImportantDestinationsEditor from "@/components/tenant/ImportantDestinatio
 import PreferenceSection from "@/components/tenant/PreferenceSection";
 import PreferenceSummary from "@/components/tenant/PreferenceSummary";
 import PrioritySelector from "@/components/tenant/PrioritySelector";
-import { MINIMUM_ROOM_OPTIONS } from "@/data/tenant-preference-options";
+import {
+  MINIMUM_ROOM_OPTIONS,
+  RECOMMENDATION_PRIORITY_OPTIONS,
+} from "@/data/tenant-preference-options";
 import {
   FURNISHING_OPTIONS,
   PROPERTY_AMENITIES,
@@ -25,7 +28,6 @@ import {
 import type {
   BudgetFlexibilityPercent,
   MinimumRoomCount,
-  RecommendationPriorities,
   TenantSearchPreferences,
 } from "@/types/tenant-preference";
 
@@ -448,15 +450,7 @@ export default function TenantPreferenceForm() {
           description="Rate each factor from 1 to 5. Scores will be normalized later."
         >
           <div className="grid gap-4 md:grid-cols-2">
-            {(
-              [
-                ["location", "Destination access", "How strongly travel needs should affect ranking."],
-                ["budget", "Monthly budget", "How strongly rent should affect ranking."],
-                ["space", "Property size", "Bedrooms, bathrooms, and floor area."],
-                ["amenities", "Amenities", "Importance of selected property features."],
-                ["rent_fairness", "Rent fairness", "Importance of model-assessed value."],
-              ] as Array<[keyof RecommendationPriorities, string, string]>
-            ).map(([key, label, description]) => (
+            {RECOMMENDATION_PRIORITY_OPTIONS.map(({ key, label, description }) => (
               <PrioritySelector
                 key={key}
                 label={label}
