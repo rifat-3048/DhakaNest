@@ -1,6 +1,6 @@
 """Request and response contracts for recommendation candidate filtering."""
 
-from datetime import date
+from datetime import date, datetime
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -8,6 +8,15 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 PropertyType = Literal["apartment", "house", "sublet", "room"]
 FurnishingStatus = Literal["unfurnished", "semi_furnished", "furnished"]
+RecommendationReasonCategory = Literal[
+    "location",
+    "budget",
+    "space",
+    "amenities",
+    "rent_fairness",
+    "property_match",
+]
+RecommendationReasonStrength = Literal["strong", "moderate", "informational"]
 RoomMinimum = Literal[1, 2, 3, 4, 5, 6]
 BudgetFlexibility = Literal[0, 5, 10]
 CanonicalAmenity = Literal[
@@ -155,6 +164,8 @@ class CandidateCommute(BaseModel):
     destination_preference: int = Field(..., ge=1, le=5)
     distance_km: float = Field(..., ge=0)
     estimated_duration_minutes: float = Field(..., ge=0)
+    # Retain provider precision for later calculations without exposing it in JSON.
+    duration_seconds: float = Field(..., ge=0, exclude=True)
     max_commute_minutes: int | None = Field(default=None, ge=1, le=240)
     within_max_commute: bool | None
 
@@ -182,3 +193,115 @@ class CommuteCandidatesResponse(BaseModel):
     filter_summary: FilterDiagnostics
     routing_summary: RoutingDiagnostics
     candidates: list[CommuteReadyCandidate]
+
+
+class ScoredCandidateCommute(CandidateCommute):
+    normalized_destination_score: float = Field(..., ge=0, le=1)
+
+
+class DestinationAccessScoredCandidate(RecommendationCandidate):
+    commutes: list[ScoredCandidateCommute]
+    destination_access_score: float = Field(..., ge=0, le=1)
+
+
+class DestinationScoringDiagnostics(BaseModel):
+    scored_candidate_count: int
+    scored_destination_pairs: int
+
+
+class DestinationAccessScoredResponse(BaseModel):
+    total_base_eligible: int
+    total_after_hard_filters: int
+    total_routing_complete: int
+    total_after_max_commute: int
+    total_scored_candidates: int
+    filter_summary: FilterDiagnostics
+    routing_summary: RoutingDiagnostics
+    scoring_summary: DestinationScoringDiagnostics
+    candidates: list[DestinationAccessScoredCandidate]
+
+
+class PropertySimilarCandidate(DestinationAccessScoredCandidate):
+    property_similarity_score: float = Field(..., ge=0, le=1)
+
+
+class KNNDiagnostics(BaseModel):
+    knn_input_candidate_count: int
+    configured_k: int
+    effective_k: int
+    knn_selected_candidate_count: int
+    feature_dimension_count: int
+    property_type_dimensions: int
+    furnishing_dimensions: int
+    structural_dimensions: int
+    amenity_dimensions: int
+
+
+class KNNRecommendationResponse(BaseModel):
+    total_base_eligible: int
+    total_after_hard_filters: int
+    total_routing_complete: int
+    total_after_max_commute: int
+    total_scored_candidates: int
+    total_after_knn: int
+    filter_summary: FilterDiagnostics
+    routing_summary: RoutingDiagnostics
+    scoring_summary: DestinationScoringDiagnostics
+    knn_summary: KNNDiagnostics
+    candidates: list[PropertySimilarCandidate]
+
+
+class NormalizedRecommendationWeights(BaseModel):
+    location: float = Field(..., ge=0, le=1)
+    budget: float = Field(..., ge=0, le=1)
+    space: float = Field(..., ge=0, le=1)
+    amenities: float = Field(..., ge=0, le=1)
+    rent_fairness: float = Field(..., ge=0, le=1)
+
+
+class RecommendationReason(BaseModel):
+    code: str
+    category: RecommendationReasonCategory
+    text: str
+    strength: RecommendationReasonStrength
+
+
+class RankedRecommendationCandidate(PropertySimilarCandidate):
+    budget_score: float = Field(..., ge=0, le=1)
+    space_score: float = Field(..., ge=0, le=1)
+    amenities_score: float = Field(..., ge=0, le=1)
+    rent_fairness_score: float = Field(..., ge=0, le=1)
+    final_suitability_score: float = Field(..., ge=0, le=1)
+    rank: int = Field(..., ge=1)
+    recommendation_reasons: list[RecommendationReason] = Field(
+        default_factory=list,
+        min_length=0,
+        max_length=5,
+    )
+
+
+class WSMDiagnostics(BaseModel):
+    wsm_input_candidate_count: int
+    wsm_ranked_candidate_count: int
+    weight_sum: float
+    scoring_version: str
+
+
+class RankedRecommendationResponse(BaseModel):
+    total_base_eligible: int
+    total_after_hard_filters: int
+    total_routing_complete: int
+    total_after_max_commute: int
+    total_scored_candidates: int
+    total_after_knn: int
+    total_ranked: int
+    filter_summary: FilterDiagnostics
+    routing_summary: RoutingDiagnostics
+    scoring_summary: DestinationScoringDiagnostics
+    knn_summary: KNNDiagnostics
+    normalized_weights: NormalizedRecommendationWeights
+    wsm_summary: WSMDiagnostics
+    candidates: list[RankedRecommendationCandidate]
+    # These fields are populated only for explicit idempotent API submissions.
+    recommendation_run_id: str | None = None
+    created_at: datetime | None = None

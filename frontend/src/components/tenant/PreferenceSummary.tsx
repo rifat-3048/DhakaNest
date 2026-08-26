@@ -27,7 +27,6 @@ function minimumRoomLabel(value: number): string {
 interface PreferenceSummaryProps {
   preferences: TenantSearchPreferences;
   isProcessing: boolean;
-  successMessage: string | null;
   onFind: () => void;
   onReset: () => void;
 }
@@ -35,7 +34,6 @@ interface PreferenceSummaryProps {
 export default function PreferenceSummary({
   preferences,
   isProcessing,
-  successMessage,
   onFind,
   onReset,
 }: PreferenceSummaryProps) {
@@ -139,17 +137,13 @@ export default function PreferenceSummary({
         disabled={isProcessing}
         className="mt-6 flex min-h-12 w-full items-center justify-center rounded-lg bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isProcessing ? "Saving preferences..." : "Find My Recommended Homes"}
+        {isProcessing
+          ? "Opening recommendations..."
+          : "Find My Recommended Homes"}
       </button>
       <p className="mt-2 text-center text-xs text-slate-500">
-        Recommendations are not generated in this frontend phase.
+        Your saved requirements will be evaluated against approved homes.
       </p>
-
-      {successMessage && (
-        <p className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
-          {successMessage}
-        </p>
-      )}
 
       <button
         type="button"

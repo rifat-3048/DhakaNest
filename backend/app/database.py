@@ -2,6 +2,9 @@ from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 from app.config import settings
 from app.services.listing_service import ensure_listing_indexes
+from app.services.recommendation_history_service import (
+    ensure_recommendation_history_indexes,
+)
 
 
 # These module-level variables store the MongoDB client and database.
@@ -20,6 +23,7 @@ async def connect_to_mongo() -> None:
     # Create indexes once at startup so landlord and admin listing queries
     # remain efficient as the collection grows.
     await ensure_listing_indexes(database)
+    await ensure_recommendation_history_indexes(database)
 
 
 async def close_mongo_connection() -> None:

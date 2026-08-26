@@ -13,7 +13,8 @@ export default function TenantDashboardPage() {
           </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
             Tell DhakaNest about your housing needs, budget, and the places you
-            travel to regularly. Suitable homes across Dhaka will be evaluated later.
+            travel to regularly. Approved homes will be ranked using these
+            requirements and your priorities.
           </p>
         </div>
       </section>

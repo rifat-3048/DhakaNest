@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import ImportantDestinationsEditor from "@/components/tenant/ImportantDestinationsEditor";
 import PreferenceSection from "@/components/tenant/PreferenceSection";
@@ -23,8 +24,9 @@ import {
 } from "@/lib/tenant-preference-storage";
 import {
   createImportantDestination,
-  validateImportantDestinations,
 } from "@/lib/tenant-destination";
+import { validateTenantPreferences } from "@/lib/tenant-preference-validation";
+import { createRecommendationSubmissionKey } from "@/lib/recommendation-submission";
 import type {
   BudgetFlexibilityPercent,
   MinimumRoomCount,
@@ -72,57 +74,11 @@ function nullableNumber(value: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function validatePreferences(
-  values: TenantSearchPreferences,
-): Record<string, string> {
-  const nextErrors: Record<string, string> = {};
-
-  const destinationError = validateImportantDestinations(
-    values.important_destinations,
-  );
-  if (destinationError) nextErrors.important_destinations = destinationError;
-  if (!Number.isFinite(values.maximum_rent_bdt) || values.maximum_rent_bdt <= 0) {
-    nextErrors.maximum_rent_bdt = "Enter a valid maximum monthly rent.";
-  }
-  if (
-    values.minimum_rent_bdt !== null &&
-    values.minimum_rent_bdt > values.maximum_rent_bdt
-  ) {
-    nextErrors.minimum_rent_bdt = "Minimum rent cannot exceed maximum rent.";
-  }
-  if (values.property_types.length === 0) {
-    nextErrors.property_types = "Select at least one property type.";
-  }
-  if (values.minimum_bedrooms < 1) {
-    nextErrors.minimum_bedrooms = "Select at least one bedroom.";
-  }
-  if (values.minimum_bathrooms < 1) {
-    nextErrors.minimum_bathrooms = "Select at least one bathroom.";
-  }
-  if (
-    values.minimum_area_sqft !== null &&
-    values.maximum_area_sqft !== null &&
-    values.minimum_area_sqft > values.maximum_area_sqft
-  ) {
-    nextErrors.minimum_area_sqft = "Minimum area cannot exceed maximum area.";
-  }
-
-  const hasDuplicateAmenity = values.must_have_amenities.some((amenity) =>
-    values.nice_to_have_amenities.includes(amenity),
-  );
-  if (hasDuplicateAmenity) {
-    nextErrors.amenities =
-      "An amenity cannot be both must-have and nice-to-have.";
-  }
-
-  return nextErrors;
-}
-
 export default function TenantPreferenceForm() {
+  const router = useRouter();
   const [preferences, setPreferences] =
     useState<TenantSearchPreferences>(createInitialPreferences);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
@@ -138,13 +94,12 @@ export default function TenantPreferenceForm() {
     update: (current: TenantSearchPreferences) => TenantSearchPreferences,
   ) {
     setPreferences(update);
-    setSuccessMessage(null);
   }
 
   function handleFindRecommendedHomes() {
+    if (isProcessing) return;
     setIsProcessing(true);
-    setSuccessMessage(null);
-    const validationErrors = validatePreferences(preferences);
+    const validationErrors = validateTenantPreferences(preferences);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -153,12 +108,9 @@ export default function TenantPreferenceForm() {
       return;
     }
 
-    const stored = saveTenantPreferences(preferences);
-    console.log("Tenant recommendation payload:", stored);
-    setSuccessMessage(
-      "Your search preferences are ready. The recommendation engine will use this information when it is connected.",
-    );
-    setIsProcessing(false);
+    saveTenantPreferences(preferences);
+    createRecommendationSubmissionKey();
+    router.push("/tenant/recommendations");
   }
 
   function handleReset() {
@@ -166,7 +118,6 @@ export default function TenantPreferenceForm() {
     clearTenantPreferences();
     setPreferences(createInitialPreferences());
     setErrors({});
-    setSuccessMessage(null);
   }
 
   return (
@@ -471,7 +422,6 @@ export default function TenantPreferenceForm() {
       <PreferenceSummary
         preferences={preferences}
         isProcessing={isProcessing}
-        successMessage={successMessage}
         onFind={handleFindRecommendedHomes}
         onReset={handleReset}
       />

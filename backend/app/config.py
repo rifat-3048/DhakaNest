@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     routing_timeout_seconds: float = Field(default=10.0, gt=0, le=60)
     routing_user_agent: str = "DhakaNest-University-Development/0.1"
 
+    # Number of content-similar properties retained for later WSM scoring.
+    recommendation_knn_k: int = Field(default=10, ge=1)
+
     # This tells pydantic-settings to also read values from a .env file.
     model_config = SettingsConfigDict(
         env_file=".env",

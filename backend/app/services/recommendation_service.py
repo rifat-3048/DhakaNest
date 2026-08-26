@@ -4,22 +4,31 @@ from collections.abc import Callable, Iterable
 from datetime import date, datetime
 from typing import Any
 
+from app.config import settings
 from app.schemas.recommendation_schema import (
     CandidateCommute,
     CommuteCandidatesResponse,
     CommuteReadyCandidate,
+    DestinationAccessScoredCandidate,
+    DestinationAccessScoredResponse,
+    DestinationScoringDiagnostics,
     FilterDiagnostics,
+    KNNRecommendationResponse,
+    RankedRecommendationResponse,
     RecommendationCandidate,
     RecommendationCandidatesResponse,
     RoutingDiagnostics,
+    ScoredCandidateCommute,
     TenantRecommendationRequest,
 )
 from app.services.listing_service import get_recommendation_eligible_listings
+from app.services.property_knn_service import select_property_neighbors
 from app.services.routing_service import (
     RouteMatrix,
     RoutingProvider,
     get_routing_provider,
 )
+from app.services.wsm_service import rank_knn_candidates
 
 
 def calculate_effective_maximum_rent(
@@ -276,6 +285,7 @@ def apply_commute_routes(
                     estimated_duration_minutes=round(
                         route.duration_seconds / 60, 2
                     ),
+                    duration_seconds=route.duration_seconds,
                     max_commute_minutes=destination.max_commute_minutes,
                     within_max_commute=within_maximum,
                 )
@@ -343,4 +353,175 @@ async def get_commute_ready_recommendation_candidates(
         part_one=part_one,
         preferences=preferences,
         route_matrix=route_matrix,
+    )
+
+
+def _clamp_unit_interval(value: float) -> float:
+    return max(0.0, min(1.0, value))
+
+
+def score_destination_access(
+    *,
+    commute_response: CommuteCandidatesResponse,
+    preferences: TenantRecommendationRequest,
+) -> DestinationAccessScoredResponse:
+    """Normalize every destination independently, then weight by importance."""
+    candidates = commute_response.candidates
+    if not candidates:
+        return DestinationAccessScoredResponse(
+            total_base_eligible=commute_response.total_base_eligible,
+            total_after_hard_filters=commute_response.total_after_hard_filters,
+            total_routing_complete=commute_response.total_routing_complete,
+            total_after_max_commute=commute_response.total_after_max_commute,
+            total_scored_candidates=0,
+            filter_summary=commute_response.filter_summary,
+            routing_summary=commute_response.routing_summary,
+            scoring_summary=DestinationScoringDiagnostics(
+                scored_candidate_count=0,
+                scored_destination_pairs=0,
+            ),
+            candidates=[],
+        )
+
+    destination_importance = {
+        destination.id: destination.preference
+        for destination in preferences.important_destinations
+    }
+    duration_ranges: dict[str, tuple[float, float]] = {}
+    for destination in preferences.important_destinations:
+        durations = [
+            next(
+                commute.duration_seconds
+                for commute in candidate.commutes
+                if commute.destination_id == destination.id
+            )
+            for candidate in candidates
+        ]
+        duration_ranges[destination.id] = (min(durations), max(durations))
+
+    scored_candidates: list[DestinationAccessScoredCandidate] = []
+    for candidate in candidates:
+        scored_commutes: list[ScoredCandidateCommute] = []
+        weighted_score_sum = 0.0
+        importance_sum = 0
+
+        for commute in candidate.commutes:
+            minimum, maximum = duration_ranges[commute.destination_id]
+            if maximum == minimum:
+                normalized_score = 1.0
+            else:
+                normalized_score = 1 - (
+                    (commute.duration_seconds - minimum) / (maximum - minimum)
+                )
+                normalized_score = _clamp_unit_interval(normalized_score)
+
+            importance = destination_importance[commute.destination_id]
+            weighted_score_sum += normalized_score * importance
+            importance_sum += importance
+            scored_commutes.append(
+                ScoredCandidateCommute.model_validate(
+                    {
+                        **commute.model_dump(),
+                        "duration_seconds": commute.duration_seconds,
+                        "destination_preference": importance,
+                        "normalized_destination_score": round(
+                            normalized_score, 4
+                        ),
+                    }
+                )
+            )
+
+        destination_access_score = _clamp_unit_interval(
+            weighted_score_sum / importance_sum
+        )
+        scored_candidates.append(
+            DestinationAccessScoredCandidate.model_validate(
+                {
+                    **candidate.model_dump(exclude={"commutes"}),
+                    "commutes": scored_commutes,
+                    "destination_access_score": round(
+                        destination_access_score, 4
+                    ),
+                }
+            )
+        )
+
+    scored_pair_count = len(scored_candidates) * len(
+        preferences.important_destinations
+    )
+    return DestinationAccessScoredResponse(
+        total_base_eligible=commute_response.total_base_eligible,
+        total_after_hard_filters=commute_response.total_after_hard_filters,
+        total_routing_complete=commute_response.total_routing_complete,
+        total_after_max_commute=commute_response.total_after_max_commute,
+        total_scored_candidates=len(scored_candidates),
+        filter_summary=commute_response.filter_summary,
+        routing_summary=commute_response.routing_summary,
+        scoring_summary=DestinationScoringDiagnostics(
+            scored_candidate_count=len(scored_candidates),
+            scored_destination_pairs=scored_pair_count,
+        ),
+        candidates=scored_candidates,
+    )
+
+
+async def get_destination_access_scored_candidates(
+    *,
+    database: Any,
+    preferences: TenantRecommendationRequest,
+    routing_provider: RoutingProvider | None = None,
+) -> DestinationAccessScoredResponse:
+    """Run Parts 1 and 2 once, then calculate the Part 3 criterion."""
+    commute_response = await get_commute_ready_recommendation_candidates(
+        database=database,
+        preferences=preferences,
+        routing_provider=routing_provider,
+    )
+    return score_destination_access(
+        commute_response=commute_response,
+        preferences=preferences,
+    )
+
+
+async def get_knn_recommendation_candidates(
+    *,
+    database: Any,
+    preferences: TenantRecommendationRequest,
+    routing_provider: RoutingProvider | None = None,
+    configured_k: int | None = None,
+) -> KNNRecommendationResponse:
+    """Run Parts 1-3 once, then select content-similar property neighbors."""
+    scored_response = await get_destination_access_scored_candidates(
+        database=database,
+        preferences=preferences,
+        routing_provider=routing_provider,
+    )
+    return select_property_neighbors(
+        scored_response=scored_response,
+        preferences=preferences,
+        configured_k=(
+            settings.recommendation_knn_k
+            if configured_k is None
+            else configured_k
+        ),
+    )
+
+
+async def get_ranked_recommendations(
+    *,
+    database: Any,
+    preferences: TenantRecommendationRequest,
+    routing_provider: RoutingProvider | None = None,
+    configured_k: int | None = None,
+) -> RankedRecommendationResponse:
+    """Run Parts 1-4 once, then calculate criteria and final WSM ranking."""
+    knn_response = await get_knn_recommendation_candidates(
+        database=database,
+        preferences=preferences,
+        routing_provider=routing_provider,
+        configured_k=configured_k,
+    )
+    return rank_knn_candidates(
+        knn_response=knn_response,
+        preferences=preferences,
     )
