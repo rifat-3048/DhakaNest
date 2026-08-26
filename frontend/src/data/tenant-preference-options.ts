@@ -1,16 +1,4 @@
-import type {
-  MinimumRoomCount,
-  RentalFurnishingStatus,
-} from "@/types/tenant-preference";
-
-export const FURNISHING_OPTIONS: Array<{
-  value: RentalFurnishingStatus;
-  label: string;
-}> = [
-  { value: "unfurnished", label: "Unfurnished" },
-  { value: "semi_furnished", label: "Semi-furnished" },
-  { value: "furnished", label: "Furnished" },
-];
+import type { MinimumRoomCount } from "@/types/tenant-preference";
 
 export const MINIMUM_ROOM_OPTIONS = [
   { label: "1", value: 1 },
