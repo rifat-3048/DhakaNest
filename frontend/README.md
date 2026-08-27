@@ -53,3 +53,15 @@ without session storage and never calls the ranked recommendation endpoint.
 ## Local Development
 
 Create a local environment file from `.env.local.example`, then run the Next.js development server.
+## Recommendation maps
+
+Current and historical recommendation results use `Leaflet` and
+`react-leaflet` with OpenStreetMap raster tiles. OpenStreetMap attribution
+remains visible and no map API key is required.
+
+The map displays numbered ranked-home markers and distinct important-destination
+markers. Only the selected home requests OSRM Route API geometry, and results
+are cached in memory by recommendation run and listing ID. Recommendation
+commute metrics continue to come from the saved recommendation snapshot; the
+route polyline is traffic-free visualization generated on demand. The public
+OSRM service has no production SLA.
