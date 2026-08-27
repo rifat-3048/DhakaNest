@@ -2,6 +2,7 @@ import { validateImportantDestinations } from "./tenant-destination.ts";
 import type {
   RankedRecommendationResponse,
   RecommendationHistoryListResponse,
+  RecommendationRouteGeometryResponse,
   RecommendationRunDetail,
 } from "../types/recommendation.ts";
 import type { TenantSearchPreferences } from "../types/tenant-preference.ts";
@@ -219,6 +220,17 @@ export function getRecommendationHistoryDetail(
 ): Promise<RecommendationRunDetail> {
   return authenticatedGet(
     `/api/recommendations/history/${encodeURIComponent(runId)}`,
+    options,
+  );
+}
+
+export function getRecommendationRouteGeometry(
+  runId: string,
+  listingId: string,
+  options: AuthenticatedRequestOptions = {},
+): Promise<RecommendationRouteGeometryResponse> {
+  return authenticatedGet(
+    `/api/recommendations/history/${encodeURIComponent(runId)}/listings/${encodeURIComponent(listingId)}/route-geometry`,
     options,
   );
 }
