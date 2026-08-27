@@ -17,6 +17,7 @@ const TOKEN_KEY = "dhakanest_access_token";
 
 export type RecommendationErrorKind =
   | "authentication"
+  | "rate_limited"
   | "service_unavailable"
   | "network"
   | "request";
@@ -60,6 +61,7 @@ export function buildRankedRecommendationRequest(
 
 function errorKind(status: number): RecommendationErrorKind {
   if (status === 401 || status === 403) return "authentication";
+  if (status === 429) return "rate_limited";
   if (status === 503) return "service_unavailable";
   return "request";
 }
