@@ -60,8 +60,8 @@ def _pipeline(response: RankedRecommendationResponse) -> dict[str, Any]:
         "scoring_version": response.wsm_summary.scoring_version,
         "configured_knn_k": response.knn_summary.configured_k,
         "effective_knn_k": response.knn_summary.effective_k,
-        "routing_provider": settings.routing_provider,
-        "travel_mode": "driving",
+        "routing_provider": response.routing_summary.provider or settings.routing_provider,
+        "travel_mode": response.routing_summary.travel_mode,
     }
 
 
