@@ -1,0 +1,8 @@
+DhakaNest local runtime acceptance
+Frontend: http://localhost:3000 -> HTTP 200, DhakaNest content present
+Backend /health -> HTTP 200
+Backend /ready -> HTTP 200
+Backend /openapi.json -> HTTP 200
+Readiness database state: connected
+Readiness routing state: available; OSRM healthy; circuit closed
+Docker required: No
