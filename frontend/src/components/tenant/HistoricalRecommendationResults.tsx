@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import RecommendationCard from "@/components/tenant/RecommendationCard";
+import RecommendationExplorer from "@/components/tenant/RecommendationExplorer";
 import { clearStoredAuth } from "@/lib/auth";
 import {
   getRecommendationHistoryDetail,
@@ -144,13 +144,12 @@ export default function HistoricalRecommendationResults() {
             </h2>
           </section>
         ) : (
-          historicalCandidates(detail).map((candidate) => (
-            <RecommendationCard
-              key={candidate.id}
-              candidate={candidate}
-              detailsHref={null}
-            />
-          ))
+          <RecommendationExplorer
+            candidates={historicalCandidates(detail)}
+            destinations={request.important_destinations}
+            runId={detail.run_id}
+            historical
+          />
         )}
       </div>
     </main>
