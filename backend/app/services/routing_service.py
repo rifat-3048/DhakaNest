@@ -50,12 +50,26 @@ class RouteMatrix:
         return self.routes.get((listing_id, destination_id))
 
 
+@dataclass(frozen=True)
+class RouteGeometry:
+    """One visualization-only road line normalized to GeoJSON."""
+
+    coordinates: list[list[float]]
+
+
 class RoutingProvider(Protocol):
     async def get_route_matrix(
         self,
         listings: Sequence[RecommendationCandidate],
         destinations: Sequence[ImportantDestinationRequest],
     ) -> RouteMatrix: ...
+
+    async def get_route_geometry(
+        self,
+        *,
+        origin: tuple[float, float],
+        destination: tuple[float, float],
+    ) -> RouteGeometry | None: ...
 
 
 def _valid_coordinate(value: object, minimum: float, maximum: float) -> bool:
@@ -108,6 +122,28 @@ def build_osrm_table_url(
     coordinate_path = ";".join(coordinates)
     return (
         f"{base_url.rstrip('/')}/table/v1/driving/{coordinate_path}"
+        f"?{parameters}"
+    )
+
+
+def build_osrm_route_url(
+    *,
+    base_url: str,
+    origin: tuple[float, float],
+    destination: tuple[float, float],
+) -> str:
+    """Build a visualization-only OSRM Route request."""
+    coordinates = ";".join(
+        [
+            _provider_coordinate(*origin),
+            _provider_coordinate(*destination),
+        ]
+    )
+    parameters = urlencode(
+        {"overview": "full", "geometries": "geojson", "steps": "false"}
+    )
+    return (
+        f"{base_url.rstrip('/')}/route/v1/driving/{coordinates}"
         f"?{parameters}"
     )
 
@@ -176,6 +212,36 @@ def parse_osrm_table_response(
     return RouteMatrix(routes=routes)
 
 
+def parse_osrm_route_response(payload: object) -> RouteGeometry | None:
+    """Normalize one OSRM route while treating NoRoute as a partial miss."""
+    if isinstance(payload, dict) and payload.get("code") == "NoRoute":
+        return None
+    if not isinstance(payload, dict) or payload.get("code") != "Ok":
+        raise RoutingResponseError("Routing provider returned an unsuccessful response.")
+    routes = payload.get("routes")
+    if not isinstance(routes, list) or not routes:
+        return None
+    first_route = routes[0]
+    geometry = first_route.get("geometry") if isinstance(first_route, dict) else None
+    coordinates = geometry.get("coordinates") if isinstance(geometry, dict) else None
+    if geometry is None or geometry.get("type") != "LineString" or not isinstance(
+        coordinates, list
+    ) or len(coordinates) < 2:
+        raise RoutingResponseError("Routing provider returned invalid route geometry.")
+
+    normalized: list[list[float]] = []
+    for coordinate in coordinates:
+        if (
+            not isinstance(coordinate, list)
+            or len(coordinate) < 2
+            or not _valid_coordinate(coordinate[0], -180, 180)
+            or not _valid_coordinate(coordinate[1], -90, 90)
+        ):
+            raise RoutingResponseError("Routing provider returned invalid coordinates.")
+        normalized.append([float(coordinate[0]), float(coordinate[1])])
+    return RouteGeometry(coordinates=normalized)
+
+
 class OSRMRoutingProvider:
     """Small OSRM Table adapter using Python's standard HTTP client."""
 
@@ -226,6 +292,21 @@ class OSRMRoutingProvider:
             listing_ids=[listing.id for listing in listings],
             destination_ids=[destination.id for destination in destinations],
         )
+
+    async def get_route_geometry(
+        self,
+        *,
+        origin: tuple[float, float],
+        destination: tuple[float, float],
+    ) -> RouteGeometry | None:
+        """Fetch one road polyline without using its metrics for scoring."""
+        url = build_osrm_route_url(
+            base_url=self.base_url,
+            origin=origin,
+            destination=destination,
+        )
+        payload = await asyncio.to_thread(self._fetch_json, url)
+        return parse_osrm_route_response(payload)
 
 
 def get_routing_provider() -> RoutingProvider:
