@@ -54,12 +54,12 @@ without session storage and never calls the ranked recommendation endpoint.
 
 Create a local environment file from `.env.local.example`, then run the Next.js development server.
 
-## Production Build
+## Local Optimized Build
 
-Set `NEXT_PUBLIC_API_BASE_URL` to the public HTTPS FastAPI origin before running
-`npm run build`. Production builds fail when this variable is absent. For local
-production-mode testing, run `npm run build` followed by `npm start`. See
-`../docs/deployment.md` for the local runtime baseline.
+For local development, set `NEXT_PUBLIC_API_BASE_URL` to
+`http://127.0.0.1:8000`. To verify the normal optimized build, run
+`npm run build`. The supported demonstration command remains `npm run dev`.
+See `../docs/local-setup.md` for the complete local baseline.
 ## Recommendation maps
 
 Current and historical recommendation results use `Leaflet` and
