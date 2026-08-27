@@ -1,4 +1,4 @@
-"""Safe HTTP smoke checks for a deployed DhakaNest backend."""
+"""Safe HTTP smoke checks for a locally running DhakaNest backend."""
 
 import argparse
 import json
