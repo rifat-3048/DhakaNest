@@ -314,6 +314,17 @@ def apply_commute_routes(
         routing_complete_candidates=complete_count,
         after_max_commute=len(commute_ready),
         excluded_by_max_commute=excluded_by_max_commute,
+        provider=(route_matrix.metadata.provider if route_matrix.metadata else None),
+        travel_mode=(
+            route_matrix.metadata.travel_mode if route_matrix.metadata else "driving"
+        ),
+        cache_hit=(route_matrix.metadata.cache_hit if route_matrix.metadata else False),
+        fallback_used=(
+            route_matrix.metadata.fallback_used if route_matrix.metadata else False
+        ),
+        request_duration_ms=(
+            route_matrix.metadata.request_duration_ms if route_matrix.metadata else 0
+        ),
     )
     return CommuteCandidatesResponse(
         total_base_eligible=part_one.total_base_eligible,
