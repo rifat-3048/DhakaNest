@@ -1,4 +1,4 @@
-"""Read-only production release gate with explicit PASS/WARNING/BLOCKED output."""
+"""Legacy read-only configuration audit retained for compatibility."""
 
 import asyncio
 import shutil
@@ -69,7 +69,7 @@ async def main() -> int:
     results.append(report("WARNING", "Central observability", "External log/metric aggregation is not configured."))
     del database_ok
     blocked = any(status == "BLOCKED" for status, _check, _note in results)
-    print("\nRELEASE BLOCKED" if blocked else "\nRELEASE READY")
+    print("\nLOCAL CONFIGURATION NEEDS ATTENTION" if blocked else "\nLOCAL CONFIGURATION PASS")
     return 1 if blocked else 0
 
 
