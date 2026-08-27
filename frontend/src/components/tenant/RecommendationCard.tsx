@@ -32,9 +32,13 @@ function words(value: string | null): string {
 export default function RecommendationCard({
   candidate,
   detailsHref,
+  selected = false,
+  onSelect,
 }: {
   candidate: RankedRecommendationCandidate;
   detailsHref?: string | null;
+  selected?: boolean;
+  onSelect?: () => void;
 }) {
   const image = recommendationImage(candidate);
   const suitability = suitabilityPercent(candidate.final_suitability_score);
@@ -42,7 +46,15 @@ export default function RecommendationCard({
     candidate.model_micro_area ?? candidate.broad_area ?? candidate.address;
 
   return (
-    <article className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+    <article
+      id={`recommendation-card-${candidate.id}`}
+      className={`overflow-hidden rounded-lg border bg-white shadow-sm transition ${
+        selected
+          ? "border-emerald-600 ring-2 ring-emerald-600 ring-offset-2"
+          : "border-slate-200"
+      }`}
+      aria-label={`Rank ${candidate.rank}: ${candidate.title ?? "Recommended home"}${selected ? ", selected on map" : ""}`}
+    >
       <div className="grid lg:grid-cols-[300px_minmax(0,1fr)]">
         <div className="relative min-h-56 bg-slate-100 lg:min-h-full">
           {image ? (
@@ -68,6 +80,11 @@ export default function RecommendationCard({
           <span className="absolute left-4 top-4 bg-slate-950 px-3 py-1.5 text-sm font-bold text-white shadow-sm">
             Rank #{candidate.rank}
           </span>
+          {selected && (
+            <span className="absolute right-4 top-4 bg-emerald-700 px-3 py-1.5 text-xs font-bold text-white shadow-sm">
+              Selected on map
+            </span>
+          )}
         </div>
 
         <div className="min-w-0 p-5 sm:p-6">
@@ -188,16 +205,26 @@ export default function RecommendationCard({
             </div>
           </section>
 
-          {detailsHref !== null && (
-            <div className="mt-6 flex justify-end">
+          <div className="mt-6 flex flex-wrap justify-end gap-3">
+            {onSelect && (
+              <button
+                type="button"
+                onClick={onSelect}
+                aria-pressed={selected}
+                className="inline-flex min-h-11 items-center justify-center border border-emerald-700 bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50"
+              >
+                {selected ? "Selected on map" : "Show on map"}
+              </button>
+            )}
+            {detailsHref !== null && (
               <Link
                 href={detailsHref ?? recommendationDetailsPath(candidate.id)}
                 className="inline-flex min-h-11 items-center justify-center bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
               >
                 View Details
               </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </article>
