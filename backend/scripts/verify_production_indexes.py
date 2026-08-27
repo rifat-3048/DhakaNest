@@ -1,4 +1,4 @@
-"""Read-only verification of indexes required by production workflows."""
+"""Read-only verification of indexes required by local DhakaNest workflows."""
 
 import asyncio
 import sys
