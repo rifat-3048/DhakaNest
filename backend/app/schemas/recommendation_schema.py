@@ -183,6 +183,11 @@ class RoutingDiagnostics(BaseModel):
     routing_complete_candidates: int
     after_max_commute: int
     excluded_by_max_commute: int
+    provider: str | None = None
+    travel_mode: str = "driving"
+    cache_hit: bool = False
+    fallback_used: bool = False
+    request_duration_ms: float = Field(default=0, ge=0)
 
 
 class CommuteCandidatesResponse(BaseModel):
