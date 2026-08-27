@@ -40,6 +40,8 @@ export default function LandlordShell({ children }: LandlordShellProps) {
       return;
     }
 
+    // Authorization is derived from browser storage after client hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsAuthorized(true);
   }, [router]);
 
