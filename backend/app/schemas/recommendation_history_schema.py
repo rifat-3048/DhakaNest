@@ -69,7 +69,8 @@ class RecommendationRunDetail(BaseModel):
     normalized_weights: NormalizedRecommendationWeights
     results: list[HistoricalRankedRecommendationCandidate]
     filter_summary: dict[str, int]
-    routing_summary: dict[str, int]
+    # Routing diagnostics include numeric counters plus provider metadata.
+    routing_summary: dict[str, Any]
     scoring_summary: dict[str, int]
     knn_summary: dict[str, int | float | str]
     wsm_summary: dict[str, int | float | str]
