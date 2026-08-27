@@ -1,11 +1,12 @@
 # DhakaNest Operations
 
-## Validation
+## Local Validation
 
 ```powershell
 python scripts/verify_production_indexes.py
-python scripts/production_release_check.py
-python scripts/production_smoke_test.py --base-url https://api.example.com
+python scripts/final_preflight_check.py
+python scripts/final_acceptance_check.py
+python scripts/production_smoke_test.py --base-url http://127.0.0.1:8000
 python scripts/load_test_recommendations.py --base-url http://127.0.0.1:8000
 ```
 
@@ -41,10 +42,9 @@ request IDs, and provider metadata without bodies or secrets. Startup validates
 configuration, initializes routing, connects MongoDB, and creates indexes;
 shutdown closes Motor. External aggregation remains platform work.
 
-## Rollback
+## Local Recovery
 
-Redeploy previously verified frontend/backend image tags and matching environment
-revision. Part 11 has no destructive schema migration, so application rollback
-normally needs no database downgrade. Database restore is a separate incident
-decision requiring a verified archive and isolated rehearsal. No zero-downtime
-claim is made before a hosting platform and rollout strategy are selected.
+Stop both local servers, restore the last known working source revision, and
+restart MongoDB, FastAPI, and Next.js. Part 11 introduced no destructive schema
+migration. Database restore is a separate decision requiring a verified archive
+and an isolated rehearsal; never use `--drop` against the active local database.
