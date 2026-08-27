@@ -30,6 +30,29 @@ class RoutingResponseError(RoutingServiceError):
     """The provider returned a completely unusable response."""
 
 
+class RoutingProviderHTTPError(RoutingServiceError):
+    """A safe normalized upstream HTTP failure."""
+
+    def __init__(self, status_code: int, category: str) -> None:
+        super().__init__(f"Routing provider HTTP failure ({category}).")
+        self.status_code = status_code
+        self.category = category
+
+
+class RoutingCircuitOpen(RoutingServiceError):
+    """The provider is temporarily blocked after repeated failures."""
+
+
+@dataclass(frozen=True)
+class RoutingMetadata:
+    provider: str
+    travel_mode: str = "driving"
+    request_duration_ms: float = 0.0
+    cache_hit: bool = False
+    fallback_used: bool = False
+    attempt: int = 1
+
+
 @dataclass(frozen=True)
 class RouteMeasurement:
     listing_id: str
@@ -43,6 +66,7 @@ class RouteMatrix:
     """Provider-independent measurements indexed by listing and destination."""
 
     routes: dict[tuple[str, str], RouteMeasurement | None]
+    metadata: RoutingMetadata | None = None
 
     def get(
         self, listing_id: str, destination_id: str
@@ -55,9 +79,20 @@ class RouteGeometry:
     """One visualization-only road line normalized to GeoJSON."""
 
     coordinates: list[list[float]]
+    metadata: RoutingMetadata | None = None
+
+
+@dataclass(frozen=True)
+class RouteGeometryBatch:
+    """One provider-consistent set of destination road lines."""
+
+    routes: list[RouteGeometry | None]
+    metadata: RoutingMetadata | None = None
 
 
 class RoutingProvider(Protocol):
+    provider_id: str
+
     async def get_route_matrix(
         self,
         listings: Sequence[RecommendationCandidate],
@@ -70,6 +105,15 @@ class RoutingProvider(Protocol):
         origin: tuple[float, float],
         destination: tuple[float, float],
     ) -> RouteGeometry | None: ...
+
+    async def get_route_geometries(
+        self,
+        *,
+        origin: tuple[float, float],
+        destinations: Sequence[tuple[float, float]],
+    ) -> RouteGeometryBatch: ...
+
+    async def health_check(self) -> bool: ...
 
 
 def _valid_coordinate(value: object, minimum: float, maximum: float) -> bool:
@@ -251,10 +295,12 @@ class OSRMRoutingProvider:
         base_url: str,
         timeout_seconds: float,
         user_agent: str,
+        provider_id: str = "osrm",
     ) -> None:
         self.base_url = base_url
         self.timeout_seconds = timeout_seconds
         self.user_agent = user_agent
+        self.provider_id = provider_id
 
     def _fetch_json(self, url: str) -> Any:
         request = Request(
@@ -267,7 +313,15 @@ class OSRMRoutingProvider:
         try:
             with urlopen(request, timeout=self.timeout_seconds) as response:
                 return json.loads(response.read().decode("utf-8"))
-        except (HTTPError, URLError, TimeoutError, socket.timeout, OSError) as error:
+        except HTTPError as error:
+            if error.code == 429:
+                category = "provider_rate_limited"
+            elif error.code >= 500:
+                category = "provider_5xx"
+            else:
+                category = "provider_4xx"
+            raise RoutingProviderHTTPError(error.code, category) from error
+        except (URLError, TimeoutError, socket.timeout, OSError) as error:
             raise RoutingProviderUnavailable(
                 "Routing provider is unavailable."
             ) from error
@@ -308,11 +362,49 @@ class OSRMRoutingProvider:
         payload = await asyncio.to_thread(self._fetch_json, url)
         return parse_osrm_route_response(payload)
 
+    async def get_route_geometries(
+        self,
+        *,
+        origin: tuple[float, float],
+        destinations: Sequence[tuple[float, float]],
+    ) -> RouteGeometryBatch:
+        """Fetch a small provider-consistent geometry set for one selected home."""
+        routes = [
+            await self.get_route_geometry(origin=origin, destination=destination)
+            for destination in destinations
+        ]
+        return RouteGeometryBatch(routes=routes)
 
-def get_routing_provider() -> RoutingProvider:
-    """Build the configured adapter without coupling callers to OSRM details."""
+    async def health_check(self) -> bool:
+        """Use one bounded minimal route response as an OSRM readiness probe."""
+        url = build_osrm_route_url(
+            base_url=self.base_url,
+            origin=(23.8103, 90.4125),
+            destination=(23.8104, 90.4126),
+        )
+        payload = await asyncio.to_thread(self._fetch_json, url)
+        return isinstance(payload, dict) and payload.get("code") in {"Ok", "NoRoute"}
+
+
+def build_routing_adapter(
+    *,
+    provider_name: str,
+    base_url: str,
+    provider_id: str,
+) -> RoutingProvider:
+    """Build one provider adapter from trusted server configuration."""
+    if provider_name != "osrm":
+        raise ValueError(f"Unsupported routing provider: {provider_name}")
     return OSRMRoutingProvider(
-        base_url=settings.routing_base_url,
+        base_url=base_url,
         timeout_seconds=settings.routing_timeout_seconds,
         user_agent=settings.routing_user_agent,
+        provider_id=provider_id,
     )
+
+
+def get_routing_provider() -> RoutingProvider:
+    """Return the shared resilient provider-neutral routing service."""
+    from app.services.routing_infrastructure import get_managed_routing_provider
+
+    return get_managed_routing_provider()
