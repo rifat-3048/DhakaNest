@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { ListingImage } from "@/types/listing";
 
@@ -24,10 +24,6 @@ export default function AdminImageGallery({
   );
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 
-  useEffect(() => {
-    if (selectedIndex >= sortedImages.length) setSelectedIndex(0);
-  }, [selectedIndex, sortedImages.length]);
-
   if (sortedImages.length === 0) {
     return (
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
@@ -39,7 +35,8 @@ export default function AdminImageGallery({
     );
   }
 
-  const selectedImage = sortedImages[selectedIndex];
+  const visibleIndex = Math.min(selectedIndex, sortedImages.length - 1);
+  const selectedImage = sortedImages[visibleIndex];
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -50,14 +47,14 @@ export default function AdminImageGallery({
           </p>
         </div>
         <span className="text-sm font-medium text-slate-600">
-          {selectedIndex + 1} of {sortedImages.length}
+          {visibleIndex + 1} of {sortedImages.length}
         </span>
       </div>
 
       <div className="relative mt-5 aspect-[16/9] overflow-hidden rounded-lg bg-slate-100">
         <Image
           src={selectedImage.url}
-          alt={`${listingTitle} image ${selectedIndex + 1}`}
+          alt={`${listingTitle} image ${visibleIndex + 1}`}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 900px"
@@ -86,7 +83,7 @@ export default function AdminImageGallery({
             onClick={() => setSelectedIndex(index)}
             className={[
               "relative aspect-square overflow-hidden rounded-lg border-2 bg-slate-100 transition",
-              index === selectedIndex
+              index === visibleIndex
                 ? "border-emerald-700 ring-2 ring-emerald-100"
                 : "border-transparent hover:border-slate-400",
             ].join(" ")}
