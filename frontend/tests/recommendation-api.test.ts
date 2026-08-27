@@ -5,6 +5,7 @@ import {
   buildRankedRecommendationRequest,
   getRecommendationHistory,
   getRecommendationHistoryDetail,
+  getRecommendationRouteGeometry,
   getRankedRecommendations,
   RecommendationApiError,
 } from "../src/lib/recommendation-api.ts";
@@ -243,6 +244,37 @@ test("503 remains a service failure rather than an empty result", async () => {
       error instanceof RecommendationApiError &&
       error.kind === "service_unavailable" &&
       error.status === 503,
+  );
+});
+
+test("429 ranked responses are classified for a clear tenant message", async () => {
+  const fetcher: typeof fetch = async () =>
+    new Response(JSON.stringify({ detail: "Please wait a moment." }), {
+      status: 429,
+    });
+  await assert.rejects(
+    getRankedRecommendations(preferences(), { token: "token", fetcher }),
+    (error: unknown) =>
+      error instanceof RecommendationApiError &&
+      error.kind === "rate_limited" &&
+      error.status === 429,
+  );
+});
+
+test("429 route geometry responses remain distinct from provider outages", async () => {
+  const fetcher: typeof fetch = async () =>
+    new Response(JSON.stringify({ detail: "Try again shortly." }), {
+      status: 429,
+    });
+  await assert.rejects(
+    getRecommendationRouteGeometry("run", "listing", {
+      token: "token",
+      fetcher,
+    }),
+    (error: unknown) =>
+      error instanceof RecommendationApiError &&
+      error.kind === "rate_limited" &&
+      error.status === 429,
   );
 });
 
