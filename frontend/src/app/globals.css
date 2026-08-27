@@ -24,6 +24,47 @@ select {
   font: inherit;
 }
 
+.dhakanest-map-icon {
+  background: transparent;
+  border: 0;
+}
+
+.dhakanest-home-marker,
+.dhakanest-destination-marker {
+  align-items: center;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 35%);
+  color: #ffffff;
+  display: flex;
+  font-size: 13px;
+  font-weight: 800;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.dhakanest-home-marker {
+  background: #0f766e;
+}
+
+.dhakanest-home-marker.is-selected {
+  background: #0f172a;
+  border-color: #facc15;
+  outline: 3px solid #0f172a;
+}
+
+.dhakanest-destination-marker {
+  background: #0891b2;
+  border-radius: 4px;
+}
+
+.leaflet-container {
+  background: #e2e8f0;
+  font-family: inherit;
+  z-index: 0;
+}
+
 .home-reveal {
   animation: home-reveal 650ms ease-out both;
 }
