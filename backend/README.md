@@ -420,3 +420,68 @@ the map route endpoint with:
 ```powershell
 python scripts/check_recommendation_map.py
 ```
+
+## Production Routing Hardening
+
+Recommendation services now depend on a provider-neutral routing interface.
+The configured primary adapter handles both matrix and route-geometry calls; an
+optional fallback adapter can repeat the entire logical operation after a
+primary outage. Results from different providers are never combined inside one
+matrix or geometry batch, and no straight-line or guessed commute fallback is
+used.
+
+The default `https://router.project-osrm.org` endpoint is public development and
+demo infrastructure with no production SLA. Production should set
+`ROUTING_BASE_URL` to a self-hosted OSRM instance or implement a contracted
+provider adapter behind the same interface.
+
+Routing configuration includes the primary and optional fallback provider/base
+URL, a 10-second provider timeout, one bounded transient retry with short
+exponential backoff, separate matrix and geometry TTLs, a bounded in-process
+LRU/TTL cache, and circuit-breaker threshold/recovery settings. Coordinates are
+rounded to six decimals for deterministic cache keys; actual provider request
+coordinates are unchanged. Identical concurrent requests are coalesced into one
+provider call. This process-local design is suitable for one backend process;
+multi-instance deployment should replace the cache/limiter abstractions with a
+shared implementation when consistent cross-instance limits are required.
+
+Tenant-based process-local limits protect `POST /api/recommendations/ranked`
+and the saved-run route-geometry endpoint. Existing idempotent ranked responses
+are returned before consuming limiter/provider capacity. An exceeded limit
+returns `429` with `Retry-After`; endpoint requests count even when their route
+result is cached, so HTTP abuse and upstream demand remain separate concerns.
+
+Every response receives a bounded `X-Request-ID`, and routing operations emit
+safe structured logs containing provider, operation, cache/fallback state,
+attempt, duration, status, and error category. `GET /health/routing` exposes
+only process-local routing health and aggregate counters. It never exposes
+tenant data, credentials, tokens, or upstream URLs.
+
+Deployment probes can use:
+
+```text
+GET /health  - liveness; the FastAPI process is running
+GET /ready   - readiness; MongoDB and at least one routing provider are usable
+```
+
+Liveness remains healthy during a routing outage. Readiness stays healthy when
+the primary is down but a configured fallback passes its bounded health probe;
+it returns `503` when MongoDB or every configured routing provider is unusable.
+Provider health results are briefly cached to avoid excessive probe traffic.
+
+Failure meanings remain distinct: no matching homes is a successful empty
+recommendation, while routing unavailability is a service failure. Route
+geometry unavailability affects only map polylines; cards, markers, stored
+commute values, scores, reasons, ranks, and immutable historical snapshots stay
+usable. Part 10 does not alter hard filters, destination scoring, KNN, WSM,
+ranking tie-breaks, explanations, evaluation labels, or historical results.
+
+The full safe configuration template is in `.env.example`. To inspect live
+development cache behavior without creating a recommendation run, rerun:
+
+```powershell
+python scripts/check_recommendation_map.py
+```
+
+It times two identical route requests and reports cache miss/hit deltas. These
+local numbers are diagnostic only and are not production throughput claims.
