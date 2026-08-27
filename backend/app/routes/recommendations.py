@@ -1,5 +1,6 @@
 """Tenant-only API routes for recommendation candidate retrieval."""
 
+import math
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, status
@@ -15,7 +16,9 @@ from app.schemas.recommendation_schema import (
     TenantRecommendationRequest,
 )
 from app.schemas.recommendation_history_schema import (
+    DestinationRouteGeometry,
     RecommendationHistoryListResponse,
+    RecommendationRouteGeometryResponse,
     RecommendationRunDetail,
 )
 from app.services.recommendation_history_service import (
@@ -31,7 +34,12 @@ from app.services.recommendation_service import (
     get_knn_recommendation_candidates,
     get_ranked_recommendations,
 )
-from app.services.routing_service import RoutingServiceError
+from app.services.routing_service import (
+    RoutingProviderUnavailable,
+    RoutingResponseError,
+    RoutingServiceError,
+    get_routing_provider,
+)
 
 
 router = APIRouter(prefix="/api/recommendations", tags=["Recommendations"])
@@ -221,3 +229,92 @@ async def get_recommendation_history_detail(
             detail="Recommendation run not found.",
         )
     return run
+
+
+@router.get(
+    "/history/{run_id}/listings/{listing_id}/route-geometry",
+    response_model=RecommendationRouteGeometryResponse,
+    summary="Get visualization routes for one saved recommended home",
+)
+async def get_recommendation_route_geometry(
+    run_id: str,
+    listing_id: str,
+    current_user: Any = Depends(require_role("tenant")),
+    database: Any = Depends(get_database),
+) -> RecommendationRouteGeometryResponse:
+    """Route from snapshot coordinates without rerunning recommendations."""
+    run = await get_recommendation_run_detail(
+        database=database,
+        tenant_id=current_user["_id"],
+        run_id=run_id,
+    )
+    if run is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Recommendation run not found.",
+        )
+
+    listing = next((item for item in run.results if item.id == listing_id), None)
+    if listing is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Listing is not part of this recommendation run.",
+        )
+
+    try:
+        origin = (float(listing.latitude), float(listing.longitude))
+    except (TypeError, ValueError, OverflowError) as error:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="Map location unavailable for this historical result.",
+        ) from error
+    if (
+        not math.isfinite(origin[0])
+        or not math.isfinite(origin[1])
+        or not -90 <= origin[0] <= 90
+        or not -180 <= origin[1] <= 180
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="Map location unavailable for this historical result.",
+        )
+
+    provider = get_routing_provider()
+    routes: list[DestinationRouteGeometry] = []
+    unavailable: list[str] = []
+    for destination in run.request_snapshot.important_destinations:
+        try:
+            geometry = await provider.get_route_geometry(
+                origin=origin,
+                destination=(destination.latitude, destination.longitude),
+            )
+        except RoutingProviderUnavailable as error:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Road route visualization is temporarily unavailable.",
+            ) from error
+        except RoutingResponseError:
+            unavailable.append(destination.id)
+            continue
+        if geometry is None:
+            unavailable.append(destination.id)
+            continue
+        routes.append(
+            DestinationRouteGeometry(
+                destination_id=destination.id,
+                destination=destination.destination,
+                geometry={
+                    "type": "LineString",
+                    "coordinates": geometry.coordinates,
+                },
+            )
+        )
+
+    return RecommendationRouteGeometryResponse(
+        run_id=run_id,
+        listing_id=listing_id,
+        provider="osrm",
+        travel_mode="driving",
+        routes=routes,
+        unavailable_destination_ids=unavailable,
+    )
