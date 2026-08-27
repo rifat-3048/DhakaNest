@@ -2,6 +2,10 @@
 
 This folder contains the FastAPI backend for DhakaNest.
 
+Local environment, health, index, backup, smoke, load-test, and rollback
+guidance is documented in `../docs/deployment.md`,
+`../docs/operations.md`, and `../docs/production_release_checklist.md`.
+
 ## What Exists Now
 
 - A FastAPI app with health and database health endpoints.

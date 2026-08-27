@@ -418,7 +418,10 @@ class RateLimitTests(TestCase):
 
 class HealthAndCorrelationTests(IsolatedAsyncioTestCase):
     async def test_liveness_does_not_depend_on_routing(self):
-        self.assertEqual(await health_check(), {"status": "ok", "project": "DhakaNest"})
+        response = await health_check()
+        self.assertEqual(response["status"], "ok")
+        self.assertEqual(response["project"], "DhakaNest")
+        self.assertNotIn("mongo_uri", response)
 
     async def test_readiness_succeeds_with_healthy_primary(self):
         database = AsyncMock(); provider = AsyncMock()

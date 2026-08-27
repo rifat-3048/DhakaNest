@@ -25,6 +25,14 @@ yarn-error.log*
 pnpm-debug.log*
 *.tsbuildinfo
 
+# Production operations artifacts
+backups/
+*.archive
+*.archive.gz
+load-test-results/
+*.log
+coverage/
+
 # Environment files
 .env
 .env.*

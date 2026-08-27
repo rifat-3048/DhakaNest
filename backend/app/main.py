@@ -4,7 +4,9 @@ from uuid import uuid4
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from app.config import settings
 from app.core.observability import request_id_context
 from app.database import close_mongo_connection, connect_to_mongo
 from app.routes.auth import router as auth_router
@@ -24,21 +26,19 @@ app = FastAPI(
         "Backend API for the DhakaNest rental home "
         "recommendation system."
     ),
-    version="0.1.0",
+    version=settings.app_version,
 )
 
 
-# Allow the local Next.js frontend to call this API from the browser.
+# Allow only explicitly configured frontend origins.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts)
 
 
 REQUEST_ID_PATTERN = re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
@@ -53,6 +53,12 @@ async def request_correlation_middleware(request: Request, call_next):
     try:
         response = await call_next(request)
         response.headers["X-Request-ID"] = request_id
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = (
+            "camera=(), microphone=(), geolocation=()"
+        )
         return response
     finally:
         request_id_context.reset(token)

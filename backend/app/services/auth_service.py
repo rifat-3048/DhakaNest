@@ -9,6 +9,13 @@ from app.schemas.user_schema import TokenResponse, UserRegister, UserResponse
 from app.utils.object_id import object_id_to_str
 
 
+async def ensure_user_indexes(database: AsyncIOMotorDatabase) -> None:
+    """Create the uniqueness constraint required by registration and login."""
+    await database.users.create_index(
+        [("email", 1)], name="user_email_unique", unique=True
+    )
+
+
 def user_document_to_response(user: dict) -> UserResponse:
     """Convert a MongoDB user document into the public API response shape."""
     return UserResponse(

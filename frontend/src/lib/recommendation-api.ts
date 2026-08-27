@@ -1,4 +1,5 @@
 import { validateImportantDestinations } from "./tenant-destination.ts";
+import { API_BASE_URL } from "./api-config.ts";
 import type {
   RankedRecommendationResponse,
   RecommendationHistoryListResponse,
@@ -8,11 +9,6 @@ import type {
 import type { TenantSearchPreferences } from "../types/tenant-preference.ts";
 
 
-const API_BASE_URL = (
-  process.env.NEXT_PUBLIC_API_URL ??
-  process.env.NEXT_PUBLIC_API_BASE_URL ??
-  "http://127.0.0.1:8000"
-).replace(/\/$/, "");
 const TOKEN_KEY = "dhakanest_access_token";
 
 export type RecommendationErrorKind =

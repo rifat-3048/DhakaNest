@@ -53,6 +53,13 @@ without session storage and never calls the ranked recommendation endpoint.
 ## Local Development
 
 Create a local environment file from `.env.local.example`, then run the Next.js development server.
+
+## Production Build
+
+Set `NEXT_PUBLIC_API_BASE_URL` to the public HTTPS FastAPI origin before running
+`npm run build`. Production builds fail when this variable is absent. For local
+production-mode testing, run `npm run build` followed by `npm start`. See
+`../docs/deployment.md` for the local runtime baseline.
 ## Recommendation maps
 
 Current and historical recommendation results use `Leaflet` and

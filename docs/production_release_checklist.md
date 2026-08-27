@@ -1,0 +1,23 @@
+# Production Release Checklist
+
+- [ ] Production environment variables configured
+- [ ] Secrets stored outside repository
+- [ ] Production MongoDB configured
+- [ ] Required indexes verified
+- [ ] Production routing provider configured
+- [ ] Public OSRM demo not used
+- [ ] CORS origins correct
+- [ ] HTTPS configured at platform/proxy
+- [ ] Backend `/health` passes
+- [ ] Backend `/ready` passes
+- [ ] Frontend production build passes
+- [ ] Smoke test passes
+- [ ] Recommendation flow passes
+- [ ] Recommendation history passes
+- [ ] Map fallback passes
+- [ ] Backup completed
+- [ ] Restore tested in isolated database
+- [ ] `npm audit` passes
+- [ ] Python dependency audit reviewed
+- [ ] Controlled load test completed
+- [ ] Rollback procedure documented

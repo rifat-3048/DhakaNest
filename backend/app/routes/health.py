@@ -14,7 +14,13 @@ router = APIRouter()
 @router.get("/health")
 async def health_check() -> dict[str, str]:
     """Return a simple response to confirm the API is running."""
-    return {"status": "ok", "project": "DhakaNest"}
+    return {
+        "status": "ok",
+        "project": "DhakaNest",
+        "version": settings.app_version,
+        "environment": settings.app_env,
+        "build": settings.build_commit,
+    }
 
 
 @router.get("/health/db", response_model=None)

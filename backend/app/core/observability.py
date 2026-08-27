@@ -2,6 +2,7 @@
 
 import json
 import logging
+from datetime import datetime, timezone
 from collections import defaultdict
 from contextvars import ContextVar
 from threading import Lock
@@ -63,6 +64,8 @@ routing_metrics = RoutingMetrics()
 def log_routing_event(**fields: Any) -> None:
     """Emit one safe JSON event with the current request correlation ID."""
     safe_fields = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "level": "INFO",
         "event": "routing",
         "request_id": request_id_context.get(),
         **fields,

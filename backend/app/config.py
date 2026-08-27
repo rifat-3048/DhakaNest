@@ -8,11 +8,19 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
+    app_env: Literal["development", "test", "production"] = "development"
+    app_version: str = "0.1.0"
+    build_commit: str = "local"
+    cors_allowed_origins: str = (
+        "http://localhost:3000,http://127.0.0.1:3000"
+    )
+    trusted_hosts: str = "localhost,127.0.0.1,testserver"
+
     # MongoDB connection string, for example: mongodb://localhost:27017
-    mongo_uri: str
+    mongo_uri: str = Field(..., min_length=1)
 
     # Name of the MongoDB database used by DhakaNest.
-    database_name: str
+    database_name: str = Field(..., min_length=1)
 
     # Secret key used to sign JWT access tokens. Keep the real value in .env.
     jwt_secret_key: str
@@ -86,7 +94,40 @@ class Settings(BaseSettings):
             raise ValueError(
                 "ROUTING_FALLBACK_PROVIDER is required when a fallback URL is configured."
             )
+        origins = self.allowed_origins
+        hosts = self.allowed_hosts
+        if not origins:
+            raise ValueError("CORS_ALLOWED_ORIGINS must contain at least one origin.")
+        for origin in origins:
+            parsed = urlparse(origin)
+            if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+                raise ValueError("CORS origins must be complete http or https origins.")
+            if parsed.path not in {"", "/"} or parsed.query or parsed.fragment:
+                raise ValueError("CORS origins must not contain paths, queries, or fragments.")
+        if not hosts or any("/" in host or "://" in host for host in hosts):
+            raise ValueError("TRUSTED_HOSTS must contain hostnames only.")
+        if self.app_env == "production":
+            if not self.mongo_uri.startswith(("mongodb://", "mongodb+srv://")) or "your_" in self.mongo_uri.lower():
+                raise ValueError("Production MONGO_URI must be a real MongoDB connection URI.")
+            if "router.project-osrm.org" == urlparse(self.routing_base_url).hostname:
+                raise ValueError(
+                    "Production cannot use the public router.project-osrm.org demo service."
+                )
+            if len(self.jwt_secret_key) < 32 or "your_" in self.jwt_secret_key.lower():
+                raise ValueError("Production JWT_SECRET_KEY must be a strong non-placeholder secret.")
+            if any(urlparse(origin).scheme != "https" for origin in origins):
+                raise ValueError("Production CORS origins must use HTTPS.")
+            if "*" in hosts:
+                raise ValueError("Production TRUSTED_HOSTS must be explicit.")
         return self
+
+    @property
+    def allowed_origins(self) -> list[str]:
+        return [item.strip().rstrip("/") for item in self.cors_allowed_origins.split(",") if item.strip()]
+
+    @property
+    def allowed_hosts(self) -> list[str]:
+        return [item.strip() for item in self.trusted_hosts.split(",") if item.strip()]
 
     # This tells pydantic-settings to also read values from a .env file.
     model_config = SettingsConfigDict(

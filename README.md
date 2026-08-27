@@ -13,4 +13,7 @@ The goal is to help users discover rental homes based on location, budget, prefe
 
 ## Current Status
 
-This repository currently contains only the initial project skeleton. Authentication, rental listing logic, recommendation logic, frontend UI, and ML training code will be added later.
+The application now includes authentication, listing workflows, explainable
+location-aware recommendations, immutable history, maps, local operational tools,
+operational validation scripts, and CI checks. See `docs/deployment.md`,
+`docs/operations.md`, and `docs/production_release_checklist.md` before release.
