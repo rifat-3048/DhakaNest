@@ -89,6 +89,8 @@ export default function AdminListingReviewPage() {
   }, [listingId]);
 
   useEffect(() => {
+    // This effect intentionally starts the initial external API synchronization.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadListing();
   }, [loadListing]);
 
