@@ -1,0 +1,14 @@
+DhakaNest Part 12 backend regression
+Command: python -m unittest discover -s tests
+Result: PASS
+Tests run: 243
+Passed: 243
+Failed: 0
+
+Final read-only acceptance: PASS
+MongoDB: connected
+Required indexes: 6/6 valid
+Eligible inventory: 12 listings
+Evaluation inventory: 12/12 seeded listings
+Rent model: loaded and returned a positive prediction
+Routing provider: reachable
