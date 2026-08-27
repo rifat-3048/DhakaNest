@@ -8,6 +8,7 @@ This script reads the newest saved tenant run and does not rerun recommendations
 
 import json
 import sys
+import time
 from pathlib import Path
 from urllib.request import Request, urlopen
 
@@ -52,11 +53,23 @@ def main() -> None:
             raise RuntimeError("The newest recommendation run has no homes to map.")
 
         selected = min(detail["results"], key=lambda item: item["rank"])
+        metrics_before = api_get("/health/routing", token)["metrics"]
+        first_started = time.perf_counter()
         routes = api_get(
             f"/api/recommendations/history/{run['_id']}/listings/"
             f"{selected['id']}/route-geometry",
             token,
         )
+        first_duration_ms = round((time.perf_counter() - first_started) * 1_000, 2)
+        first_metrics = api_get("/health/routing", token)["metrics"]
+        second_started = time.perf_counter()
+        repeated_routes = api_get(
+            f"/api/recommendations/history/{run['_id']}/listings/"
+            f"{selected['id']}/route-geometry",
+            token,
+        )
+        second_duration_ms = round((time.perf_counter() - second_started) * 1_000, 2)
+        second_metrics = api_get("/health/routing", token)["metrics"]
         second_routes = None
         if len(detail["results"]) > 1:
             second = detail["results"][1]
@@ -73,6 +86,15 @@ def main() -> None:
             "selected_rank": selected["rank"],
             "selected_route_lines": len(routes["routes"]),
             "selected_unavailable_routes": len(routes["unavailable_destination_ids"]),
+            "repeated_route_is_identical": repeated_routes["routes"] == routes["routes"],
+            "first_request_ms": first_duration_ms,
+            "second_request_ms": second_duration_ms,
+            "first_cache_miss_delta": first_metrics.get(
+                "routing_cache_misses_total", 0
+            ) - metrics_before.get("routing_cache_misses_total", 0),
+            "second_cache_hit_delta": second_metrics.get(
+                "routing_cache_hits_total", 0
+            ) - first_metrics.get("routing_cache_hits_total", 0),
             "second_home_route_lines": (
                 len(second_routes["routes"]) if second_routes else None
             ),
