@@ -1,7 +1,7 @@
 """Public contracts for immutable tenant recommendation history."""
 
 from datetime import datetime
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -53,6 +53,13 @@ class RecommendationHistoryListResponse(BaseModel):
     runs: list[RecommendationRunSummary]
 
 
+class HistoricalRankedRecommendationCandidate(RankedRecommendationCandidate):
+    """A saved result that tolerates legacy snapshots without coordinates."""
+
+    latitude: float | None = None
+    longitude: float | None = None
+
+
 class RecommendationRunDetail(BaseModel):
     run_id: str
     created_at: datetime
@@ -60,9 +67,35 @@ class RecommendationRunDetail(BaseModel):
     pipeline_snapshot: RecommendationPipelineSnapshot
     counts: RecommendationRunCounts
     normalized_weights: NormalizedRecommendationWeights
-    results: list[RankedRecommendationCandidate]
+    results: list[HistoricalRankedRecommendationCandidate]
     filter_summary: dict[str, int]
     routing_summary: dict[str, int]
     scoring_summary: dict[str, int]
     knn_summary: dict[str, int | float | str]
     wsm_summary: dict[str, int | float | str]
+
+
+class GeoJSONLineString(BaseModel):
+    """A provider-normalized road line in GeoJSON coordinate order."""
+
+    type: Literal["LineString"] = "LineString"
+    coordinates: list[list[float]]
+
+
+class DestinationRouteGeometry(BaseModel):
+    """Visualization geometry for one destination in a saved search."""
+
+    destination_id: str
+    destination: str
+    geometry: GeoJSONLineString
+
+
+class RecommendationRouteGeometryResponse(BaseModel):
+    """Road lines for one selected home without recommendation recalculation."""
+
+    run_id: str
+    listing_id: str
+    provider: str
+    travel_mode: Literal["driving"] = "driving"
+    routes: list[DestinationRouteGeometry]
+    unavailable_destination_ids: list[str] = Field(default_factory=list)
