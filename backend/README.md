@@ -393,3 +393,30 @@ python scripts/check_recommendation_history.py
 
 The script uses a fixed development key, so rerunning it reopens the same test
 run instead of adding duplicate history records.
+## Recommendation map and road-route visualization
+
+Recommendation Part 9 uses the existing OSRM Table API measurements for
+recommendation commute metrics and the OSRM Route API only for on-demand map
+polylines. The visualization endpoint is:
+
+```text
+GET /api/recommendations/history/{run_id}/listings/{listing_id}/route-geometry
+```
+
+It is tenant-only and reads the selected home and destination coordinates from
+the immutable recommendation-run snapshot. It never looks up the current
+listing or reruns filtering, KNN, WSM, or rent prediction. A failed individual
+destination route is omitted while other routes are returned; a provider
+outage returns `503` without affecting saved recommendation results.
+
+Historical distance and duration values are the metrics saved when the run was
+generated. Route lines are traffic-free visualization geometry generated on
+demand from saved coordinates. The public OSRM server is suitable for light
+development use and has no production SLA.
+
+With FastAPI running and at least one saved recommendation run available, check
+the map route endpoint with:
+
+```powershell
+python scripts/check_recommendation_map.py
+```
