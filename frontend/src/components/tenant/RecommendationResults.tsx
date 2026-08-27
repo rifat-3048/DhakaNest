@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import RecommendationCard from "@/components/tenant/RecommendationCard";
+import RecommendationExplorer from "@/components/tenant/RecommendationExplorer";
 import { clearStoredAuth } from "@/lib/auth";
 import {
   getRankedRecommendations,
@@ -16,6 +16,7 @@ import { saveLatestRecommendationResult } from "@/lib/recommendation-result-stor
 import { getRecommendationSubmissionKey } from "@/lib/recommendation-submission";
 import { getSavedTenantPreferences } from "@/lib/tenant-preference-storage";
 import type { RankedRecommendationResponse } from "@/types/recommendation";
+import type { TenantSearchPreferences } from "@/types/tenant-preference";
 
 
 const WEIGHT_LABELS = {
@@ -29,6 +30,7 @@ const WEIGHT_LABELS = {
 export default function RecommendationResults() {
   const router = useRouter();
   const [response, setResponse] = useState<RankedRecommendationResponse | null>(null);
+  const [preferences, setPreferences] = useState<TenantSearchPreferences | null>(null);
   const [errorKind, setErrorKind] = useState<RecommendationErrorKind | null>(null);
   const [hasPreferences, setHasPreferences] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +47,7 @@ export default function RecommendationResults() {
         setIsLoading(false);
         return;
       }
+      setPreferences(saved.preferences);
 
       setIsLoading(true);
       setErrorKind(null);
@@ -179,10 +182,12 @@ export default function RecommendationResults() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
-        {candidates.map((candidate) => (
-          <RecommendationCard key={candidate.id} candidate={candidate} />
-        ))}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <RecommendationExplorer
+          candidates={candidates}
+          destinations={preferences?.important_destinations ?? []}
+          runId={response.recommendation_run_id}
+        />
       </div>
     </main>
   );
