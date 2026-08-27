@@ -51,8 +51,8 @@ export interface RankedRecommendationCandidate {
   broad_area: string | null;
   model_micro_area: string | null;
   address: string | null;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   available_from: string | null;
   rent_assessment: RentAssessment | null;
   primary_image: ListingImage | null;
@@ -149,4 +149,24 @@ export interface RecommendationRunDetail {
   scoring_summary: Record<string, number>;
   knn_summary: Record<string, number | string>;
   wsm_summary: Record<string, number | string>;
+}
+
+export interface RouteGeometryLineString {
+  type: "LineString";
+  coordinates: number[][];
+}
+
+export interface DestinationRouteGeometry {
+  destination_id: string;
+  destination: string;
+  geometry: RouteGeometryLineString;
+}
+
+export interface RecommendationRouteGeometryResponse {
+  run_id: string;
+  listing_id: string;
+  provider: string;
+  travel_mode: "driving";
+  routes: DestinationRouteGeometry[];
+  unavailable_destination_ids: string[];
 }
