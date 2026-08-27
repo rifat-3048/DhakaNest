@@ -1,0 +1,17 @@
+DhakaNest final WSM priority-sensitivity check
+Command: python scripts/check_recommendation_wsm.py
+Result: PASS
+
+Shared Part 3 candidates: 12
+Effective KNN candidates: 10
+
+Balanced top home: Three Bedroom Apartment in Banasree
+Location-focused top home: Family Apartment on Dhanmondi Road 8A
+Budget-focused top home: Furnished Sublet near Banani Road 11
+Amenities-focused top home: Family Apartment on Dhanmondi Road 8A
+Rent-fairness-focused top home: Three Bedroom Apartment in Banasree
+
+The changed priorities produced different ranking orders. Property similarity
+was changed from 0.6637 to 0.0 in the double-counting audit while final
+suitability remained 0.6253, confirming that KNN similarity is not a sixth WSM
+criterion.
