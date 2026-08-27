@@ -25,7 +25,7 @@ yarn-error.log*
 pnpm-debug.log*
 *.tsbuildinfo
 
-# Production operations artifacts
+# Local operational artifacts
 backups/
 *.archive
 *.archive.gz
