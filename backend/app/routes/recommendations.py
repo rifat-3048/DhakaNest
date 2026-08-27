@@ -5,7 +5,9 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, status
 
+from app.config import settings
 from app.core.dependencies import require_role
+from app.core.rate_limit import SlidingWindowRateLimiter
 from app.database import get_database
 from app.schemas.recommendation_schema import (
     CommuteCandidatesResponse,
@@ -43,6 +45,35 @@ from app.services.routing_service import (
 
 
 router = APIRouter(prefix="/api/recommendations", tags=["Recommendations"])
+recommendation_rate_limiter = SlidingWindowRateLimiter(
+    limit=settings.recommendation_rate_limit_per_minute
+)
+geometry_rate_limiter = SlidingWindowRateLimiter(
+    limit=settings.route_geometry_rate_limit_per_minute
+)
+
+
+def _enforce_rate_limit(
+    limiter: SlidingWindowRateLimiter,
+    tenant_id: Any,
+    message: str,
+) -> None:
+    allowed, retry_after = limiter.check(str(tenant_id))
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=message,
+            headers={"Retry-After": str(retry_after)},
+        )
+
+
+def _tenant_rate_limit_identity(current_user: Any) -> Any:
+    """Use the stable database ID, with an email fallback for legacy callers."""
+    if isinstance(current_user, dict):
+        return current_user.get("_id") or current_user.get("email") or "tenant"
+    return getattr(current_user, "id", None) or getattr(
+        current_user, "email", "tenant"
+    )
 
 
 @router.post(
@@ -165,6 +196,12 @@ async def get_ranked_recommendation_results(
         if existing is not None:
             return existing
 
+    _enforce_rate_limit(
+        recommendation_rate_limiter,
+        _tenant_rate_limit_identity(current_user),
+        "Please wait a moment before generating recommendations again.",
+    )
+
     try:
         response = await get_ranked_recommendations(
             database=database,
@@ -279,41 +316,72 @@ async def get_recommendation_route_geometry(
             detail="Map location unavailable for this historical result.",
         )
 
+    _enforce_rate_limit(
+        geometry_rate_limiter,
+        _tenant_rate_limit_identity(current_user),
+        "Route visualization is being requested too frequently. Please try again shortly.",
+    )
     provider = get_routing_provider()
     routes: list[DestinationRouteGeometry] = []
     unavailable: list[str] = []
-    for destination in run.request_snapshot.important_destinations:
+    destinations = run.request_snapshot.important_destinations
+    response_provider = settings.routing_provider
+
+    if hasattr(provider, "get_route_geometries"):
         try:
-            geometry = await provider.get_route_geometry(
+            batch = await provider.get_route_geometries(
                 origin=origin,
-                destination=(destination.latitude, destination.longitude),
+                destinations=[
+                    (destination.latitude, destination.longitude)
+                    for destination in destinations
+                ],
             )
-        except RoutingProviderUnavailable as error:
+        except RoutingServiceError as error:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Road route visualization is temporarily unavailable.",
             ) from error
-        except RoutingResponseError:
-            unavailable.append(destination.id)
-            continue
+        if batch.metadata:
+            response_provider = batch.metadata.provider
+        geometries = batch.routes
+    else:
+        geometries = []
+        for destination in destinations:
+            try:
+                geometry = await provider.get_route_geometry(
+                    origin=origin,
+                    destination=(destination.latitude, destination.longitude),
+                )
+            except RoutingProviderUnavailable as error:
+                raise HTTPException(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    detail="Road route visualization is temporarily unavailable.",
+                ) from error
+            except RoutingResponseError:
+                geometry = None
+            geometries.append(geometry)
+
+    for destination, geometry in zip(destinations, geometries, strict=True):
         if geometry is None:
             unavailable.append(destination.id)
-            continue
-        routes.append(
-            DestinationRouteGeometry(
-                destination_id=destination.id,
-                destination=destination.destination,
-                geometry={
-                    "type": "LineString",
-                    "coordinates": geometry.coordinates,
-                },
+        else:
+            if geometry.metadata:
+                response_provider = geometry.metadata.provider
+            routes.append(
+                DestinationRouteGeometry(
+                    destination_id=destination.id,
+                    destination=destination.destination,
+                    geometry={
+                        "type": "LineString",
+                        "coordinates": geometry.coordinates,
+                    },
+                )
             )
-        )
 
     return RecommendationRouteGeometryResponse(
         run_id=run_id,
         listing_id=listing_id,
-        provider="osrm",
+        provider=response_provider,
         travel_mode="driving",
         routes=routes,
         unavailable_destination_ids=unavailable,
