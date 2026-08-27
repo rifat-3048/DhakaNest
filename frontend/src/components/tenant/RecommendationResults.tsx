@@ -109,6 +109,11 @@ export default function RecommendationResults() {
         }
       >
         <p>Please try again shortly or review your saved preferences.</p>
+        {errorKind === "rate_limited" && (
+          <p className="mt-2 font-medium text-slate-700">
+            Please wait a moment before generating recommendations again.
+          </p>
+        )}
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <button
             type="button"
