@@ -3,8 +3,8 @@
 This folder contains the FastAPI backend for DhakaNest.
 
 Local environment, health, index, backup, smoke, load-test, and rollback
-guidance is documented in `../docs/deployment.md`,
-`../docs/operations.md`, and `../docs/production_release_checklist.md`.
+guidance is documented in `../docs/local-setup.md`,
+`../docs/operations.md`, and `../docs/local-submission-checklist.md`.
 
 ## What Exists Now
 
@@ -120,7 +120,7 @@ ROUTING_USER_AGENT=DhakaNest-University-Development/0.1
 The public OSRM server requires no API key and is a best-effort development
 service, not production infrastructure. Its driving-profile durations are road
 estimates only: they do not include live traffic, Dhaka congestion, public
-transport, or walking conditions. A production deployment should configure a
+transport, or walking conditions. A future hosted system should configure a
 self-hosted or contracted routing provider with an appropriate service level.
 
 To run the read-only commute scenarios against local listings:
@@ -425,7 +425,7 @@ the map route endpoint with:
 python scripts/check_recommendation_map.py
 ```
 
-## Production Routing Hardening
+## Local Routing Reliability
 
 Recommendation services now depend on a provider-neutral routing interface.
 The configured primary adapter handles both matrix and route-geometry calls; an
@@ -461,7 +461,7 @@ attempt, duration, status, and error category. `GET /health/routing` exposes
 only process-local routing health and aggregate counters. It never exposes
 tenant data, credentials, tokens, or upstream URLs.
 
-Deployment probes can use:
+Local runtime checks can use:
 
 ```text
 GET /health  - liveness; the FastAPI process is running
