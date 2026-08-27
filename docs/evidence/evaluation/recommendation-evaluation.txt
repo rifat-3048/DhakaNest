@@ -1,0 +1,17 @@
+DhakaNest final recommendation evaluation
+Command: python scripts/evaluate_recommendations.py
+Result: PASS
+
+Profiles: 8
+Seeded listings per profile: 12
+Relevance judgments: 96
+
+Macro Precision@5:  0.9500
+Macro Precision@10: 0.9500
+Macro NDCG@5:       0.9822
+Macro NDCG@10:      0.9822
+
+Precision relevance threshold: relevance >= 2
+Short-list denominator: min(K, recommendations returned)
+Interpretation: Precision measures returned relevance; NDCG measures ordering.
+Limitation: small controlled development benchmark with manual judgments.
