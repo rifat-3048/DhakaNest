@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { suitabilityPercent } from "@/lib/recommendation-display";
-import { getRecommendationRouteGeometry } from "@/lib/recommendation-api";
+import {
+  getRecommendationRouteGeometry,
+  RecommendationApiError,
+} from "@/lib/recommendation-api";
 import {
   isLatestRouteRequest,
   RecommendationRouteCache,
@@ -46,7 +49,7 @@ export default function RecommendationMapPanel({
   onSelectHome,
 }: RecommendationMapPanelProps) {
   const [routes, setRoutes] = useState<RecommendationRouteGeometryResponse | null>(null);
-  const [routeState, setRouteState] = useState<"idle" | "loading" | "ready" | "partial" | "unavailable">("idle");
+  const [routeState, setRouteState] = useState<"idle" | "loading" | "ready" | "partial" | "rate_limited" | "unavailable">("idle");
   const [tileFailed, setTileFailed] = useState(false);
   const latestRequest = useRef(0);
   const selected = homes.find((home) => home.id === selectedHomeId) ?? null;
@@ -84,7 +87,12 @@ export default function RecommendationMapPanel({
       }).catch((error: unknown) => {
         if (error instanceof DOMException && error.name === "AbortError") return;
         if (isLatestRouteRequest(requestNumber, latestRequest.current)) {
-          setRouteState("unavailable");
+          setRouteState(
+            error instanceof RecommendationApiError &&
+              error.kind === "rate_limited"
+              ? "rate_limited"
+              : "unavailable",
+          );
         }
       });
     }, 0);
@@ -178,6 +186,7 @@ export default function RecommendationMapPanel({
             {routeState === "loading" && "Loading road route visualization..."}
             {routeState === "partial" && "Some road routes are unavailable; available routes are shown."}
             {routeState === "unavailable" && (runId ? "Road route visualization is temporarily unavailable." : "Route visualization is unavailable for this result.")}
+            {routeState === "rate_limited" && "Route visualization is being requested too frequently. Please try again shortly."}
             {routeState === "ready" && "Road routes shown for the selected home."}
           </p>
         </div>
