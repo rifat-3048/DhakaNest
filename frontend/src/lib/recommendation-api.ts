@@ -42,6 +42,10 @@ export function buildRankedRecommendationRequest(
 
   return {
     ...preferences,
+    // Preferred area is a soft target. Legacy bounds stay clear for new UI requests.
+    preferred_area_sqft: preferences.preferred_area_sqft,
+    minimum_area_sqft: null,
+    maximum_area_sqft: null,
     important_destinations: preferences.important_destinations.map(
       (destination) => ({
         id: destination.id,
@@ -50,6 +54,7 @@ export function buildRankedRecommendationRequest(
         longitude: destination.longitude as number,
         preference: destination.preference as number,
         max_commute_minutes: destination.max_commute_minutes,
+        travel_days_per_month: destination.travel_days_per_month,
       }),
     ),
   };

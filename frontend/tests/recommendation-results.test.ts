@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -110,6 +111,28 @@ test("suitability formats backend score without recalculating ranking", () => {
   assert.equal(suitabilityPercent(0.8124), 81);
   assert.equal(suitabilityPercent(2), 100);
   assert.equal(suitabilityPercent(-1), 0);
+});
+
+test("cards and details display stored affordability and travel breakdown fields", () => {
+  const cardSource = readFileSync(
+    new URL("../src/components/tenant/RecommendationCard.tsx", import.meta.url),
+    "utf8",
+  );
+  const detailsSource = readFileSync(
+    new URL("../src/components/tenant/RecommendationDetails.tsx", import.meta.url),
+    "utf8",
+  );
+  for (const label of [
+    "Monthly rent",
+    "Estimated travel cost",
+    "Estimated monthly spend",
+  ]) {
+    assert.match(cardSource, new RegExp(label));
+  }
+  assert.match(detailsSource, /Estimated monthly travel/);
+  assert.match(detailsSource, /km one way/);
+  assert.match(detailsSource, /one round trip per travel day/);
+  assert.match(detailsSource, /academic cost assumption/);
 });
 
 test("missing images return placeholder state", () => {

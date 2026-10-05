@@ -29,9 +29,13 @@ from tests.test_recommendation_part1 import FakeDatabase, valid_request
 from tests.test_recommendation_part5 import make_knn_response
 
 
-def ranked_response(specifications: list[dict] | None = None):
+def ranked_response(
+    specifications: list[dict] | None = None,
+    **preference_changes,
+):
     preferences, knn = make_knn_response(
-        [{}] if specifications is None else specifications
+        [{}] if specifications is None else specifications,
+        **preference_changes,
     )
     return preferences, rank_knn_candidates(
         knn_response=knn,
@@ -131,7 +135,14 @@ class RecommendationPersistenceTests(IsolatedAsyncioTestCase):
     async def test_snapshot_preserves_request_results_scores_and_metadata(self) -> None:
         database = HistoryDatabase()
         tenant_id = ObjectId()
-        preferences, response = ranked_response()
+        destination = valid_request().important_destinations[0].model_dump()
+        destination["id"] = "work"
+        preferences, response = ranked_response(
+            important_destinations=[
+                {**destination, "travel_days_per_month": 20}
+            ]
+        )
+        preferences = preferences.model_copy(update={"preferred_area_sqft": 1_200})
         persisted = await save_recommendation_run(
             database=database,
             tenant_id=tenant_id,
@@ -147,6 +158,34 @@ class RecommendationPersistenceTests(IsolatedAsyncioTestCase):
         self.assertEqual(
             document["request_snapshot"]["maximum_rent_bdt"],
             preferences.maximum_rent_bdt,
+        )
+        self.assertEqual(
+            document["request_snapshot"]["preferred_area_sqft"],
+            1_200,
+        )
+        self.assertEqual(
+            document["request_snapshot"]["important_destinations"][0][
+                "travel_days_per_month"
+            ],
+            20,
+        )
+        self.assertEqual(
+            document["pipeline_snapshot"]["travel_cost"]["cost_per_km_bdt"],
+            15,
+        )
+        self.assertEqual(
+            document["results"][0]["commutes"][0][
+                "estimated_monthly_travel_cost_bdt"
+            ],
+            3_000,
+        )
+        self.assertEqual(
+            document["results"][0]["estimated_monthly_travel_cost_bdt"],
+            3_000,
+        )
+        self.assertEqual(
+            document["results"][0]["estimated_monthly_spend_bdt"],
+            28_000,
         )
         self.assertEqual(document["results"][0]["rank"], 1)
         self.assertEqual(
@@ -165,9 +204,37 @@ class RecommendationPersistenceTests(IsolatedAsyncioTestCase):
             document["normalized_weights"],
             response.normalized_weights.model_dump(mode="json"),
         )
-        self.assertEqual(document["pipeline_snapshot"]["scoring_version"], "wsm_v1")
+        self.assertEqual(document["pipeline_snapshot"]["scoring_version"], "wsm_v3")
         self.assertEqual(document["pipeline_snapshot"]["configured_knn_k"], 1)
         self.assertEqual(document["created_at"].utcoffset(), timedelta(0))
+
+    async def test_stored_travel_rate_and_costs_ignore_later_configuration(self) -> None:
+        database = HistoryDatabase()
+        destination = valid_request().important_destinations[0].model_dump()
+        destination["id"] = "work"
+        preferences, response = ranked_response(
+            important_destinations=[
+                {**destination, "travel_days_per_month": 20}
+            ]
+        )
+        saved = await save_recommendation_run(
+            database=database,
+            tenant_id=ObjectId(),
+            idempotency_key="immutable-travel-cost",
+            request=preferences,
+            response=response,
+        )
+        with patch("app.config.settings.transport_cost_per_km_bdt", 99):
+            detail = await get_recommendation_run_detail(
+                database=database,
+                tenant_id=database.collection.documents[0]["tenant_id"],
+                run_id=saved.recommendation_run_id,
+            )
+        self.assertEqual(detail.travel_cost_summary.cost_per_km_bdt, 15)
+        self.assertEqual(
+            detail.results[0].estimated_monthly_travel_cost_bdt,
+            3_000,
+        )
 
     async def test_same_tenant_and_key_reuses_one_run(self) -> None:
         database = HistoryDatabase()

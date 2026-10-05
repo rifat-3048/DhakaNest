@@ -72,7 +72,7 @@ export default function ImportantDestinationsEditor({
             Important destinations <span className="text-red-600">*</span>
           </h3>
           <p className="mt-1 text-xs text-slate-500">
-            Search and select one to three real places. Commute time is optional.
+            Search and select one to three real places. Travel frequency is required.
           </p>
         </div>
         <span className="text-xs font-semibold text-emerald-700">
@@ -110,7 +110,7 @@ export default function ImportantDestinationsEditor({
               )}
             </div>
 
-            <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_180px_200px]">
+            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_160px_190px_230px]">
               <DestinationSearchField
                 destination={destination}
                 onChange={replaceDestination}
@@ -167,6 +167,38 @@ export default function ImportantDestinationsEditor({
                     minutes
                   </span>
                 </div>
+              </label>
+
+              <label>
+                <span className="text-sm font-medium text-slate-700">
+                  How many days per month do you travel here?{" "}
+                  <span className="text-red-600">*</span>
+                </span>
+                <div className="relative mt-1">
+                  <input
+                    type="number"
+                    min={1}
+                    max={31}
+                    step={1}
+                    value={destination.travel_days_per_month ?? ""}
+                    placeholder="20"
+                    onChange={(event) =>
+                      updateDestination(destination.id, {
+                        travel_days_per_month:
+                          event.target.value === ""
+                            ? null
+                            : Number(event.target.value),
+                      })
+                    }
+                    className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 pr-24 text-sm outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                  />
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500">
+                    days/month
+                  </span>
+                </div>
+                <span className="mt-1.5 block text-xs text-slate-500">
+                  Used to estimate your monthly travel cost.
+                </span>
               </label>
             </div>
           </article>

@@ -18,6 +18,7 @@ function validPreferences(): TenantSearchPreferences {
         longitude: 90.3817,
         preference: 5,
         max_commute_minutes: null,
+        travel_days_per_month: 20,
       },
     ],
     minimum_rent_bdt: null,
@@ -26,6 +27,7 @@ function validPreferences(): TenantSearchPreferences {
     property_types: ["apartment"],
     minimum_bedrooms: 2,
     minimum_bathrooms: 1,
+    preferred_area_sqft: null,
     minimum_area_sqft: null,
     maximum_area_sqft: null,
     furnishing_statuses: [],
@@ -68,4 +70,40 @@ test("unresolved destination does not start recommendation navigation", () => {
 
 test("processing state blocks duplicate concurrent submission", () => {
   assert.equal(canStartRecommendationRequest(validPreferences(), true), false);
+});
+
+test("every destination requires 1 to 31 travel days for a new search", () => {
+  for (const value of [null, 0, 32]) {
+    const values = validPreferences();
+    values.important_destinations[0].travel_days_per_month = value;
+    assert.match(
+      validateTenantPreferences(values).important_destinations,
+      /days per month/i,
+    );
+  }
+  for (const value of [1, 31]) {
+    const values = validPreferences();
+    values.important_destinations[0].travel_days_per_month = value;
+    assert.equal(validateTenantPreferences(values).important_destinations, undefined);
+  }
+});
+
+test("preferred floor size must be positive and within listing limits", () => {
+  const values = validPreferences();
+  values.preferred_area_sqft = 0;
+  assert.match(
+    validateTenantPreferences(values).preferred_area_sqft,
+    /floor size/i,
+  );
+  values.preferred_area_sqft = 20_001;
+  assert.match(
+    validateTenantPreferences(values).preferred_area_sqft,
+    /20,000/i,
+  );
+});
+
+test("amenities must stay in their tenant-facing groups", () => {
+  const values = validPreferences();
+  values.must_have_amenities = ["CCTV"];
+  assert.match(validateTenantPreferences(values).amenities, /correct groups/i);
 });

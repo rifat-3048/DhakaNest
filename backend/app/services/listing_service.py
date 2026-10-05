@@ -20,6 +20,7 @@ from app.services.rent_fairness_service import PREDICTION_RELEVANT_FIELDS
 
 
 COLLECTION_NAME = "listings"
+RECOMMENDATION_INVENTORY_LIMIT = 5_000
 LANDLORD_EDITABLE_STATUSES = {"draft", "revision_requested"}
 AdminListingStatusFilter = Literal[
     "all",
@@ -94,7 +95,7 @@ def get_missing_recommendation_data(listing: dict[str, Any]) -> list[str]:
 
 
 async def get_recommendation_eligible_listings(
-    *, database: Any, limit: int = 1_000
+    *, database: Any, limit: int = RECOMMENDATION_INVENTORY_LIMIT
 ) -> list[dict[str, Any]]:
     """Return only the base inventory that a future recommender may consider."""
     candidates: list[dict[str, Any]] = []

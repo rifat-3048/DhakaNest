@@ -23,6 +23,7 @@ function preferences(): TenantSearchPreferences {
         longitude: 90.3929,
         preference: 5,
         max_commute_minutes: 30,
+        travel_days_per_month: 20,
       },
     ],
     minimum_rent_bdt: null,
@@ -31,13 +32,14 @@ function preferences(): TenantSearchPreferences {
     property_types: ["apartment"],
     minimum_bedrooms: 2,
     minimum_bathrooms: 1,
+    preferred_area_sqft: null,
     minimum_area_sqft: null,
     maximum_area_sqft: null,
     furnishing_statuses: [],
     desired_move_in_date: null,
     household_size: 2,
     must_have_amenities: ["Lift"],
-    nice_to_have_amenities: ["Parking"],
+    nice_to_have_amenities: ["CCTV"],
     priorities: {
       location: 5,
       budget: 4,
@@ -83,8 +85,23 @@ test("ranked request serializes exact resolved tenant preference fields", () => 
   assert.equal(request.important_destinations[0].destination, "University of Dhaka");
   assert.equal(request.important_destinations[0].latitude, 23.7338);
   assert.equal(request.maximum_rent_bdt, 30_000);
+  assert.equal(request.important_destinations[0].travel_days_per_month, 20);
   assert.deepEqual(request.property_types, ["apartment"]);
   assert.deepEqual(request.priorities, preferences().priorities);
+});
+
+test("ranked request sends preferred area and clears legacy area bounds", () => {
+  const values = preferences();
+  values.property_types = ["room", "sublet"];
+  values.preferred_area_sqft = 850;
+  values.minimum_area_sqft = 850;
+  values.maximum_area_sqft = 1400;
+
+  const request = buildRankedRecommendationRequest(values);
+  assert.deepEqual(request.property_types, ["room", "sublet"]);
+  assert.equal(request.preferred_area_sqft, 850);
+  assert.equal(request.minimum_area_sqft, null);
+  assert.equal(request.maximum_area_sqft, null);
 });
 
 test("ranked API includes Bearer auth and parses a successful response", async () => {

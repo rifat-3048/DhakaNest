@@ -55,7 +55,10 @@ def calculate_tenant_area_target(
     preferences: TenantRecommendationRequest,
     candidates: list[DestinationAccessScoredCandidate],
 ) -> float:
-    """Choose the requested midpoint/bound or the candidate median when absent."""
+    """Choose the preferred target, legacy bound, or candidate median."""
+    if preferences.preferred_area_sqft is not None:
+        return float(preferences.preferred_area_sqft)
+
     minimum = preferences.minimum_area_sqft
     maximum = preferences.maximum_area_sqft
     if minimum is not None and maximum is not None:

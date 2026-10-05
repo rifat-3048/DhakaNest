@@ -35,6 +35,18 @@ export interface RecommendationCommute {
   max_commute_minutes: number | null;
   within_max_commute: boolean | null;
   normalized_destination_score: number;
+  travel_days_per_month?: number | null;
+  estimated_monthly_travel_cost_bdt?: number | null;
+}
+
+export type TravelCostBasis = "rent_plus_travel" | "rent_only_legacy";
+
+export interface TravelCostMetadata {
+  cost_per_km_bdt: number;
+  round_trip_multiplier: number;
+  distance_basis: "osrm_road_distance";
+  frequency_unit: "days_per_month";
+  calculation_version: "travel_cost_v1";
 }
 
 export interface RankedRecommendationCandidate {
@@ -67,6 +79,9 @@ export interface RankedRecommendationCandidate {
   final_suitability_score: number;
   rank: number;
   recommendation_reasons: RecommendationReason[];
+  travel_cost_basis?: TravelCostBasis;
+  estimated_monthly_travel_cost_bdt?: number | null;
+  estimated_monthly_spend_bdt?: number | null;
 }
 
 export interface NormalizedRecommendationWeights {
@@ -97,6 +112,7 @@ export interface RankedRecommendationResponse {
     weight_sum: number;
     scoring_version: string;
   };
+  travel_cost_summary?: TravelCostMetadata | null;
   recommendation_run_id: string | null;
   created_at: string | null;
 }
@@ -134,6 +150,7 @@ export interface RecommendationRunDetail {
     effective_knn_k: number;
     routing_provider: string;
     travel_mode: string;
+    travel_cost?: TravelCostMetadata | null;
   };
   counts: {
     base_eligible: number;
@@ -149,6 +166,7 @@ export interface RecommendationRunDetail {
   scoring_summary: Record<string, number>;
   knn_summary: Record<string, number | string>;
   wsm_summary: Record<string, number | string>;
+  travel_cost_summary?: TravelCostMetadata | null;
 }
 
 export interface RouteGeometryLineString {

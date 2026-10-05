@@ -19,6 +19,7 @@ RecommendationReasonCategory = Literal[
 RecommendationReasonStrength = Literal["strong", "moderate", "informational"]
 RoomMinimum = Literal[1, 2, 3, 4, 5, 6]
 BudgetFlexibility = Literal[0, 5, 10]
+TravelCostBasis = Literal["rent_plus_travel", "rent_only_legacy"]
 CanonicalAmenity = Literal[
     "Lift",
     "Generator",
@@ -44,6 +45,7 @@ class ImportantDestinationRequest(BaseModel):
     longitude: float = Field(..., ge=-180, le=180)
     preference: int = Field(..., ge=1, le=5)
     max_commute_minutes: int | None = Field(default=None, ge=1, le=240)
+    travel_days_per_month: int | None = Field(default=None, ge=1, le=31)
 
     @field_validator("id", "destination")
     @classmethod
@@ -80,6 +82,7 @@ class TenantRecommendationRequest(BaseModel):
     property_types: list[PropertyType] = Field(..., min_length=1, max_length=4)
     minimum_bedrooms: RoomMinimum
     minimum_bathrooms: RoomMinimum
+    preferred_area_sqft: float | None = Field(default=None, gt=0, le=20_000)
     minimum_area_sqft: float | None = Field(default=None, ge=0)
     maximum_area_sqft: float | None = Field(default=None, gt=0)
     furnishing_statuses: list[FurnishingStatus] = Field(
@@ -163,11 +166,15 @@ class CandidateCommute(BaseModel):
     destination: str
     destination_preference: int = Field(..., ge=1, le=5)
     distance_km: float = Field(..., ge=0)
+    # Retain provider precision for travel-cost calculations without exposing it.
+    distance_meters: float | None = Field(default=None, ge=0, exclude=True)
     estimated_duration_minutes: float = Field(..., ge=0)
     # Retain provider precision for later calculations without exposing it in JSON.
     duration_seconds: float = Field(..., ge=0, exclude=True)
     max_commute_minutes: int | None = Field(default=None, ge=1, le=240)
     within_max_commute: bool | None
+    travel_days_per_month: int | None = Field(default=None, ge=1, le=31)
+    estimated_monthly_travel_cost_bdt: float | None = Field(default=None, ge=0)
 
 
 class CommuteReadyCandidate(RecommendationCandidate):
@@ -272,6 +279,9 @@ class RecommendationReason(BaseModel):
 
 
 class RankedRecommendationCandidate(PropertySimilarCandidate):
+    travel_cost_basis: TravelCostBasis = "rent_only_legacy"
+    estimated_monthly_travel_cost_bdt: float | None = Field(default=None, ge=0)
+    estimated_monthly_spend_bdt: float | None = Field(default=None, ge=0)
     budget_score: float = Field(..., ge=0, le=1)
     space_score: float = Field(..., ge=0, le=1)
     amenities_score: float = Field(..., ge=0, le=1)
@@ -292,6 +302,14 @@ class WSMDiagnostics(BaseModel):
     scoring_version: str
 
 
+class TravelCostMetadata(BaseModel):
+    cost_per_km_bdt: float = Field(..., gt=0)
+    round_trip_multiplier: int = Field(default=2, ge=1)
+    distance_basis: Literal["osrm_road_distance"] = "osrm_road_distance"
+    frequency_unit: Literal["days_per_month"] = "days_per_month"
+    calculation_version: Literal["travel_cost_v1"] = "travel_cost_v1"
+
+
 class RankedRecommendationResponse(BaseModel):
     total_base_eligible: int
     total_after_hard_filters: int
@@ -306,6 +324,7 @@ class RankedRecommendationResponse(BaseModel):
     knn_summary: KNNDiagnostics
     normalized_weights: NormalizedRecommendationWeights
     wsm_summary: WSMDiagnostics
+    travel_cost_summary: TravelCostMetadata | None = None
     candidates: list[RankedRecommendationCandidate]
     # These fields are populated only for explicit idempotent API submissions.
     recommendation_run_id: str | None = None

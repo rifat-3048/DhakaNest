@@ -191,6 +191,7 @@ class NumericFeatureTests(TestCase):
             ]
         )
         cases = [
+            ({"preferred_area_sqft": 1_200}, 1_200),
             ({"minimum_area_sqft": 900, "maximum_area_sqft": 1_300}, 1_100),
             ({"minimum_area_sqft": 900, "maximum_area_sqft": None}, 900),
             ({"minimum_area_sqft": None, "maximum_area_sqft": 1_300}, 1_300),
@@ -203,6 +204,87 @@ class NumericFeatureTests(TestCase):
                     calculate_tenant_area_target(changed, scored.candidates),
                     expected,
                 )
+
+    def test_preferred_area_proximity_changes_knn_similarity(self) -> None:
+        areas = [1_100, 1_200, 1_300, 1_400, 1_800]
+        preferences, scored = make_scored_response(
+            [
+                {
+                    "bedrooms": 2,
+                    "bathrooms": 1,
+                    "area_sqft": area,
+                }
+                for area in areas
+            ]
+        )
+        preferences = preferences.model_copy(
+            update={
+                "minimum_bedrooms": 2,
+                "minimum_bathrooms": 1,
+                "preferred_area_sqft": 1_200,
+                "minimum_area_sqft": None,
+                "maximum_area_sqft": None,
+            }
+        )
+        response = select_property_neighbors(
+            scored_response=scored,
+            preferences=preferences,
+            configured_k=len(areas),
+        )
+        similarities = {
+            int(candidate.area_sqft): candidate.property_similarity_score
+            for candidate in response.candidates
+        }
+
+        self.assertEqual(similarities[1_200], max(similarities.values()))
+        self.assertAlmostEqual(similarities[1_100], similarities[1_300], places=2)
+        self.assertGreater(similarities[1_300], similarities[1_400])
+        self.assertGreater(similarities[1_400], similarities[1_800])
+
+    def test_travel_frequency_does_not_change_knn_features_or_similarity(self) -> None:
+        preferences, scored = make_scored_response([{}, {}])
+        destination = preferences.important_destinations[0]
+        ten_days = preferences.model_copy(
+            update={
+                "important_destinations": [
+                    destination.model_copy(update={"travel_days_per_month": 10})
+                ]
+            }
+        )
+        twenty_days = preferences.model_copy(
+            update={
+                "important_destinations": [
+                    destination.model_copy(update={"travel_days_per_month": 20})
+                ]
+            }
+        )
+        ten_space = build_property_feature_space(
+            candidates=scored.candidates,
+            preferences=ten_days,
+        )
+        twenty_space = build_property_feature_space(
+            candidates=scored.candidates,
+            preferences=twenty_days,
+        )
+        np.testing.assert_array_equal(ten_space.tenant_vector, twenty_space.tenant_vector)
+        np.testing.assert_array_equal(
+            ten_space.candidate_vectors,
+            twenty_space.candidate_vectors,
+        )
+        ten_result = select_property_neighbors(
+            scored_response=scored,
+            preferences=ten_days,
+            configured_k=2,
+        )
+        twenty_result = select_property_neighbors(
+            scored_response=scored,
+            preferences=twenty_days,
+            configured_k=2,
+        )
+        self.assertEqual(
+            [candidate.property_similarity_score for candidate in ten_result.candidates],
+            [candidate.property_similarity_score for candidate in twenty_result.candidates],
+        )
 
 
 class SimilarityAndSelectionTests(TestCase):

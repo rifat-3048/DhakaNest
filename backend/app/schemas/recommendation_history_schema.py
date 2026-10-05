@@ -9,6 +9,7 @@ from app.schemas.recommendation_schema import (
     NormalizedRecommendationWeights,
     RankedRecommendationCandidate,
     TenantRecommendationRequest,
+    TravelCostMetadata,
 )
 
 
@@ -26,6 +27,7 @@ class RecommendationPipelineSnapshot(BaseModel):
     effective_knn_k: int = Field(..., ge=0)
     routing_provider: str
     travel_mode: str
+    travel_cost: TravelCostMetadata | None = None
 
 
 class RecommendationTopMatch(BaseModel):
@@ -74,6 +76,7 @@ class RecommendationRunDetail(BaseModel):
     scoring_summary: dict[str, int]
     knn_summary: dict[str, int | float | str]
     wsm_summary: dict[str, int | float | str]
+    travel_cost_summary: TravelCostMetadata | None = None
 
 
 class GeoJSONLineString(BaseModel):

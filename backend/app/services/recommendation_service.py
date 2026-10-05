@@ -282,12 +282,14 @@ def apply_commute_routes(
                     destination=destination.destination,
                     destination_preference=destination.preference,
                     distance_km=round(route.distance_meters / 1_000, 2),
+                    distance_meters=route.distance_meters,
                     estimated_duration_minutes=round(
                         route.duration_seconds / 60, 2
                     ),
                     duration_seconds=route.duration_seconds,
                     max_commute_minutes=destination.max_commute_minutes,
                     within_max_commute=within_maximum,
+                    travel_days_per_month=destination.travel_days_per_month,
                 )
             )
 

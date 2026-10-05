@@ -115,6 +115,7 @@ def settings_values(**updates):
         "cloudinary_cloud_name": "test",
         "cloudinary_api_key": "test",
         "cloudinary_api_secret": "test",
+        "transport_cost_per_km_bdt": 15,
     }
     values.update(updates)
     return values
@@ -154,6 +155,15 @@ def manager(primary=None, fallback=None, clock=None, **updates):
 class RoutingConfigurationTests(TestCase):
     def test_valid_routing_configuration_loads(self):
         self.assertEqual(Settings(**settings_values()).routing_provider, "osrm")
+
+    def test_transport_cost_rate_must_be_positive_and_finite(self):
+        self.assertEqual(
+            Settings(**settings_values()).transport_cost_per_km_bdt,
+            15,
+        )
+        for value in [0, -1, float("inf"), float("nan")]:
+            with self.subTest(value=value), self.assertRaises(ValidationError):
+                Settings(**settings_values(transport_cost_per_km_bdt=value))
 
     def test_unsupported_provider_is_rejected(self):
         with self.assertRaises(ValidationError):

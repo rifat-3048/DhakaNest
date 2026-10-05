@@ -70,6 +70,7 @@ function destinations(): ImportantDestinationPreference[] {
     longitude: 90.3929,
     preference: 5,
     max_commute_minutes: 30,
+    travel_days_per_month: 20,
   }];
 }
 

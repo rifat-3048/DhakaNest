@@ -1,8 +1,10 @@
 """Independent criterion scoring and final Weighted Sum Model ranking."""
 
 import math
+from dataclasses import dataclass
 from typing import Any
 
+from app.config import settings
 from app.schemas.recommendation_schema import (
     KNNRecommendationResponse,
     NormalizedRecommendationWeights,
@@ -10,7 +12,9 @@ from app.schemas.recommendation_schema import (
     RankedRecommendationCandidate,
     RankedRecommendationResponse,
     RecommendationPrioritiesRequest,
+    ScoredCandidateCommute,
     TenantRecommendationRequest,
+    TravelCostMetadata,
     WSMDiagnostics,
 )
 from app.services.recommendation_explanation_service import (
@@ -18,7 +22,9 @@ from app.services.recommendation_explanation_service import (
 )
 
 
-RECOMMENDATION_SCORING_VERSION = "wsm_v1"
+RECOMMENDATION_SCORING_VERSION = "wsm_v3"
+PREFERRED_AREA_TOLERANCE = 0.40
+ROUND_TRIP_MULTIPLIER = 2
 CANONICAL_AMENITIES = {
     "Lift",
     "Generator",
@@ -54,7 +60,7 @@ def calculate_budget_score(
     maximum_rent_bdt: float,
     over_budget_percent: int,
 ) -> float:
-    """Score affordability without applying another eligibility filter."""
+    """Score a monthly affordability amount without another hard filter."""
     asking = _finite_number(asking_rent_bdt, "asking_rent_bdt")
     preferred_max = _finite_number(maximum_rent_bdt, "maximum_rent_bdt")
     allowed_max = preferred_max * (1 + over_budget_percent / 100)
@@ -78,6 +84,105 @@ def calculate_budget_score(
     return _clamp_score(1 - min(abs(asking - target) / half_range, 1.0))
 
 
+def calculate_monthly_travel_cost(
+    *,
+    distance_km: float,
+    travel_days_per_month: int,
+    cost_per_km_bdt: float,
+) -> float:
+    """Estimate one round trip per travel day using OSRM road distance."""
+    distance = _finite_number(distance_km, "distance_km")
+    rate = _finite_number(cost_per_km_bdt, "cost_per_km_bdt")
+    if distance < 0 or rate <= 0:
+        raise ValueError("Travel distance cannot be negative and rate must be positive.")
+    if (
+        not isinstance(travel_days_per_month, int)
+        or isinstance(travel_days_per_month, bool)
+        or not 1 <= travel_days_per_month <= 31
+    ):
+        raise ValueError("travel_days_per_month must be between 1 and 31.")
+    return distance * ROUND_TRIP_MULTIPLIER * travel_days_per_month * rate
+
+
+@dataclass(frozen=True)
+class CandidateAffordability:
+    """Candidate costs and enriched commutes used by budget scoring."""
+
+    basis: str
+    monthly_travel_cost_bdt: float | None
+    monthly_spend_bdt: float | None
+    commutes: list[ScoredCandidateCommute]
+
+
+def calculate_candidate_affordability(
+    *,
+    candidate: PropertySimilarCandidate,
+    preferences: TenantRecommendationRequest,
+    cost_per_km_bdt: float,
+) -> CandidateAffordability:
+    """Calculate a complete total or preserve legacy rent-only semantics."""
+    days_by_destination = {
+        destination.id: destination.travel_days_per_month
+        for destination in preferences.important_destinations
+    }
+    has_complete_frequency = all(
+        days_by_destination.get(commute.destination_id) is not None
+        for commute in candidate.commutes
+    ) and len(candidate.commutes) == len(preferences.important_destinations)
+
+    if not has_complete_frequency:
+        return CandidateAffordability(
+            basis="rent_only_legacy",
+            monthly_travel_cost_bdt=None,
+            monthly_spend_bdt=None,
+            commutes=[
+                commute.model_copy(
+                    update={
+                        "travel_days_per_month": days_by_destination.get(
+                            commute.destination_id
+                        ),
+                        "estimated_monthly_travel_cost_bdt": None,
+                    }
+                )
+                for commute in candidate.commutes
+            ],
+        )
+
+    total = 0.0
+    enriched_commutes: list[ScoredCandidateCommute] = []
+    for commute in candidate.commutes:
+        days = days_by_destination[commute.destination_id]
+        if days is None:  # Guarded above; keeps type narrowing explicit.
+            raise ValueError("Complete travel frequency was expected.")
+        distance_km = (
+            commute.distance_meters / 1_000
+            if commute.distance_meters is not None
+            else commute.distance_km
+        )
+        cost = calculate_monthly_travel_cost(
+            distance_km=distance_km,
+            travel_days_per_month=days,
+            cost_per_km_bdt=cost_per_km_bdt,
+        )
+        total += cost
+        enriched_commutes.append(
+            commute.model_copy(
+                update={
+                    "travel_days_per_month": days,
+                    "estimated_monthly_travel_cost_bdt": cost,
+                }
+            )
+        )
+
+    advertised_rent = _finite_number(candidate.asking_rent_bdt, "asking_rent_bdt")
+    return CandidateAffordability(
+        basis="rent_plus_travel",
+        monthly_travel_cost_bdt=total,
+        monthly_spend_bdt=advertised_rent + total,
+        commutes=enriched_commutes,
+    )
+
+
 def _minimum_component(actual: float, minimum: float) -> float:
     difference = max(0.0, actual - minimum)
     return 1 / (1 + difference)
@@ -86,11 +191,21 @@ def _minimum_component(actual: float, minimum: float) -> float:
 def calculate_area_score(
     *,
     area_sqft: float,
-    minimum_area_sqft: float | None,
-    maximum_area_sqft: float | None,
+    preferred_area_sqft: float | None = None,
+    minimum_area_sqft: float | None = None,
+    maximum_area_sqft: float | None = None,
 ) -> float:
-    """Score expressed area preferences with bounded distance functions."""
+    """Score preferred-area proximity or a legacy explicit area range."""
     area = _finite_number(area_sqft, "area_sqft")
+    if preferred_area_sqft is not None:
+        preferred = _finite_number(preferred_area_sqft, "preferred_area_sqft")
+        if preferred <= 0:
+            raise ValueError("preferred_area_sqft must be positive.")
+        relative_difference = abs(area - preferred) / preferred
+        return _clamp_score(
+            1 - (relative_difference / PREFERRED_AREA_TOLERANCE)
+        )
+
     if minimum_area_sqft is None and maximum_area_sqft is None:
         return 1.0
 
@@ -132,6 +247,7 @@ def calculate_space_score(
     )
     area_score = calculate_area_score(
         area_sqft=area_sqft,
+        preferred_area_sqft=preferences.preferred_area_sqft,
         minimum_area_sqft=preferences.minimum_area_sqft,
         maximum_area_sqft=preferences.maximum_area_sqft,
     )
@@ -203,10 +319,18 @@ def _score_candidate(
     candidate: PropertySimilarCandidate,
     preferences: TenantRecommendationRequest,
     weights: dict[str, float],
-) -> tuple[dict[str, float], float]:
+    cost_per_km_bdt: float,
+) -> tuple[dict[str, float], float, CandidateAffordability]:
+    affordability = calculate_candidate_affordability(
+        candidate=candidate,
+        preferences=preferences,
+        cost_per_km_bdt=cost_per_km_bdt,
+    )
     budget_score = calculate_budget_score(
-        asking_rent_bdt=_finite_number(
-            candidate.asking_rent_bdt, "asking_rent_bdt"
+        asking_rent_bdt=(
+            affordability.monthly_spend_bdt
+            if affordability.monthly_spend_bdt is not None
+            else _finite_number(candidate.asking_rent_bdt, "asking_rent_bdt")
         ),
         minimum_rent_bdt=preferences.minimum_rent_bdt,
         maximum_rent_bdt=preferences.maximum_rent_bdt,
@@ -234,22 +358,42 @@ def _score_candidate(
         normalized_weights=weights,
         **scores,
     )
-    return scores, final_score
+    return scores, final_score, affordability
 
 
 def rank_knn_candidates(
     *,
     knn_response: KNNRecommendationResponse,
     preferences: TenantRecommendationRequest,
+    transport_cost_per_km_bdt: float | None = None,
 ) -> RankedRecommendationResponse:
     """Score and rank Part 4 survivors without additional external calls."""
+    cost_per_km_bdt = _finite_number(
+        settings.transport_cost_per_km_bdt
+        if transport_cost_per_km_bdt is None
+        else transport_cost_per_km_bdt,
+        "transport_cost_per_km_bdt",
+    )
+    if cost_per_km_bdt <= 0:
+        raise ValueError("transport_cost_per_km_bdt must be positive.")
     weights = normalize_priority_weights(preferences.priorities)
     scored: list[
-        tuple[int, PropertySimilarCandidate, dict[str, float], float]
+        tuple[
+            int,
+            PropertySimilarCandidate,
+            dict[str, float],
+            float,
+            CandidateAffordability,
+        ]
     ] = []
     for index, candidate in enumerate(knn_response.candidates):
-        scores, final_score = _score_candidate(candidate, preferences, weights)
-        scored.append((index, candidate, scores, final_score))
+        scores, final_score, affordability = _score_candidate(
+            candidate,
+            preferences,
+            weights,
+            cost_per_km_bdt,
+        )
+        scored.append((index, candidate, scores, final_score, affordability))
 
     scored.sort(
         key=lambda item: (
@@ -259,11 +403,18 @@ def rank_knn_candidates(
         )
     )
     ranked: list[RankedRecommendationCandidate] = []
-    for rank, (_, candidate, scores, final_score) in enumerate(scored, start=1):
+    for rank, (_, candidate, scores, final_score, affordability) in enumerate(
+        scored, start=1
+    ):
         ranked_candidate = RankedRecommendationCandidate.model_validate(
                 {
                     **candidate.model_dump(exclude={"commutes"}),
-                    "commutes": candidate.commutes,
+                    "commutes": affordability.commutes,
+                    "travel_cost_basis": affordability.basis,
+                    "estimated_monthly_travel_cost_bdt": (
+                        affordability.monthly_travel_cost_bdt
+                    ),
+                    "estimated_monthly_spend_bdt": affordability.monthly_spend_bdt,
                     **{name: round(value, 4) for name, value in scores.items()},
                     "final_suitability_score": round(final_score, 4),
                     "rank": rank,
@@ -309,6 +460,10 @@ def rank_knn_candidates(
             wsm_ranked_candidate_count=len(ranked),
             weight_sum=float(raw_weight_sum),
             scoring_version=RECOMMENDATION_SCORING_VERSION,
+        ),
+        travel_cost_summary=TravelCostMetadata(
+            cost_per_km_bdt=cost_per_km_bdt,
+            round_trip_multiplier=ROUND_TRIP_MULTIPLIER,
         ),
         candidates=ranked,
     )

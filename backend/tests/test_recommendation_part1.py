@@ -28,6 +28,7 @@ def valid_request(**updates: object) -> TenantRecommendationRequest:
                 "longitude": 90.3998,
                 "preference": 5,
                 "max_commute_minutes": 45,
+                "travel_days_per_month": None,
             }
         ],
         "minimum_rent_bdt": None,
@@ -36,6 +37,7 @@ def valid_request(**updates: object) -> TenantRecommendationRequest:
         "property_types": ["apartment"],
         "minimum_bedrooms": 1,
         "minimum_bathrooms": 1,
+        "preferred_area_sqft": None,
         "minimum_area_sqft": None,
         "maximum_area_sqft": None,
         "furnishing_statuses": [],
@@ -114,6 +116,16 @@ class RecommendationRequestValidationTests(TestCase):
             with self.subTest(updates=updates), self.assertRaises(ValidationError):
                 valid_request(**updates)
 
+    def test_preferred_area_is_optional_bounded_and_positive(self) -> None:
+        self.assertIsNone(valid_request().preferred_area_sqft)
+        self.assertEqual(
+            valid_request(preferred_area_sqft=1_200).preferred_area_sqft,
+            1_200,
+        )
+        for value in [0, -1, 20_001, float("inf"), float("nan")]:
+            with self.subTest(value=value), self.assertRaises(ValidationError):
+                valid_request(preferred_area_sqft=value)
+
     def test_canonical_property_furnishing_and_amenity_values_are_enforced(self) -> None:
         for updates in [
             {"property_types": ["flat"]},
@@ -140,12 +152,30 @@ class RecommendationRequestValidationTests(TestCase):
             [{**destination, "longitude": 181}],
             [{**destination, "preference": 0}],
             [{**destination, "max_commute_minutes": 241}],
+            [{**destination, "travel_days_per_month": 0}],
+            [{**destination, "travel_days_per_month": 32}],
         ]
         for destinations in invalid_cases:
             with self.subTest(destinations=destinations), self.assertRaises(
                 ValidationError
             ):
                 valid_request(important_destinations=destinations)
+
+    def test_travel_frequency_is_nullable_for_legacy_requests(self) -> None:
+        self.assertIsNone(
+            valid_request().important_destinations[0].travel_days_per_month
+        )
+        for days in [1, 31]:
+            destination = valid_request().important_destinations[0].model_dump()
+            parsed = valid_request(
+                important_destinations=[
+                    {**destination, "travel_days_per_month": days}
+                ]
+            )
+            self.assertEqual(
+                parsed.important_destinations[0].travel_days_per_month,
+                days,
+            )
 
     def test_priority_values_must_be_between_one_and_five(self) -> None:
         priorities = valid_request().priorities.model_dump()
@@ -185,6 +215,22 @@ class RecommendationHardFilterTests(TestCase):
                 valid_request(minimum_rent_bdt=10_000, over_budget_percent=10),
             ),
             ["inside", "five", "ten"],
+        )
+
+    def test_travel_frequency_does_not_change_advertised_rent_filter(self) -> None:
+        destination = valid_request().important_destinations[0].model_dump()
+        preferences = valid_request(
+            maximum_rent_bdt=25_000,
+            important_destinations=[
+                {**destination, "travel_days_per_month": 31}
+            ],
+        )
+        self.assertEqual(
+            candidate_ids(
+                [make_listing(id="within", asking_rent_bdt=25_000)],
+                preferences,
+            ),
+            ["within"],
         )
 
     def test_property_type_exact_and_multiple_selection(self) -> None:
@@ -248,6 +294,16 @@ class RecommendationHardFilterTests(TestCase):
         self.assertEqual(
             candidate_ids(listings, valid_request(maximum_area_sqft=1_000)),
             ["below", "minimum", "inside"],
+        )
+
+    def test_preferred_area_is_not_a_hard_filter(self) -> None:
+        listings = [
+            make_listing(id=str(area), area_sqft=area)
+            for area in [1_100, 1_200, 1_400, 1_800]
+        ]
+        self.assertEqual(
+            candidate_ids(listings, valid_request(preferred_area_sqft=1_200)),
+            ["1100", "1200", "1400", "1800"],
         )
 
     def test_furnishing_selection_and_empty_any_semantics(self) -> None:

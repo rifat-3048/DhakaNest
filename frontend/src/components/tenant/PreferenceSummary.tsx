@@ -24,6 +24,18 @@ function minimumRoomLabel(value: number): string {
   return value === 6 ? "5+" : String(value);
 }
 
+function propertyTypeSummary(
+  propertyTypes: TenantSearchPreferences["property_types"],
+): string {
+  const labels: string[] = [];
+  if (propertyTypes.includes("apartment")) labels.push("Apartment");
+  if (propertyTypes.includes("house")) labels.push("House");
+  if (propertyTypes.includes("room") || propertyTypes.includes("sublet")) {
+    labels.push("Room / Sublet");
+  }
+  return labels.join(", ") || "Not selected";
+}
+
 interface PreferenceSummaryProps {
   preferences: TenantSearchPreferences;
   isProcessing: boolean;
@@ -81,6 +93,12 @@ export default function PreferenceSummary({
                       ? `${destination.max_commute_minutes} min`
                       : "Flexible"}
                   </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Travel frequency:{" "}
+                    {destination.travel_days_per_month
+                      ? `${destination.travel_days_per_month} days/month`
+                      : "Not entered"}
+                  </p>
                 </div>
               ))}
           </dd>
@@ -91,14 +109,11 @@ export default function PreferenceSummary({
         />
         <SummaryItem
           label="Property requirements"
-          value={`${preferences.property_types.map(words).join(", ") || "Not selected"}; ${minimumRoomLabel(preferences.minimum_bedrooms)} bedrooms minimum; ${minimumRoomLabel(preferences.minimum_bathrooms)} bathrooms minimum`}
+          value={`${propertyTypeSummary(preferences.property_types)}; ${minimumRoomLabel(preferences.minimum_bedrooms)} bedroom(s); ${minimumRoomLabel(preferences.minimum_bathrooms)} bathroom(s)`}
         />
         <SummaryItem
-          label="Property size"
-          value={formatAreaRange(
-            preferences.minimum_area_sqft,
-            preferences.maximum_area_sqft,
-          )}
+          label="Preferred floor size"
+          value={formatFloorSize(preferences.preferred_area_sqft)}
         />
         <SummaryItem
           label="Household"
@@ -156,13 +171,9 @@ export default function PreferenceSummary({
   );
 }
 
-function formatAreaRange(minimum: number | null, maximum: number | null): string {
-  if (minimum && maximum) {
-    return `${currencyFormatter.format(minimum)} - ${currencyFormatter.format(maximum)} sq ft`;
-  }
-  if (minimum) return `${currencyFormatter.format(minimum)}+ sq ft`;
-  if (maximum) return `Up to ${currencyFormatter.format(maximum)} sq ft`;
-  return "No restriction";
+function formatFloorSize(value: number | null): string {
+  if (value) return `${currencyFormatter.format(value)} sq ft`;
+  return "No preference";
 }
 
 function SummaryItem({ label, value }: { label: string; value: string }) {

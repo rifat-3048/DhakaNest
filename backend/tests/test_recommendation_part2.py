@@ -3,7 +3,7 @@
 import socket
 from unittest import IsolatedAsyncioTestCase, TestCase
 from unittest.mock import AsyncMock, patch
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 from fastapi import HTTPException
 
@@ -50,6 +50,7 @@ def destination(
     *,
     maximum: int | None = None,
     preference: int = 5,
+    travel_days_per_month: int | None = None,
 ) -> ImportantDestinationRequest:
     return ImportantDestinationRequest(
         id=destination_id,
@@ -58,6 +59,7 @@ def destination(
         longitude=90.3998,
         preference=preference,
         max_commute_minutes=maximum,
+        travel_days_per_month=travel_days_per_month,
     )
 
 
@@ -180,6 +182,91 @@ class OSRMRoutingAdapterTests(TestCase):
                 "app.services.routing_service.urlopen", side_effect=error
             ), self.assertRaises(RoutingProviderUnavailable):
                 provider._fetch_json("https://routing.example.test/table")
+
+
+class OSRMMatrixBatchingTests(IsolatedAsyncioTestCase):
+    def make_provider(self, failing_batch: int | None = None):
+        provider = OSRMRoutingProvider(
+            base_url="https://routing.test",
+            timeout_seconds=1,
+            user_agent="DhakaNest-Test",
+        )
+        state = {"offset": 0, "calls": 0}
+
+        def fetch(url: str) -> dict:
+            state["calls"] += 1
+            if failing_batch == state["calls"]:
+                raise RoutingProviderUnavailable("batch failed")
+            query = parse_qs(urlparse(url).query)
+            rows = len(query["sources"][0].split(";"))
+            columns = len(query["destinations"][0].split(";"))
+            offset = state["offset"]
+            state["offset"] += rows
+            return {
+                "code": "Ok",
+                "durations": [
+                    [float((offset + row + 1) * 100 + column) for column in range(columns)]
+                    for row in range(rows)
+                ],
+                "distances": [
+                    [float((offset + row + 1) * 1000 + column) for column in range(columns)]
+                    for row in range(rows)
+                ],
+            }
+
+        provider._fetch_json = fetch
+        return provider, state
+
+    async def test_chunking_preserves_order_and_exact_matrix(self) -> None:
+        listings = [
+            candidate(f"listing-{index}", longitude=90.37 + index / 1000)
+            for index in range(5)
+        ]
+        destinations = [destination("a"), destination("b")]
+        provider, state = self.make_provider()
+        with patch(
+            "app.services.routing_service.settings.routing_matrix_listing_batch_size",
+            3,
+        ):
+            matrix = await provider.get_route_matrix(listings, destinations)
+
+        self.assertEqual(state["calls"], 2)
+        self.assertEqual(matrix.get("listing-0", "a").distance_meters, 1000)
+        self.assertEqual(matrix.get("listing-4", "b").distance_meters, 5001)
+        self.assertEqual(
+            list(matrix.routes),
+            [(listing.id, place.id) for listing in listings for place in destinations],
+        )
+
+    async def test_batched_and_single_request_results_are_equivalent(self) -> None:
+        listings = [candidate(f"listing-{index}") for index in range(5)]
+        destinations = [destination("a"), destination("b")]
+        batched, _ = self.make_provider()
+        single, _ = self.make_provider()
+        with patch(
+            "app.services.routing_service.settings.routing_matrix_listing_batch_size",
+            3,
+        ):
+            batched_result = await batched.get_route_matrix(listings, destinations)
+        with patch(
+            "app.services.routing_service.settings.routing_matrix_listing_batch_size",
+            95,
+        ):
+            single_result = await single.get_route_matrix(listings, destinations)
+        self.assertEqual(batched_result.routes, single_result.routes)
+
+    async def test_any_batch_failure_fails_the_complete_matrix(self) -> None:
+        provider, state = self.make_provider(failing_batch=2)
+        with patch(
+            "app.services.routing_service.settings.routing_matrix_listing_batch_size",
+            3,
+        ):
+            with self.assertRaises(RoutingProviderUnavailable):
+                await provider.get_route_matrix(
+                    [candidate(f"listing-{index}") for index in range(5)],
+                    [destination()],
+                )
+        self.assertEqual(state["calls"], 2)
 
 
 class CommuteConstraintTests(TestCase):

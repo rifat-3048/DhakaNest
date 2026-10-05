@@ -62,6 +62,11 @@ def _pipeline(response: RankedRecommendationResponse) -> dict[str, Any]:
         "effective_knn_k": response.knn_summary.effective_k,
         "routing_provider": response.routing_summary.provider or settings.routing_provider,
         "travel_mode": response.routing_summary.travel_mode,
+        "travel_cost": (
+            response.travel_cost_summary.model_dump(mode="json")
+            if response.travel_cost_summary is not None
+            else None
+        ),
     }
 
 
@@ -72,6 +77,7 @@ def _result_snapshot(candidate: Any) -> dict[str, Any]:
         snapshot["commutes"], candidate.commutes, strict=True
     ):
         stored["duration_seconds"] = commute.duration_seconds
+        stored["distance_meters"] = commute.distance_meters
     return snapshot
 
 
@@ -98,6 +104,7 @@ def _document_to_ranked_response(
             "knn_summary": document["knn_summary"],
             "normalized_weights": document["normalized_weights"],
             "wsm_summary": document["wsm_summary"],
+            "travel_cost_summary": document.get("travel_cost_summary"),
             "candidates": document["results"],
             "recommendation_run_id": str(document["_id"]),
             "created_at": _utc_datetime(document["created_at"]),
@@ -120,6 +127,7 @@ def _document_to_detail(document: dict[str, Any]) -> RecommendationRunDetail:
             "scoring_summary": document["scoring_summary"],
             "knn_summary": document["knn_summary"],
             "wsm_summary": document["wsm_summary"],
+            "travel_cost_summary": document.get("travel_cost_summary"),
         }
     )
 
@@ -209,6 +217,11 @@ async def save_recommendation_run(
         "scoring_summary": response.scoring_summary.model_dump(mode="json"),
         "knn_summary": response.knn_summary.model_dump(mode="json"),
         "wsm_summary": response.wsm_summary.model_dump(mode="json"),
+        "travel_cost_summary": (
+            response.travel_cost_summary.model_dump(mode="json")
+            if response.travel_cost_summary is not None
+            else None
+        ),
     }
     try:
         inserted = await database[COLLECTION_NAME].insert_one(document)

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -49,6 +50,9 @@ function candidate(id: string, rank: number): RankedRecommendationCandidate {
     title: `Listing ${id}`,
     description: null,
     asking_rent_bdt: 25_000,
+    travel_cost_basis: "rent_plus_travel",
+    estimated_monthly_travel_cost_bdt: 3_000,
+    estimated_monthly_spend_bdt: 28_000,
     property_type: "apartment",
     bedrooms: 2,
     bathrooms: 2,
@@ -73,6 +77,8 @@ function candidate(id: string, rank: number): RankedRecommendationCandidate {
       max_commute_minutes: 30,
       within_max_commute: true,
       normalized_destination_score: 1,
+      travel_days_per_month: 20,
+      estimated_monthly_travel_cost_bdt: 3_000,
     }],
     destination_access_score: 1,
     property_similarity_score: 0.8,
@@ -140,4 +146,26 @@ test("historical cards retain stored rank order and snapshot fields", () => {
   assert.equal(restored[0].recommendation_reasons[0].category, "location");
   assert.equal(restored[0].commutes[0].max_commute_minutes, 30);
   assert.equal(restored[0].primary_image, null);
+  assert.equal(restored[0].estimated_monthly_travel_cost_bdt, 3_000);
+  assert.equal(restored[0].estimated_monthly_spend_bdt, 28_000);
+  assert.equal(restored[0].commutes[0].travel_days_per_month, 20);
+});
+
+test("historical UI uses stored travel values and marks legacy absence", () => {
+  const source = readFileSync(
+    new URL(
+      "../src/components/tenant/HistoricalRecommendationResults.tsx",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  assert.match(source, /travel_days_per_month/);
+  assert.match(source, /These historical values are not recalculated/);
+  assert.match(source, /Travel-cost estimate was not recorded/);
+
+  const legacy = candidate("legacy", 1);
+  delete legacy.estimated_monthly_travel_cost_bdt;
+  delete legacy.estimated_monthly_spend_bdt;
+  assert.equal(legacy.estimated_monthly_travel_cost_bdt, undefined);
+  assert.equal(legacy.estimated_monthly_spend_bdt, undefined);
 });

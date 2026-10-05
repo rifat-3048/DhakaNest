@@ -97,7 +97,30 @@ def _budget_reason(
 ) -> ReasonCandidate | None:
     if candidate.asking_rent_bdt is None:
         return None
-    if candidate.asking_rent_bdt > preferences.maximum_rent_bdt:
+    if (
+        candidate.travel_cost_basis == "rent_plus_travel"
+        and candidate.estimated_monthly_spend_bdt is not None
+    ):
+        spend = candidate.estimated_monthly_spend_bdt
+        if spend > preferences.maximum_rent_bdt:
+            text = (
+                "Travel increases the estimated monthly spend to "
+                f"BDT {spend:,.0f}."
+            )
+            code = "budget_spend_increased_by_travel"
+        elif candidate.budget_score >= STRONG_SCORE_THRESHOLD:
+            text = (
+                "Estimated monthly spend including travel is "
+                f"BDT {spend:,.0f}, which fits your budget well."
+            )
+            code = "budget_spend_comfortable"
+        else:
+            text = (
+                "Estimated monthly spend including travel is "
+                f"BDT {spend:,.0f}, within your preferred maximum budget."
+            )
+            code = "budget_spend_within_preferred"
+    elif candidate.asking_rent_bdt > preferences.maximum_rent_bdt:
         text = (
             "Slightly above your preferred budget but within your allowed "
             f"{preferences.over_budget_percent}% flexibility."
@@ -130,7 +153,22 @@ def _space_reason(
         f"{preferences.minimum_bathrooms}-bathroom requirements."
     )
     area = candidate.area_sqft
-    if area is not None and (
+    if area is not None and preferences.preferred_area_sqft is not None:
+        preferred = preferences.preferred_area_sqft
+        relative_difference = abs(area - preferred) / preferred
+        if relative_difference <= 0.10:
+            room_text = (
+                f"Meets your bedroom and bathroom requirements, and "
+                f"{area:,.0f} sq ft is close to your preferred floor size "
+                f"of {preferred:,.0f} sq ft."
+            )
+        else:
+            room_text = (
+                f"Meets your bedroom and bathroom requirements, with "
+                f"{area:,.0f} sq ft compared with your preferred floor size "
+                f"of {preferred:,.0f} sq ft."
+            )
+    elif area is not None and (
         preferences.minimum_area_sqft is not None
         or preferences.maximum_area_sqft is not None
     ):

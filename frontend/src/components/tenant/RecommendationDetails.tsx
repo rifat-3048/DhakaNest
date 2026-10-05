@@ -10,7 +10,10 @@ import {
   suitabilityPercent,
 } from "@/lib/recommendation-display";
 import { getLatestRecommendationResult } from "@/lib/recommendation-result-storage";
-import type { RankedRecommendationCandidate } from "@/types/recommendation";
+import type {
+  RankedRecommendationCandidate,
+  TravelCostMetadata,
+} from "@/types/recommendation";
 
 
 const currency = new Intl.NumberFormat("en-BD", { maximumFractionDigits: 0 });
@@ -18,6 +21,7 @@ const currency = new Intl.NumberFormat("en-BD", { maximumFractionDigits: 0 });
 export default function RecommendationDetails() {
   const params = useParams<{ listingId: string }>();
   const [candidate, setCandidate] = useState<RankedRecommendationCandidate | null>(null);
+  const [travelCost, setTravelCost] = useState<TravelCostMetadata | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -29,6 +33,7 @@ export default function RecommendationDetails() {
       setCandidate(
         response?.candidates.find((item) => item.id === params.listingId) ?? null,
       );
+      setTravelCost(response?.travel_cost_summary ?? null);
       setLoaded(true);
     }
     void loadDetails();
@@ -108,6 +113,27 @@ export default function RecommendationDetails() {
             <p className="mt-5 text-2xl font-bold text-emerald-700">
               BDT {currency.format(candidate.asking_rent_bdt ?? 0)} / month
             </p>
+            {candidate.estimated_monthly_travel_cost_bdt != null &&
+            candidate.estimated_monthly_spend_bdt != null ? (
+              <dl className="mt-5 grid gap-4 border border-slate-200 bg-slate-50 p-5 sm:grid-cols-3">
+                <Fact
+                  label="Monthly rent"
+                  value={`BDT ${currency.format(candidate.asking_rent_bdt ?? 0)}`}
+                />
+                <Fact
+                  label="Estimated monthly travel cost"
+                  value={`BDT ${currency.format(candidate.estimated_monthly_travel_cost_bdt)}`}
+                />
+                <Fact
+                  label="Estimated monthly spend"
+                  value={`BDT ${currency.format(candidate.estimated_monthly_spend_bdt)}`}
+                />
+              </dl>
+            ) : (
+              <p className="mt-4 text-sm text-slate-500">
+                Travel-cost estimate was not recorded for this recommendation.
+              </p>
+            )}
             <p className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-700">
               {candidate.description ?? "No additional property description is available."}
             </p>
@@ -126,18 +152,39 @@ export default function RecommendationDetails() {
               </ul>
             </section>
             <section className="mt-7">
-              <h2 className="text-lg font-bold text-slate-950">Estimated drives</h2>
+              <h2 className="text-lg font-bold text-slate-950">
+                Estimated monthly travel
+              </h2>
               <div className="mt-3 divide-y divide-slate-100">
                 {candidate.commutes.map((commute) => (
                   <div key={commute.destination_id} className="py-3 text-sm text-slate-700">
                     <strong className="text-slate-950">{commute.destination}</strong>
                     <p className="mt-1">
-                      {commute.estimated_duration_minutes.toFixed(1)} minutes, {" "}
-                      {commute.distance_km.toFixed(1)} km; importance {commute.destination_preference}/5
+                      {commute.distance_km.toFixed(1)} km one way; {" "}
+                      {commute.estimated_duration_minutes.toFixed(1)} minutes estimated drive
                     </p>
+                    {commute.travel_days_per_month != null &&
+                      commute.estimated_monthly_travel_cost_bdt != null && (
+                        <p className="mt-1 font-medium text-slate-900">
+                          {commute.travel_days_per_month} days/month; BDT{" "}
+                          {currency.format(commute.estimated_monthly_travel_cost_bdt)}/month
+                        </p>
+                      )}
                   </div>
                 ))}
               </div>
+              {candidate.estimated_monthly_travel_cost_bdt != null && (
+                <p className="mt-4 text-sm font-semibold text-slate-950">
+                  Total estimated travel: BDT{" "}
+                  {currency.format(candidate.estimated_monthly_travel_cost_bdt)}/month
+                </p>
+              )}
+              {travelCost && (
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  Estimated using a fixed BDT {currency.format(travelCost.cost_per_km_bdt)}/km
+                  academic cost assumption and one round trip per travel day.
+                </p>
+              )}
             </section>
           </div>
         </article>

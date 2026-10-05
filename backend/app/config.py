@@ -53,11 +53,16 @@ class Settings(BaseSettings):
     routing_geometry_cache_ttl_seconds: int = Field(default=3_600, ge=1, le=86_400)
     routing_cache_max_entries: int = Field(default=1_000, ge=1, le=100_000)
     routing_cache_coordinate_precision: int = Field(default=6, ge=4, le=7)
+    # Keep each public OSRM Table request below its coordinate-size limits.
+    routing_matrix_listing_batch_size: int = Field(default=75, ge=1, le=95)
     routing_circuit_failure_threshold: int = Field(default=3, ge=1, le=100)
     routing_circuit_open_seconds: float = Field(default=30.0, gt=0, le=3_600)
     routing_health_cache_ttl_seconds: int = Field(default=30, ge=1, le=300)
     recommendation_rate_limit_per_minute: int = Field(default=12, ge=1, le=1_000)
     route_geometry_rate_limit_per_minute: int = Field(default=30, ge=1, le=1_000)
+
+    # Fixed academic assumption used with OSRM road distance for travel estimates.
+    transport_cost_per_km_bdt: float = Field(..., gt=0, allow_inf_nan=False)
 
     # Number of content-similar properties retained for later WSM scoring.
     recommendation_knn_k: int = Field(default=10, ge=1)

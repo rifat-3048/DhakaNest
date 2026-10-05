@@ -18,6 +18,7 @@ function validDestination(): ImportantDestinationPreference {
     longitude: 90.3929,
     preference: 5,
     max_commute_minutes: 30,
+    travel_days_per_month: 20,
   };
 }
 
@@ -61,6 +62,22 @@ test("optional commute may be null", () => {
   const destination = validDestination();
   destination.max_commute_minutes = null;
   assert.equal(validateImportantDestinations([destination]), null);
+});
+
+test("travel frequency accepts boundaries and rejects missing or out of range", () => {
+  for (const value of [1, 31]) {
+    const destination = validDestination();
+    destination.travel_days_per_month = value;
+    assert.equal(validateImportantDestinations([destination]), null);
+  }
+  for (const value of [null, 0, 32]) {
+    const destination = validDestination();
+    destination.travel_days_per_month = value;
+    assert.match(
+      validateImportantDestinations([destination]) ?? "",
+      /days per month/i,
+    );
+  }
 });
 
 test("zero and negative commute values fail validation", () => {

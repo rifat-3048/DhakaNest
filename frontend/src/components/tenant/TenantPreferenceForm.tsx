@@ -8,14 +8,16 @@ import PreferenceSection from "@/components/tenant/PreferenceSection";
 import PreferenceSummary from "@/components/tenant/PreferenceSummary";
 import PrioritySelector from "@/components/tenant/PrioritySelector";
 import {
+  MUST_HAVE_AMENITY_OPTIONS,
   MINIMUM_ROOM_OPTIONS,
+  NICE_TO_HAVE_AMENITY_OPTIONS,
   RECOMMENDATION_PRIORITY_OPTIONS,
+  TENANT_PROPERTY_TYPE_OPTIONS,
 } from "@/data/tenant-preference-options";
 import {
   FURNISHING_OPTIONS,
-  PROPERTY_AMENITIES,
-  PROPERTY_TYPE_OPTIONS,
   type PropertyAmenity,
+  type PropertyType,
 } from "@/data/property-options";
 import {
   clearTenantPreferences,
@@ -42,6 +44,7 @@ function createInitialPreferences(): TenantSearchPreferences {
     property_types: ["apartment"],
     minimum_bedrooms: 2,
     minimum_bathrooms: 1,
+    preferred_area_sqft: null,
     minimum_area_sqft: null,
     maximum_area_sqft: null,
     furnishing_statuses: [],
@@ -66,6 +69,17 @@ function toggleArrayValue<T extends string>(values: T[], value: T): T[] {
   return values.includes(value)
     ? values.filter((item) => item !== value)
     : [...values, value];
+}
+
+function togglePropertyTypeGroup(
+  values: PropertyType[],
+  group: readonly PropertyType[],
+): PropertyType[] {
+  const groupIsSelected = group.every((value) => values.includes(value));
+  if (groupIsSelected) {
+    return values.filter((value) => !group.includes(value));
+  }
+  return [...values, ...group.filter((value) => !values.includes(value))];
 }
 
 function nullableNumber(value: string): number | null {
@@ -209,25 +223,27 @@ export default function TenantPreferenceForm() {
         <PreferenceSection
           number={3}
           title="Property requirements"
-          description="Choose the property formats and minimum space you need."
+          description="Choose the property formats and space that suit your household."
         >
           <FieldHeading
             label="Property types"
             requirement="Required"
-            detail={`${preferences.property_types.length} selected`}
+            detail={`${TENANT_PROPERTY_TYPE_OPTIONS.filter((option) => option.propertyTypes.every((value) => preferences.property_types.includes(value))).length} selected`}
           />
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {PROPERTY_TYPE_OPTIONS.map((option) => (
+            {TENANT_PROPERTY_TYPE_OPTIONS.map((option) => (
               <CheckboxChoice
                 key={option.value}
                 label={option.label}
-                checked={preferences.property_types.includes(option.value)}
+                checked={option.propertyTypes.every((value) =>
+                  preferences.property_types.includes(value),
+                )}
                 onChange={() =>
                   updatePreferences((current) => ({
                     ...current,
-                    property_types: toggleArrayValue(
+                    property_types: togglePropertyTypeGroup(
                       current.property_types,
-                      option.value,
+                      option.propertyTypes,
                     ),
                   }))
                 }
@@ -238,7 +254,7 @@ export default function TenantPreferenceForm() {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <SelectNumberField
-              label="Minimum bedrooms"
+              label="How many bedrooms do you need?"
               value={preferences.minimum_bedrooms}
               onChange={(value) =>
                 updatePreferences((current) => ({
@@ -248,7 +264,7 @@ export default function TenantPreferenceForm() {
               }
             />
             <SelectNumberField
-              label="Minimum bathrooms"
+              label="How many bathrooms do you need?"
               value={preferences.minimum_bathrooms}
               onChange={(value) =>
                 updatePreferences((current) => ({
@@ -260,35 +276,24 @@ export default function TenantPreferenceForm() {
           </div>
           <ErrorText message={errors.minimum_bedrooms ?? errors.minimum_bathrooms} />
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 max-w-md">
             <NumberField
-              label="Minimum floor area"
+              label="Preferred floor size"
               requirement="Optional"
               suffix="sq ft"
               min={1}
-              value={preferences.minimum_area_sqft}
+              max={20000}
+              helperText="Nearby sizes can still be recommended."
+              value={preferences.preferred_area_sqft}
               onChange={(value) =>
                 updatePreferences((current) => ({
                   ...current,
-                  minimum_area_sqft: value,
-                }))
-              }
-            />
-            <NumberField
-              label="Maximum floor area"
-              requirement="Optional"
-              suffix="sq ft"
-              min={1}
-              value={preferences.maximum_area_sqft}
-              onChange={(value) =>
-                updatePreferences((current) => ({
-                  ...current,
-                  maximum_area_sqft: value,
+                  preferred_area_sqft: value,
                 }))
               }
             />
           </div>
-          <ErrorText message={errors.minimum_area_sqft} />
+          <ErrorText message={errors.preferred_area_sqft} />
 
           <div className="mt-6">
             <FieldHeading
@@ -366,6 +371,7 @@ export default function TenantPreferenceForm() {
             <AmenityGroup
               title="Must-have amenities"
               description="Missing items may exclude a listing."
+              options={MUST_HAVE_AMENITY_OPTIONS}
               selected={preferences.must_have_amenities}
               onToggle={(amenity) =>
                 updatePreferences((current) => ({
@@ -380,6 +386,7 @@ export default function TenantPreferenceForm() {
             <AmenityGroup
               title="Nice-to-have amenities"
               description="These improve ranking without excluding listings."
+              options={NICE_TO_HAVE_AMENITY_OPTIONS}
               selected={preferences.nice_to_have_amenities}
               onToggle={(amenity) =>
                 updatePreferences((current) => ({
@@ -487,18 +494,22 @@ function NumberField({
   value,
   onChange,
   min,
+  max,
   step = 1,
   prefix,
   suffix,
+  helperText,
 }: {
   label: string;
   requirement: "Required" | "Optional";
   value: number | null;
   onChange: (value: number | null) => void;
   min: number;
+  max?: number;
   step?: number;
   prefix?: string;
   suffix?: string;
+  helperText?: string;
 }) {
   return (
     <label>
@@ -512,6 +523,7 @@ function NumberField({
         <input
           type="number"
           min={min}
+          max={max}
           step={step}
           value={value ?? ""}
           onChange={(event) => onChange(nullableNumber(event.target.value))}
@@ -523,6 +535,9 @@ function NumberField({
           </span>
         )}
       </div>
+      {helperText && (
+        <span className="mt-1.5 block text-xs text-slate-500">{helperText}</span>
+      )}
     </label>
   );
 }
@@ -559,11 +574,13 @@ function SelectNumberField({
 function AmenityGroup({
   title,
   description,
+  options,
   selected,
   onToggle,
 }: {
   title: string;
   description: string;
+  options: ReadonlyArray<{ value: PropertyAmenity; label: string }>;
   selected: PropertyAmenity[];
   onToggle: (amenity: PropertyAmenity) => void;
 }) {
@@ -575,7 +592,7 @@ function AmenityGroup({
         {selected.length} selected
       </p>
       <div className="mt-3 space-y-2">
-        {PROPERTY_AMENITIES.map((amenity) => (
+        {options.map((amenity) => (
           <CheckboxChoice
             key={amenity.value}
             label={amenity.label}

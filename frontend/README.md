@@ -27,6 +27,11 @@ The backend is the source of truth for scores and rank. The frontend displays
 Weighted Sum Model. Suitability is not model confidence, probability, or
 classification accuracy.
 
+Recommendation affordability shows monthly rent, estimated monthly travel cost,
+and estimated monthly spend when every destination has a travel frequency. The
+travel estimate is advisory and uses the backend's fixed academic BDT/km rate
+with one round trip per travel day.
+
 Commute durations are shown as estimated drives. They are traffic-free OSRM road
 estimates, not live Dhaka traffic times. Listings without images use a local
 placeholder instead of a broken or externally hotlinked image.

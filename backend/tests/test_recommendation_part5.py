@@ -15,6 +15,8 @@ from app.services.wsm_service import (
     calculate_amenities_score,
     calculate_area_score,
     calculate_budget_score,
+    calculate_candidate_affordability,
+    calculate_monthly_travel_cost,
     calculate_rent_fairness_score,
     calculate_space_score,
     calculate_weighted_suitability,
@@ -97,6 +99,193 @@ class BudgetScoreTests(TestCase):
         ]
         self.assertTrue(all(math.isfinite(value) for value in values))
         self.assertTrue(all(0 <= value <= 1 for value in values))
+
+
+class TravelCostTests(TestCase):
+    def test_basic_formula_frequency_and_distance_scaling(self) -> None:
+        ten_days = calculate_monthly_travel_cost(
+            distance_km=5,
+            travel_days_per_month=10,
+            cost_per_km_bdt=15,
+        )
+        twenty_days = calculate_monthly_travel_cost(
+            distance_km=5,
+            travel_days_per_month=20,
+            cost_per_km_bdt=15,
+        )
+        ten_km = calculate_monthly_travel_cost(
+            distance_km=10,
+            travel_days_per_month=10,
+            cost_per_km_bdt=15,
+        )
+        self.assertEqual(twenty_days, 3_000)
+        self.assertEqual(twenty_days, ten_days * 2)
+        self.assertEqual(ten_km, ten_days * 2)
+
+    def test_multiple_destinations_sum_without_importance_weighting(self) -> None:
+        preferences, knn = make_knn_response([{"asking_rent_bdt": 25_000}])
+        first = preferences.important_destinations[0].model_copy(
+            update={"preference": 1, "travel_days_per_month": 20}
+        )
+        second = first.model_copy(
+            update={
+                "id": "hospital",
+                "destination": "Hospital",
+                "preference": 5,
+                "travel_days_per_month": 4,
+            }
+        )
+        preferences = preferences.model_copy(
+            update={"important_destinations": [first, second]}
+        )
+        commute_a = knn.candidates[0].commutes[0].model_copy(
+            update={
+                "distance_km": 5.0,
+                "distance_meters": 5_000.0,
+                "destination_preference": 1,
+            }
+        )
+        commute_b = commute_a.model_copy(
+            update={
+                "destination_id": "hospital",
+                "destination": "Hospital",
+                "distance_km": 8.0,
+                "distance_meters": 8_000.0,
+                "destination_preference": 5,
+            }
+        )
+        candidate = knn.candidates[0].model_copy(
+            update={"commutes": [commute_a, commute_b]}
+        )
+        calculated = calculate_candidate_affordability(
+            candidate=candidate,
+            preferences=preferences,
+            cost_per_km_bdt=15,
+        )
+        self.assertEqual(
+            [item.estimated_monthly_travel_cost_bdt for item in calculated.commutes],
+            [3_000, 960],
+        )
+        self.assertEqual(calculated.monthly_travel_cost_bdt, 3_960)
+        self.assertEqual(calculated.monthly_spend_bdt, 28_960)
+
+        changed_importance = preferences.model_copy(
+            update={
+                "important_destinations": [
+                    first.model_copy(update={"preference": 5}),
+                    second.model_copy(update={"preference": 1}),
+                ]
+            }
+        )
+        changed = calculate_candidate_affordability(
+            candidate=candidate,
+            preferences=changed_importance,
+            cost_per_km_bdt=15,
+        )
+        self.assertEqual(changed.monthly_travel_cost_bdt, 3_960)
+
+    def test_incomplete_legacy_frequency_keeps_rent_only_budget(self) -> None:
+        preferences, knn = make_knn_response([{"asking_rent_bdt": 25_000}])
+        response = rank_knn_candidates(
+            knn_response=knn,
+            preferences=preferences,
+            transport_cost_per_km_bdt=15,
+        )
+        candidate = response.candidates[0]
+        self.assertEqual(candidate.travel_cost_basis, "rent_only_legacy")
+        self.assertIsNone(candidate.estimated_monthly_travel_cost_bdt)
+        self.assertIsNone(candidate.estimated_monthly_spend_bdt)
+        self.assertEqual(
+            candidate.budget_score,
+            round(
+                calculate_budget_score(
+                    asking_rent_bdt=25_000,
+                    minimum_rent_bdt=preferences.minimum_rent_bdt,
+                    maximum_rent_bdt=preferences.maximum_rent_bdt,
+                    over_budget_percent=preferences.over_budget_percent,
+                ),
+                4,
+            ),
+        )
+
+    def test_total_spend_can_favor_higher_rent_with_shorter_travel(self) -> None:
+        preferences, knn = make_knn_response(
+            [
+                {"id": "lower-rent-far", "asking_rent_bdt": 25_000},
+                {"id": "higher-rent-near", "asking_rent_bdt": 27_000},
+            ],
+            minimum_rent_bdt=None,
+            maximum_rent_bdt=35_000,
+        )
+        destination = preferences.important_destinations[0].model_copy(
+            update={"travel_days_per_month": 20}
+        )
+        preferences = preferences.model_copy(
+            update={"important_destinations": [destination]}
+        )
+        distances = {"lower-rent-far": 10_000.0, "higher-rent-near": 3_333.333333}
+        candidates = []
+        for candidate in knn.candidates:
+            meters = distances[candidate.id]
+            candidates.append(
+                candidate.model_copy(
+                    update={
+                        "destination_access_score": 1.0,
+                        "commutes": [
+                            candidate.commutes[0].model_copy(
+                                update={
+                                    "distance_meters": meters,
+                                    "distance_km": meters / 1_000,
+                                }
+                            )
+                        ],
+                    }
+                )
+            )
+        response = rank_knn_candidates(
+            knn_response=knn.model_copy(update={"candidates": candidates}),
+            preferences=preferences,
+            transport_cost_per_km_bdt=15,
+        )
+        by_id = {candidate.id: candidate for candidate in response.candidates}
+        farther = by_id["lower-rent-far"]
+        nearer = by_id["higher-rent-near"]
+        self.assertAlmostEqual(farther.estimated_monthly_spend_bdt, 31_000)
+        self.assertAlmostEqual(nearer.estimated_monthly_spend_bdt, 29_000, places=5)
+        self.assertGreater(nearer.budget_score, farther.budget_score)
+        self.assertGreater(
+            nearer.final_suitability_score,
+            farther.final_suitability_score,
+        )
+        self.assertLess(nearer.rank, farther.rank)
+        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v3")
+
+    def test_frequency_does_not_change_fairness_or_rerun_prediction(self) -> None:
+        preferences, knn = make_knn_response([{}])
+        low = preferences.important_destinations[0].model_copy(
+            update={"travel_days_per_month": 10}
+        )
+        high = low.model_copy(update={"travel_days_per_month": 20})
+        with patch("app.ml.predictor.predict_monthly_rent") as prediction:
+            first = rank_knn_candidates(
+                knn_response=knn,
+                preferences=preferences.model_copy(
+                    update={"important_destinations": [low]}
+                ),
+                transport_cost_per_km_bdt=15,
+            )
+            second = rank_knn_candidates(
+                knn_response=knn,
+                preferences=preferences.model_copy(
+                    update={"important_destinations": [high]}
+                ),
+                transport_cost_per_km_bdt=30,
+            )
+        prediction.assert_not_called()
+        self.assertEqual(
+            first.candidates[0].rent_fairness_score,
+            second.candidates[0].rent_fairness_score,
+        )
 
 
 class SpaceScoreTests(TestCase):
@@ -194,6 +383,52 @@ class SpaceScoreTests(TestCase):
             ),
             1.0,
         )
+
+    def test_preferred_area_score_is_symmetric_and_decays_smoothly(self) -> None:
+        scores = {
+            area: calculate_area_score(
+                area_sqft=area,
+                preferred_area_sqft=1_200,
+            )
+            for area in [1_100, 1_200, 1_300, 1_400, 1_800]
+        }
+        self.assertEqual(scores[1_200], 1.0)
+        self.assertAlmostEqual(scores[1_100], scores[1_300])
+        self.assertGreater(scores[1_300], scores[1_400])
+        self.assertGreater(scores[1_400], scores[1_800])
+        self.assertEqual(scores[1_800], 0.0)
+
+    def test_preferred_area_affects_space_and_final_ranking(self) -> None:
+        preferences, knn = make_knn_response(
+            [
+                {"id": "far", "area_sqft": 1_800},
+                {"id": "near", "area_sqft": 1_300},
+                {"id": "exact", "area_sqft": 1_200},
+            ],
+            preferred_area_sqft=1_200,
+            minimum_area_sqft=None,
+            maximum_area_sqft=None,
+        )
+        knn = knn.model_copy(
+            update={
+                "candidates": [
+                    candidate.model_copy(update={"destination_access_score": 1.0})
+                    for candidate in knn.candidates
+                ]
+            }
+        )
+        ranked = rank_knn_candidates(
+            knn_response=knn,
+            preferences=preferences,
+        )
+        by_id = {candidate.id: candidate for candidate in ranked.candidates}
+        self.assertGreater(by_id["exact"].space_score, by_id["near"].space_score)
+        self.assertGreater(by_id["near"].space_score, by_id["far"].space_score)
+        self.assertGreater(
+            by_id["exact"].final_suitability_score,
+            by_id["far"].final_suitability_score,
+        )
+        self.assertLess(by_id["exact"].rank, by_id["far"].rank)
 
 
 class AmenitiesAndFairnessTests(TestCase):
@@ -435,7 +670,7 @@ class FinalRankingTests(TestCase):
         )
         self.assertEqual(response.wsm_summary.wsm_input_candidate_count, 1)
         self.assertEqual(response.wsm_summary.wsm_ranked_candidate_count, 1)
-        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v1")
+        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v3")
         for field in [
             "budget_score",
             "space_score",

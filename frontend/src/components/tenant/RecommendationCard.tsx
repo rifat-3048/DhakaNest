@@ -96,7 +96,10 @@ export default function RecommendationCard({
               <p className="mt-1 text-sm text-slate-600">
                 {location ?? "Dhaka City"}
               </p>
-              <p className="mt-3 text-xl font-bold text-emerald-700">
+              <p className="mt-3 text-xs font-semibold uppercase text-slate-500">
+                Monthly rent
+              </p>
+              <p className="mt-1 text-xl font-bold text-emerald-700">
                 BDT {currency.format(candidate.asking_rent_bdt ?? 0)}
                 <span className="text-sm font-normal text-slate-500"> / month</span>
               </p>
@@ -110,6 +113,32 @@ export default function RecommendationCard({
               </span>
             </div>
           </div>
+
+          {candidate.estimated_monthly_travel_cost_bdt != null &&
+          candidate.estimated_monthly_spend_bdt != null ? (
+            <dl className="mt-4 grid gap-3 border border-slate-200 bg-slate-50 p-4 sm:grid-cols-2">
+              <div>
+                <dt className="text-xs font-medium text-slate-500">
+                  Estimated travel cost
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-slate-900">
+                  BDT {currency.format(candidate.estimated_monthly_travel_cost_bdt)}/month
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs font-medium text-slate-500">
+                  Estimated monthly spend
+                </dt>
+                <dd className="mt-1 text-sm font-bold text-slate-950">
+                  BDT {currency.format(candidate.estimated_monthly_spend_bdt)}
+                </dd>
+              </div>
+            </dl>
+          ) : (
+            <p className="mt-4 text-xs text-slate-500">
+              Travel-cost estimate was not recorded for this recommendation.
+            </p>
+          )}
 
           <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-y border-slate-100 py-3 text-sm text-slate-700">
             <span>{candidate.bedrooms ?? "-"} bedrooms</span>
@@ -200,6 +229,13 @@ export default function RecommendationCard({
                       ? `${commute.max_commute_minutes} min`
                       : "flexible"}
                   </p>
+                  {commute.travel_days_per_month != null &&
+                    commute.estimated_monthly_travel_cost_bdt != null && (
+                      <p className="mt-1 text-xs font-medium text-slate-700">
+                        {commute.travel_days_per_month} days/month; estimated BDT{" "}
+                        {currency.format(commute.estimated_monthly_travel_cost_bdt)}/month
+                      </p>
+                    )}
                 </div>
               ))}
             </div>

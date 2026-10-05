@@ -182,6 +182,13 @@ pool plus the tenant target. Each semantic block is L2-normalized before the
 blocks are concatenated so a larger block does not dominate merely because it
 has more columns.
 
+`preferred_area_sqft` supplies the tenant's structural area target. It is a soft
+preference, not a minimum or maximum constraint: properties closer to it receive
+stronger KNN similarity, while more distant sizes remain eligible but receive
+weaker similarity. When it is absent, KNN retains its candidate-median fallback.
+Legacy callers may still submit explicit minimum/maximum area bounds, which keep
+their original hard-filter behavior.
+
 Budget, asking rent, commute measurements, `destination_access_score`, rent
 fairness, household size, move-in date, and overall tenant priorities are
 intentionally excluded from the KNN vector. They are hard-filter inputs or
@@ -229,11 +236,50 @@ criteria:
 
 ```text
 location      = destination_access_score from Part 3
-budget        = preferred-range or ceiling affordability score
+budget        = estimated-spend (or legacy rent-only) affordability score
 space         = mean of bedroom, bathroom, and area compatibility
 amenities     = nice-to-have amenity match count / preferred count
 rent fairness = max(0, 1 - abs(stored difference_percent) / 30)
 ```
+
+For a new request where every destination has `travel_days_per_month`, the
+budget amount is estimated monthly spend rather than rent alone:
+
+```text
+monthly travel cost = sum(
+  one-way OSRM road distance
+  * 2
+  * travel days per month
+  * configured BDT per km
+)
+estimated monthly spend = advertised rent + monthly travel cost
+```
+
+`TRANSPORT_COST_PER_KM_BDT` controls the fixed rate. The local development
+configuration uses `15` BDT/km as an explicit academic assumption, not a claim
+about an exact real-world fare. One travel day means one round trip. The model
+does not distinguish transport modes, multiple daily trips, traffic pricing, or
+fuel-price changes. Duration still controls location convenience; distance is
+reused for this advisory cost estimate. Destination importance never multiplies
+travel cost.
+
+If any destination lacks frequency, the request remains backward compatible:
+no partial travel total is claimed and budget scoring remains rent-only. The
+early hard budget filter always uses advertised rent because routing happens
+later. Rent fairness still evaluates advertised rent independently.
+
+For new preferred-area requests, area compatibility uses symmetric continuous
+decay with a 40% tolerance:
+
+```text
+relative difference = abs(listing area - preferred area) / preferred area
+area fit = max(0, 1 - relative difference / 0.40)
+```
+
+Preferred floor size is therefore a soft target, not a minimum or maximum
+constraint. Substantially different sizes receive weaker space-fit scores but
+are not excluded by this preference alone. Area remains inside the existing
+space criterion alongside bedrooms and bathrooms; it is not a sixth criterion.
 
 Approved listings must already have a current admin-review rent assessment.
 Part 5 reads `rent_assessment.difference_percent`; it does not run XGBoost or
@@ -271,6 +317,18 @@ python scripts/check_recommendation_wsm.py
 
 The script routes once, reuses the same Part 4 candidate set, reads stored
 assessments, and never changes MongoDB records.
+
+Run the read-only 1,200 sq ft preferred-area comparison with:
+
+```powershell
+python scripts/check_preferred_area.py
+```
+
+Run the read-only two-destination monthly travel-cost check with:
+
+```powershell
+python scripts/check_travel_cost.py
+```
 
 ## Transparent Recommendation Reasons
 
@@ -489,3 +547,36 @@ python scripts/check_recommendation_map.py
 
 It times two identical route requests and reports cache miss/hit deltas. These
 local numbers are diagnostic only and are not production throughput claims.
+
+## Synthetic academic inventory
+
+The local demo can use a deterministic, coverage-driven inventory of 2,500
+approved listings plus 100 lifecycle examples. These records are synthetic
+academic/demo data. They are not current Dhaka market listings, market samples,
+or evidence about the real distribution of rents.
+
+Run these commands from `backend/`:
+
+```powershell
+python scripts/seed_academic_inventory.py --dry-run
+python scripts/seed_academic_inventory.py --apply
+python scripts/seed_academic_inventory.py --report
+python scripts/seed_academic_inventory.py --cleanup
+```
+
+The default seed is `20261005`; use `--seed` and `--count` for a reproducible
+custom batch. Dry run validates records and writes the coverage report without
+touching MongoDB. Apply bulk-inserts only missing deterministic seed keys, so
+rerunning the same batch does not duplicate listings. Cleanup matches the
+dedicated `academic_inventory_v1` marker and cannot delete manual listings.
+
+Generation uses repository-verified micro-area anchors with small deterministic
+coordinate jitter, the production XGBoost predictor as each rent baseline, and
+the normal stored rent-assessment builder. Variation is stratified into
+competition groups spanning property type, furnishing, size, amenities, and
+fairness bands. Empty image arrays use the application's placeholder behavior;
+the script performs no Cloudinary uploads or external geocoding.
+
+Estimated travel cost and estimated monthly spend are not stored in seeded
+listings. They remain tenant-specific recommendation-time calculations based on
+OSRM distance, destinations, and travel frequency.

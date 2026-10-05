@@ -6,6 +6,7 @@ import type {
 export const MIN_DESTINATIONS = 1;
 export const MAX_DESTINATIONS = 3;
 export const MAX_COMMUTE_MINUTES = 240;
+export const MAX_TRAVEL_DAYS_PER_MONTH = 31;
 
 export interface SelectedDestination {
   label: string;
@@ -23,6 +24,7 @@ export function createImportantDestination(
     longitude: null,
     preference: null,
     max_commute_minutes: null,
+    travel_days_per_month: null,
   };
 }
 
@@ -86,6 +88,16 @@ export function isValidOptionalCommute(value: number | null): boolean {
   );
 }
 
+export function isValidTravelFrequency(value: number | null): boolean {
+  return (
+    value !== null &&
+    Number.isFinite(value) &&
+    Number.isInteger(value) &&
+    value >= 1 &&
+    value <= MAX_TRAVEL_DAYS_PER_MONTH
+  );
+}
+
 export function canAddDestination(destinationCount: number): boolean {
   return destinationCount < MAX_DESTINATIONS;
 }
@@ -124,6 +136,14 @@ export function validateImportantDestinations(
     )
   ) {
     return `Optional commute time must be between 1 and ${MAX_COMMUTE_MINUTES} whole minutes.`;
+  }
+
+  if (
+    destinations.some(
+      (destination) => !isValidTravelFrequency(destination.travel_days_per_month),
+    )
+  ) {
+    return "Enter how many days per month you travel to this destination.";
   }
 
   const normalizedNames = destinations.map((destination) =>

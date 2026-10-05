@@ -20,6 +20,7 @@ export interface ImportantDestinationPreference {
   longitude: number | null;
   preference: PreferenceScore | null;
   max_commute_minutes: number | null;
+  travel_days_per_month: number | null;
 }
 
 export interface RecommendationPriorities {
@@ -38,6 +39,7 @@ export interface TenantSearchPreferences {
   property_types: RentalPropertyType[];
   minimum_bedrooms: MinimumRoomCount;
   minimum_bathrooms: MinimumRoomCount;
+  preferred_area_sqft: number | null;
   minimum_area_sqft: number | null;
   maximum_area_sqft: number | null;
   furnishing_statuses: RentalFurnishingStatus[];

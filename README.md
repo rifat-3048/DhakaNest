@@ -3,6 +3,12 @@
 DhakaNest is a location-aware rental home recommendation system for Dhaka City.
 It is a local academic project with separate tenant, landlord, and admin flows.
 
+An optional deterministic seed tool creates a large synthetic academic
+inventory for local demonstrations. It exists only to exercise filtering,
+KNN, WSM, preferred-area, rent-fairness, and routing trade-offs; it must not be
+presented as observed Dhaka rental-market data. See `backend/README.md` for the
+safe dry-run, apply, report, and cleanup commands.
+
 ## Technology
 
 - Next.js, TypeScript, Tailwind CSS, Leaflet, and OpenStreetMap
@@ -24,9 +30,19 @@ It is a local academic project with separate tenant, landlord, and admin flows.
 
 ```text
 Eligibility -> Hard filters -> OSRM routing -> Destination scoring
--> Content-based KNN -> Five-criterion WSM -> Ranking
+-> Content-based KNN -> Travel-cost estimation -> Rent + travel
+-> Five-criterion WSM -> Ranking
 -> Deterministic reasons -> Results, map, and history
 ```
+
+Tenant preferred floor size is a soft target rather than a minimum or maximum
+filter. Homes closer to that size receive stronger structural similarity and
+space-fit scores, while substantially different homes remain eligible with
+weaker scores.
+
+For complete new searches, affordability uses advertised rent plus estimated
+monthly travel cost. The estimate reuses OSRM road distance and each destination's
+travel days per month; it does not add a sixth recommendation criterion.
 
 ## Run Locally
 

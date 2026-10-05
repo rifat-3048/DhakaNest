@@ -335,17 +335,25 @@ class OSRMRoutingProvider:
         listings: Sequence[RecommendationCandidate],
         destinations: Sequence[ImportantDestinationRequest],
     ) -> RouteMatrix:
-        url = build_osrm_table_url(
-            base_url=self.base_url,
-            listings=listings,
-            destinations=destinations,
-        )
-        payload = await asyncio.to_thread(self._fetch_json, url)
-        return parse_osrm_table_response(
-            payload=payload,
-            listing_ids=[listing.id for listing in listings],
-            destination_ids=[destination.id for destination in destinations],
-        )
+        """Fetch deterministic chunks and reconstruct one equivalent matrix."""
+        routes: dict[tuple[str, str], RouteMeasurement | None] = {}
+        batch_size = settings.routing_matrix_listing_batch_size
+        destination_ids = [destination.id for destination in destinations]
+        for start in range(0, len(listings), batch_size):
+            batch = listings[start : start + batch_size]
+            url = build_osrm_table_url(
+                base_url=self.base_url,
+                listings=batch,
+                destinations=destinations,
+            )
+            payload = await asyncio.to_thread(self._fetch_json, url)
+            parsed = parse_osrm_table_response(
+                payload=payload,
+                listing_ids=[listing.id for listing in batch],
+                destination_ids=destination_ids,
+            )
+            routes.update(parsed.routes)
+        return RouteMatrix(routes=routes)
 
     async def get_route_geometry(
         self,

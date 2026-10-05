@@ -8,6 +8,7 @@ from app.services.recommendation_explanation_service import (
     build_recommendation_reasons,
 )
 from app.services.wsm_service import rank_knn_candidates
+from tests.test_recommendation_part1 import valid_request
 from tests.test_recommendation_part5 import make_knn_response
 
 
@@ -77,6 +78,20 @@ class ExplanationContentTests(TestCase):
         self.assertIn("within your allowed 5% flexibility", flexible_reason.text)
         self.assertNotEqual(flexible_reason.strength, "strong")
 
+    def test_complete_travel_frequency_uses_monthly_spend_wording(self) -> None:
+        destination = valid_request().important_destinations[0].model_dump()
+        destination["id"] = "work"
+        _, candidate = ranked_candidate(
+            {"asking_rent_bdt": 20_000},
+            maximum_rent_bdt=30_000,
+            important_destinations=[
+                {**destination, "travel_days_per_month": 20}
+            ],
+        )
+        reason = reason_by_category(candidate, "budget")
+        self.assertIn("Estimated monthly spend including travel", reason.text)
+        self.assertIn("BDT 23,000", reason.text)
+
     def test_space_reason_uses_actual_requirements_and_area(self) -> None:
         _, candidate = ranked_candidate(
             {"bedrooms": 3, "bathrooms": 2, "area_sqft": 1_200},
@@ -89,6 +104,19 @@ class ExplanationContentTests(TestCase):
         self.assertIn("bedroom and bathroom requirements", reason.text)
         self.assertIn("1,200 sq ft", reason.text)
         self.assertIn("preferred size range", reason.text)
+
+    def test_space_reason_uses_preferred_floor_size_wording(self) -> None:
+        _, candidate = ranked_candidate(
+            {"bedrooms": 3, "bathrooms": 2, "area_sqft": 1_250},
+            minimum_bedrooms=3,
+            minimum_bathrooms=2,
+            preferred_area_sqft=1_200,
+            minimum_area_sqft=None,
+            maximum_area_sqft=None,
+        )
+        reason = reason_by_category(candidate, "space")
+        self.assertIn("1,250 sq ft", reason.text)
+        self.assertIn("preferred floor size of 1,200 sq ft", reason.text)
 
     def test_amenity_overlap_is_exact_and_absent_preference_is_silent(self) -> None:
         _, candidate = ranked_candidate(

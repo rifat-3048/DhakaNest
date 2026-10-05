@@ -104,17 +104,36 @@ export default function HistoricalRecommendationResults() {
           <section className="mt-7 border-t border-slate-100 pt-5">
             <h2 className="text-sm font-bold text-slate-900">Original search</h2>
             <dl className="mt-3 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
-              <SnapshotFact label="Destinations" value={request.important_destinations.map((item) => `${item.destination} (${item.preference}/5${item.max_commute_minutes ? `, max ${item.max_commute_minutes} min` : ", flexible"})`).join("; ")} />
+              <SnapshotFact
+                label="Destinations"
+                value={request.important_destinations.map((item) =>
+                  `${item.destination} (${item.preference}/5${item.max_commute_minutes ? `, max ${item.max_commute_minutes} min` : ", flexible"}${item.travel_days_per_month ? `, ${item.travel_days_per_month} days/month` : ""})`
+                ).join("; ")}
+              />
               <SnapshotFact label="Budget" value={request.minimum_rent_bdt === null ? `Up to BDT ${currency.format(request.maximum_rent_bdt)}` : `BDT ${currency.format(request.minimum_rent_bdt)} - ${currency.format(request.maximum_rent_bdt)}`} />
-              <SnapshotFact label="Property types" value={request.property_types.join(", ")} />
-              <SnapshotFact label="Minimum rooms" value={`${request.minimum_bedrooms} bed, ${request.minimum_bathrooms} bath`} />
-              <SnapshotFact label="Area" value={areaSummary(request.minimum_area_sqft, request.maximum_area_sqft)} />
+              <SnapshotFact label="Property types" value={propertyTypeSummary(request.property_types)} />
+              <SnapshotFact label="Rooms needed" value={`${request.minimum_bedrooms} bed, ${request.minimum_bathrooms} bath`} />
+              <SnapshotFact
+                label={request.preferred_area_sqft != null ? "Preferred floor size" : "Area requirement"}
+                value={areaSummary(request.preferred_area_sqft ?? null, request.minimum_area_sqft, request.maximum_area_sqft)}
+              />
               <SnapshotFact label="Furnishing" value={request.furnishing_statuses.length ? request.furnishing_statuses.join(", ") : "Any"} />
               <SnapshotFact label="Must-have amenities" value={request.must_have_amenities.join(", ") || "None"} />
               <SnapshotFact label="Preferred amenities" value={request.nice_to_have_amenities.join(", ") || "None"} />
               <SnapshotFact label="Move-in date" value={request.desired_move_in_date ?? "Flexible"} />
               <SnapshotFact label="Household size" value={request.household_size ? `${request.household_size} people` : "Not specified"} />
             </dl>
+            {detail.travel_cost_summary ? (
+              <p className="mt-4 text-xs leading-5 text-slate-500">
+                Stored travel estimates use BDT{" "}
+                {currency.format(detail.travel_cost_summary.cost_per_km_bdt)}/km
+                and one round trip per travel day. These historical values are not recalculated.
+              </p>
+            ) : (
+              <p className="mt-4 text-xs text-slate-500">
+                Travel-cost estimate was not recorded for this recommendation.
+              </p>
+            )}
           </section>
 
           <section className="mt-6 border-t border-slate-100 pt-5">
@@ -156,11 +175,26 @@ export default function HistoricalRecommendationResults() {
   );
 }
 
-function areaSummary(minimum: number | null, maximum: number | null): string {
+function areaSummary(
+  preferred: number | null,
+  minimum: number | null,
+  maximum: number | null,
+): string {
+  if (preferred !== null) return `${preferred} sq ft`;
   if (minimum !== null && maximum !== null) return `${minimum}-${maximum} sq ft`;
   if (minimum !== null) return `At least ${minimum} sq ft`;
   if (maximum !== null) return `Up to ${maximum} sq ft`;
   return "Any";
+}
+
+function propertyTypeSummary(propertyTypes: string[]): string {
+  const labels: string[] = [];
+  if (propertyTypes.includes("apartment")) labels.push("Apartment");
+  if (propertyTypes.includes("house")) labels.push("House");
+  if (propertyTypes.includes("room") || propertyTypes.includes("sublet")) {
+    labels.push("Room / Sublet");
+  }
+  return labels.join(", ") || "Not selected";
 }
 
 function SnapshotFact({ label, value }: { label: string; value: string }) {
