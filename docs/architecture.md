@@ -32,6 +32,7 @@ Tenant requirements + 1-3 destinations
 -> effective top-K candidate set
 -> monthly travel-cost estimation from stored OSRM Table road distance
 -> advertised rent + travel cost as estimated monthly spend
+-> advertised-rent Budget Suitability against the maximum rent budget
 -> location, budget, space, amenities, rent-fairness WSM
 -> deterministic ranking and explanations
 -> current results, selected-home route map, immutable history
@@ -49,10 +50,12 @@ fields remain backward-compatible hard bounds when an older caller sends them.
 
 For complete new requests, each destination supplies travel days per month.
 DhakaNest assumes one round trip per travel day and sums `one-way road distance
-* 2 * days * configured BDT/km`. The resulting advisory travel estimate is added
-to advertised rent inside the existing budget criterion. Importance remains a
+* 2 * days * configured BDT/km`. This advisory travel estimate is added to
+advertised rent for the displayed estimated monthly spend, but neither travel
+cost nor total spend enters Budget Suitability directly. Budget Suitability is
+`clamp(1 - advertised rent / maximum rent budget, 0, 1)`. Importance remains a
 location signal, KNN remains structural, and XGBoost rent fairness remains
-independent. Legacy incomplete requests keep rent-only affordability.
+independent. Incomplete requests do not claim a partial travel total.
 
 No container or cloud layer is required for the supported local academic run.
 
