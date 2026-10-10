@@ -248,7 +248,7 @@ class RecommendationPersistenceTests(IsolatedAsyncioTestCase):
             document["normalized_weights"],
             response.normalized_weights.model_dump(mode="json"),
         )
-        self.assertEqual(document["pipeline_snapshot"]["scoring_version"], "wsm_v3")
+        self.assertEqual(document["pipeline_snapshot"]["scoring_version"], "wsm_v4")
         self.assertEqual(document["pipeline_snapshot"]["configured_knn_k"], 1)
         self.assertEqual(document["created_at"].utcoffset(), timedelta(0))
 
@@ -279,6 +279,28 @@ class RecommendationPersistenceTests(IsolatedAsyncioTestCase):
             detail.results[0].estimated_monthly_travel_cost_bdt,
             3_000,
         )
+
+    async def test_legacy_scoring_version_remains_readable_and_unchanged(self) -> None:
+        database = HistoryDatabase()
+        preferences, response = ranked_response()
+        saved = await save_recommendation_run(
+            database=database,
+            tenant_id=ObjectId(),
+            idempotency_key="legacy-scoring-version",
+            request=preferences,
+            response=response,
+        )
+        database.collection.documents[0]["pipeline_snapshot"][
+            "scoring_version"
+        ] = "wsm_v3"
+
+        detail = await get_recommendation_run_detail(
+            database=database,
+            tenant_id=database.collection.documents[0]["tenant_id"],
+            run_id=saved.recommendation_run_id,
+        )
+
+        self.assertEqual(detail.pipeline_snapshot.scoring_version, "wsm_v3")
 
     async def test_same_tenant_and_key_reuses_one_run(self) -> None:
         database = HistoryDatabase()
