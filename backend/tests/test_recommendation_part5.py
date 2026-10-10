@@ -61,44 +61,74 @@ class BudgetScoreTests(TestCase):
     def score(
         self,
         asking: float,
-        minimum: float | None = 20_000,
         maximum: float = 40_000,
-        flexibility: int = 0,
     ) -> float:
         return calculate_budget_score(
             asking_rent_bdt=asking,
-            minimum_rent_bdt=minimum,
             maximum_rent_bdt=maximum,
-            over_budget_percent=flexibility,
         )
 
-    def test_preferred_range_target_inside_and_maximum(self) -> None:
-        self.assertEqual(self.score(30_000), 1.0)
-        self.assertEqual(self.score(25_000), 0.5)
+    def test_regression_values_use_maximum_budget_only(self) -> None:
+        expected = {
+            4_000: 5 / 9,
+            6_000: 1 / 3,
+            8_000: 1 / 9,
+            8_500: 1 / 18,
+            9_000: 0.0,
+        }
+        for rent, score in expected.items():
+            with self.subTest(rent=rent):
+                self.assertAlmostEqual(self.score(rent, maximum=9_000), score)
+
+    def test_lower_rent_is_monotonically_more_affordable(self) -> None:
+        scores = [self.score(rent) for rent in [10_000, 20_000, 30_000, 40_000]]
+        self.assertEqual(scores, sorted(scores, reverse=True))
+        self.assertEqual(len(set(scores)), len(scores))
+
+    def test_maximum_and_flexible_over_budget_rent_score_zero(self) -> None:
         self.assertEqual(self.score(40_000), 0.0)
+        self.assertEqual(self.score(42_000), 0.0)
 
-    def test_flexibility_penalty_reaches_zero_at_allowed_maximum(self) -> None:
-        self.assertEqual(self.score(42_000, flexibility=10), 0.5)
-        self.assertEqual(self.score(44_000, flexibility=10), 0.0)
+    def test_zero_rent_is_valid(self) -> None:
+        self.assertEqual(self.score(0), 1.0)
 
-    def test_missing_minimum_uses_ceiling_affordability(self) -> None:
-        self.assertEqual(self.score(10_000, minimum=None), 0.75)
-        self.assertEqual(self.score(40_000, minimum=None), 0.0)
-
-    def test_zero_width_and_zero_flexibility_are_safe(self) -> None:
-        self.assertEqual(self.score(30_000, minimum=30_000, maximum=30_000), 1.0)
-        self.assertEqual(self.score(30_001, minimum=30_000, maximum=30_000), 0.0)
+    def test_invalid_rent_and_budget_values_are_rejected(self) -> None:
+        for asking, maximum in [
+            (-1, 40_000),
+            (20_000, 0),
+            (20_000, -1),
+            (math.inf, 40_000),
+            (20_000, math.nan),
+        ]:
+            with self.subTest(asking=asking, maximum=maximum):
+                with self.assertRaises(ValueError):
+                    self.score(asking, maximum=maximum)
 
     def test_all_budget_scores_are_finite_and_bounded(self) -> None:
         values = [
+            self.score(0),
             self.score(20_000),
             self.score(30_000),
             self.score(40_000),
-            self.score(42_000, flexibility=10),
-            self.score(44_000, flexibility=10),
+            self.score(42_000),
         ]
         self.assertTrue(all(math.isfinite(value) for value in values))
         self.assertTrue(all(0 <= value <= 1 for value in values))
+
+    def test_minimum_rent_does_not_change_budget_suitability(self) -> None:
+        scores = []
+        for minimum in [None, 10_000, 20_000]:
+            preferences, knn = make_knn_response(
+                [{"asking_rent_bdt": 25_000}],
+                minimum_rent_bdt=minimum,
+                maximum_rent_bdt=40_000,
+            )
+            response = rank_knn_candidates(
+                knn_response=knn,
+                preferences=preferences,
+            )
+            scores.append(response.candidates[0].budget_score)
+        self.assertEqual(scores, [0.375, 0.375, 0.375])
 
 
 class TravelCostTests(TestCase):
@@ -184,7 +214,7 @@ class TravelCostTests(TestCase):
         )
         self.assertEqual(changed.monthly_travel_cost_bdt, 3_960)
 
-    def test_incomplete_legacy_frequency_keeps_rent_only_budget(self) -> None:
+    def test_incomplete_frequency_still_reports_rent_only_cost_metadata(self) -> None:
         preferences, knn = make_knn_response([{"asking_rent_bdt": 25_000}])
         response = rank_knn_candidates(
             knn_response=knn,
@@ -200,15 +230,13 @@ class TravelCostTests(TestCase):
             round(
                 calculate_budget_score(
                     asking_rent_bdt=25_000,
-                    minimum_rent_bdt=preferences.minimum_rent_bdt,
                     maximum_rent_bdt=preferences.maximum_rent_bdt,
-                    over_budget_percent=preferences.over_budget_percent,
                 ),
                 4,
             ),
         )
 
-    def test_total_spend_can_favor_higher_rent_with_shorter_travel(self) -> None:
+    def test_travel_changes_monthly_spend_but_not_rent_affordability(self) -> None:
         preferences, knn = make_knn_response(
             [
                 {"id": "lower-rent-far", "asking_rent_bdt": 25_000},
@@ -252,13 +280,13 @@ class TravelCostTests(TestCase):
         nearer = by_id["higher-rent-near"]
         self.assertAlmostEqual(farther.estimated_monthly_spend_bdt, 31_000)
         self.assertAlmostEqual(nearer.estimated_monthly_spend_bdt, 29_000, places=5)
-        self.assertGreater(nearer.budget_score, farther.budget_score)
+        self.assertGreater(farther.budget_score, nearer.budget_score)
         self.assertGreater(
-            nearer.final_suitability_score,
             farther.final_suitability_score,
+            nearer.final_suitability_score,
         )
-        self.assertLess(nearer.rank, farther.rank)
-        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v3")
+        self.assertLess(farther.rank, nearer.rank)
+        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v4")
 
     def test_frequency_does_not_change_fairness_or_rerun_prediction(self) -> None:
         preferences, knn = make_knn_response([{}])
@@ -670,7 +698,7 @@ class FinalRankingTests(TestCase):
         )
         self.assertEqual(response.wsm_summary.wsm_input_candidate_count, 1)
         self.assertEqual(response.wsm_summary.wsm_ranked_candidate_count, 1)
-        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v3")
+        self.assertEqual(response.wsm_summary.scoring_version, "wsm_v4")
         for field in [
             "budget_score",
             "space_score",
