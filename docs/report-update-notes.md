@@ -11,8 +11,11 @@ the university report:
   the WSM space component; it is not a minimum/maximum hard filter.
 - Complete new searches estimate monthly travel from OSRM road distance, one
   round trip per travel day, and a configurable fixed BDT/km academic rate.
+- Budget Suitability uses advertised rent against the tenant's maximum rent
+  budget and does not depend on optional minimum rent or transportation cost.
 - Estimated monthly spend is advertised rent plus estimated travel cost and is
-  used inside Budget; destination importance is not travel frequency.
+  displayed separately rather than used as a direct WSM input; destination
+  importance is not travel frequency.
 - Legacy requests with missing frequency remain rent-only and never show a
   misleading partial travel total.
 - OSRM provides traffic-free road estimates, not live Dhaka traffic.
