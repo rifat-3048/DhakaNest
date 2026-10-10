@@ -97,40 +97,19 @@ def _budget_reason(
 ) -> ReasonCandidate | None:
     if candidate.asking_rent_bdt is None:
         return None
-    if (
-        candidate.travel_cost_basis == "rent_plus_travel"
-        and candidate.estimated_monthly_spend_bdt is not None
-    ):
-        spend = candidate.estimated_monthly_spend_bdt
-        if spend > preferences.maximum_rent_bdt:
-            text = (
-                "Travel increases the estimated monthly spend to "
-                f"BDT {spend:,.0f}."
-            )
-            code = "budget_spend_increased_by_travel"
-        elif candidate.budget_score >= STRONG_SCORE_THRESHOLD:
-            text = (
-                "Estimated monthly spend including travel is "
-                f"BDT {spend:,.0f}, which fits your budget well."
-            )
-            code = "budget_spend_comfortable"
-        else:
-            text = (
-                "Estimated monthly spend including travel is "
-                f"BDT {spend:,.0f}, within your preferred maximum budget."
-            )
-            code = "budget_spend_within_preferred"
-    elif candidate.asking_rent_bdt > preferences.maximum_rent_bdt:
+    if candidate.asking_rent_bdt > preferences.maximum_rent_bdt:
         text = (
-            "Slightly above your preferred budget but within your allowed "
-            f"{preferences.over_budget_percent}% flexibility."
+            "Monthly rent is above your preferred maximum but within your "
+            f"allowed {preferences.over_budget_percent}% flexibility."
         )
         code = "budget_within_flexibility"
     elif candidate.budget_score >= STRONG_SCORE_THRESHOLD:
-        text = "Monthly rent is comfortably within your preferred budget."
+        text = (
+            "Advertised monthly rent is comfortably within your preferred budget."
+        )
         code = "budget_comfortable"
     else:
-        text = "Monthly rent is within your preferred maximum budget."
+        text = "Advertised monthly rent is within your preferred maximum budget."
         code = "budget_within_preferred"
     return ReasonCandidate(
         reason=RecommendationReason(
