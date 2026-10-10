@@ -78,7 +78,7 @@ class ExplanationContentTests(TestCase):
         self.assertIn("within your allowed 5% flexibility", flexible_reason.text)
         self.assertNotEqual(flexible_reason.strength, "strong")
 
-    def test_complete_travel_frequency_uses_monthly_spend_wording(self) -> None:
+    def test_complete_travel_frequency_keeps_budget_reason_rent_only(self) -> None:
         destination = valid_request().important_destinations[0].model_dump()
         destination["id"] = "work"
         _, candidate = ranked_candidate(
@@ -89,8 +89,11 @@ class ExplanationContentTests(TestCase):
             ],
         )
         reason = reason_by_category(candidate, "budget")
-        self.assertIn("Estimated monthly spend including travel", reason.text)
-        self.assertIn("BDT 23,000", reason.text)
+        self.assertIn("Advertised monthly rent", reason.text)
+        self.assertNotIn("travel", reason.text.lower())
+        self.assertNotIn("monthly spend", reason.text.lower())
+        self.assertEqual(candidate.estimated_monthly_travel_cost_bdt, 3_000)
+        self.assertEqual(candidate.estimated_monthly_spend_bdt, 23_000)
 
     def test_space_reason_uses_actual_requirements_and_area(self) -> None:
         _, candidate = ranked_candidate(
