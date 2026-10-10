@@ -22,7 +22,7 @@ from app.services.recommendation_explanation_service import (
 )
 
 
-RECOMMENDATION_SCORING_VERSION = "wsm_v3"
+RECOMMENDATION_SCORING_VERSION = "wsm_v4"
 PREFERRED_AREA_TOLERANCE = 0.40
 ROUND_TRIP_MULTIPLIER = 2
 CANONICAL_AMENITIES = {
@@ -56,32 +56,16 @@ def _finite_number(value: object, field_name: str) -> float:
 def calculate_budget_score(
     *,
     asking_rent_bdt: float,
-    minimum_rent_bdt: float | None,
     maximum_rent_bdt: float,
-    over_budget_percent: int,
 ) -> float:
-    """Score a monthly affordability amount without another hard filter."""
-    asking = _finite_number(asking_rent_bdt, "asking_rent_bdt")
-    preferred_max = _finite_number(maximum_rent_bdt, "maximum_rent_bdt")
-    allowed_max = preferred_max * (1 + over_budget_percent / 100)
-
-    if asking > preferred_max:
-        flexibility_range = allowed_max - preferred_max
-        if flexibility_range <= 0:
-            return 0.0
-        return _clamp_score(
-            1 - ((asking - preferred_max) / flexibility_range)
-        )
-
-    if minimum_rent_bdt is None:
-        return _clamp_score(1 - (asking / preferred_max))
-
-    minimum = _finite_number(minimum_rent_bdt, "minimum_rent_bdt")
-    target = (minimum + preferred_max) / 2
-    half_range = (preferred_max - minimum) / 2
-    if half_range == 0:
-        return 1.0 if asking == target else 0.0
-    return _clamp_score(1 - min(abs(asking - target) / half_range, 1.0))
+    """Score advertised rent by the share of the maximum budget it preserves."""
+    rent = _finite_number(asking_rent_bdt, "asking_rent_bdt")
+    maximum_budget = _finite_number(maximum_rent_bdt, "maximum_rent_bdt")
+    if rent < 0:
+        raise ValueError("asking_rent_bdt cannot be negative.")
+    if maximum_budget <= 0:
+        raise ValueError("maximum_rent_bdt must be positive.")
+    return _clamp_score(1.0 - rent / maximum_budget)
 
 
 def calculate_monthly_travel_cost(
@@ -106,7 +90,7 @@ def calculate_monthly_travel_cost(
 
 @dataclass(frozen=True)
 class CandidateAffordability:
-    """Candidate costs and enriched commutes used by budget scoring."""
+    """Candidate travel costs and enriched commutes shown to the tenant."""
 
     basis: str
     monthly_travel_cost_bdt: float | None
@@ -327,14 +311,10 @@ def _score_candidate(
         cost_per_km_bdt=cost_per_km_bdt,
     )
     budget_score = calculate_budget_score(
-        asking_rent_bdt=(
-            affordability.monthly_spend_bdt
-            if affordability.monthly_spend_bdt is not None
-            else _finite_number(candidate.asking_rent_bdt, "asking_rent_bdt")
+        asking_rent_bdt=_finite_number(
+            candidate.asking_rent_bdt, "asking_rent_bdt"
         ),
-        minimum_rent_bdt=preferences.minimum_rent_bdt,
         maximum_rent_bdt=preferences.maximum_rent_bdt,
-        over_budget_percent=preferences.over_budget_percent,
     )
     space_score = calculate_space_score(
         bedrooms=int(_finite_number(candidate.bedrooms, "bedrooms")),
