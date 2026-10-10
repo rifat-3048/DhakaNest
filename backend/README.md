@@ -236,14 +236,25 @@ criteria:
 
 ```text
 location      = destination_access_score from Part 3
-budget        = estimated-spend (or legacy rent-only) affordability score
+budget        = advertised-rent affordability against the maximum rent budget
 space         = mean of bedroom, bathroom, and area compatibility
 amenities     = nice-to-have amenity match count / preferred count
 rent fairness = max(0, 1 - abs(stored difference_percent) / 30)
 ```
 
-For a new request where every destination has `travel_days_per_month`, the
-budget amount is estimated monthly spend rather than rent alone:
+Budget Suitability rewards lower advertised rent and does not use the optional
+minimum rent or estimated transportation costs:
+
+```text
+budget suitability = clamp(1 - advertised rent / maximum rent budget, 0, 1)
+```
+
+The minimum rent and over-budget flexibility remain hard eligibility inputs.
+An eligible listing at or above the preferred maximum receives a zero Budget
+Suitability score.
+
+For a request where every destination has `travel_days_per_month`, the backend
+also calculates advisory transportation costs and total monthly spending:
 
 ```text
 monthly travel cost = sum(
@@ -255,6 +266,9 @@ monthly travel cost = sum(
 estimated monthly spend = advertised rent + monthly travel cost
 ```
 
+These advisory values are returned and displayed, but they are not direct WSM
+ranking inputs and do not change Budget or Location Suitability.
+
 `TRANSPORT_COST_PER_KM_BDT` controls the fixed rate. The local development
 configuration uses `15` BDT/km as an explicit academic assumption, not a claim
 about an exact real-world fare. One travel day means one round trip. The model
@@ -263,10 +277,9 @@ fuel-price changes. Duration still controls location convenience; distance is
 reused for this advisory cost estimate. Destination importance never multiplies
 travel cost.
 
-If any destination lacks frequency, the request remains backward compatible:
-no partial travel total is claimed and budget scoring remains rent-only. The
-early hard budget filter always uses advertised rent because routing happens
-later. Rent fairness still evaluates advertised rent independently.
+If any destination lacks frequency, no partial travel total is claimed. Budget
+Suitability and the early hard budget filter always use advertised rent. Rent
+fairness also evaluates advertised rent independently.
 
 For new preferred-area requests, area compatibility uses symmetric continuous
 decay with a 40% tolerance:
