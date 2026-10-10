@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import {
   recommendationDetailsPath,
+  recommendationContactValue,
   recommendationImage,
   suitabilityPercent,
 } from "@/lib/recommendation-display";
@@ -261,6 +262,38 @@ export default function RecommendationCard({
               </Link>
             )}
           </div>
+
+          <section className="mt-6 border-t border-slate-200 pt-5">
+            <h3 className="text-sm font-bold text-slate-950">
+              Owner Contact Information
+            </h3>
+            <dl className="mt-3 grid gap-3 text-sm sm:grid-cols-3">
+              <div className="min-w-0">
+                <dt className="font-medium text-slate-500">Owner Name</dt>
+                <dd className="mt-1 break-words text-slate-900">
+                  {recommendationContactValue(
+                    candidate.landlord_contact?.owner_name,
+                  )}
+                </dd>
+              </div>
+              <div className="min-w-0">
+                <dt className="font-medium text-slate-500">Email</dt>
+                <dd className="mt-1 break-words text-slate-900">
+                  {recommendationContactValue(
+                    candidate.landlord_contact?.email,
+                  )}
+                </dd>
+              </div>
+              <div className="min-w-0">
+                <dt className="font-medium text-slate-500">Phone Number</dt>
+                <dd className="mt-1 break-words text-slate-900">
+                  {recommendationContactValue(
+                    candidate.landlord_contact?.phone_number,
+                  )}
+                </dd>
+              </div>
+            </dl>
+          </section>
         </div>
       </div>
     </article>

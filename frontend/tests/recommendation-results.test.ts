@@ -5,6 +5,7 @@ import test from "node:test";
 import {
   candidatesInBackendOrder,
   recommendationDetailsPath,
+  recommendationContactValue,
   recommendationImage,
   recommendationResultState,
   suitabilityPercent,
@@ -133,6 +134,24 @@ test("cards and details display stored affordability and travel breakdown fields
   assert.match(detailsSource, /km one way/);
   assert.match(detailsSource, /one round trip per travel day/);
   assert.match(detailsSource, /academic cost assumption/);
+});
+
+test("recommendation cards display landlord contacts with safe fallbacks", () => {
+  const cardSource = readFileSync(
+    new URL("../src/components/tenant/RecommendationCard.tsx", import.meta.url),
+    "utf8",
+  );
+  for (const label of [
+    "Owner Contact Information",
+    "Owner Name",
+    "Email",
+    "Phone Number",
+  ]) {
+    assert.match(cardSource, new RegExp(label));
+  }
+  assert.equal(recommendationContactValue(" Mohammad Rahim "), "Mohammad Rahim");
+  assert.equal(recommendationContactValue(null), "Not provided");
+  assert.equal(recommendationContactValue("   "), "Not provided");
 });
 
 test("missing images return placeholder state", () => {

@@ -213,6 +213,7 @@ async def evaluate_recommendations(
             database=evaluation_database,
             preferences=profile.request,
             routing_provider=routing_provider,
+            include_landlord_contacts=False,
         )
         judgments = profile.relevance_by_listing()
         audit: list[RankingAuditItem] = []

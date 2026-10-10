@@ -9,6 +9,13 @@ export function suitabilityPercent(value: number): number {
   return Math.round(Math.max(0, Math.min(1, value)) * 100);
 }
 
+export function recommendationContactValue(
+  value: string | null | undefined,
+): string {
+  const cleaned = value?.trim();
+  return cleaned || "Not provided";
+}
+
 export function candidatesInBackendOrder(
   response: RankedRecommendationResponse,
 ): RankedRecommendationCandidate[] {

@@ -25,6 +25,7 @@ from app.services.recommendation_history_service import (
 from app.services.recommendation_service import get_ranked_recommendations
 from app.services.routing_service import RoutingProviderUnavailable
 from app.services.wsm_service import rank_knn_candidates
+from app.schemas.recommendation_schema import LandlordContact
 from tests.test_recommendation_part1 import FakeDatabase, valid_request
 from tests.test_recommendation_part5 import make_knn_response
 
@@ -132,6 +133,49 @@ class HistoryDatabase:
 
 
 class RecommendationPersistenceTests(IsolatedAsyncioTestCase):
+    async def test_new_contact_snapshot_is_immutable_and_legacy_is_readable(self) -> None:
+        database = HistoryDatabase()
+        preferences, response = ranked_response()
+        contact = LandlordContact(
+            owner_name="Stored Owner",
+            email="stored@example.com",
+            phone_number="01700000000",
+        )
+        response = response.model_copy(
+            update={
+                "candidates": [
+                    response.candidates[0].model_copy(
+                        update={"landlord_contact": contact}
+                    )
+                ]
+            }
+        )
+        saved = await save_recommendation_run(
+            database=database,
+            tenant_id=ObjectId(),
+            idempotency_key="contact-snapshot",
+            request=preferences,
+            response=response,
+        )
+        response.candidates[0].landlord_contact.owner_name = "Changed Current Owner"
+        detail = await get_recommendation_run_detail(
+            database=database,
+            tenant_id=database.collection.documents[0]["tenant_id"],
+            run_id=saved.recommendation_run_id,
+        )
+        self.assertEqual(
+            detail.results[0].landlord_contact.owner_name,
+            "Stored Owner",
+        )
+
+        database.collection.documents[0]["results"][0].pop("landlord_contact")
+        legacy = await get_recommendation_run_detail(
+            database=database,
+            tenant_id=database.collection.documents[0]["tenant_id"],
+            run_id=saved.recommendation_run_id,
+        )
+        self.assertIsNone(legacy.results[0].landlord_contact)
+
     async def test_snapshot_preserves_request_results_scores_and_metadata(self) -> None:
         database = HistoryDatabase()
         tenant_id = ObjectId()

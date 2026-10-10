@@ -49,6 +49,12 @@ export interface TravelCostMetadata {
   calculation_version: "travel_cost_v1";
 }
 
+export interface LandlordContact {
+  owner_name: string | null;
+  email: string | null;
+  phone_number: string | null;
+}
+
 export interface RankedRecommendationCandidate {
   id: string;
   title: string | null;
@@ -79,6 +85,7 @@ export interface RankedRecommendationCandidate {
   final_suitability_score: number;
   rank: number;
   recommendation_reasons: RecommendationReason[];
+  landlord_contact?: LandlordContact | null;
   travel_cost_basis?: TravelCostBasis;
   estimated_monthly_travel_cost_bdt?: number | null;
   estimated_monthly_spend_bdt?: number | null;

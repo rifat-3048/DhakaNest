@@ -4,6 +4,8 @@ from collections.abc import Callable, Iterable
 from datetime import date, datetime
 from typing import Any
 
+from bson import ObjectId
+
 from app.config import settings
 from app.schemas.recommendation_schema import (
     CandidateCommute,
@@ -14,6 +16,7 @@ from app.schemas.recommendation_schema import (
     DestinationScoringDiagnostics,
     FilterDiagnostics,
     KNNRecommendationResponse,
+    LandlordContact,
     RankedRecommendationResponse,
     RecommendationCandidate,
     RecommendationCandidatesResponse,
@@ -526,6 +529,7 @@ async def get_ranked_recommendations(
     preferences: TenantRecommendationRequest,
     routing_provider: RoutingProvider | None = None,
     configured_k: int | None = None,
+    include_landlord_contacts: bool = True,
 ) -> RankedRecommendationResponse:
     """Run Parts 1-4 once, then calculate criteria and final WSM ranking."""
     knn_response = await get_knn_recommendation_candidates(
@@ -534,7 +538,61 @@ async def get_ranked_recommendations(
         routing_provider=routing_provider,
         configured_k=configured_k,
     )
-    return rank_knn_candidates(
+    ranked_response = rank_knn_candidates(
         knn_response=knn_response,
         preferences=preferences,
     )
+    if include_landlord_contacts:
+        return await attach_landlord_contacts(
+            database=database,
+            response=ranked_response,
+        )
+    return ranked_response
+
+
+def _optional_contact_text(value: object) -> str | None:
+    return value.strip() if isinstance(value, str) and value.strip() else None
+
+
+async def attach_landlord_contacts(
+    *, database: Any, response: RankedRecommendationResponse
+) -> RankedRecommendationResponse:
+    """Batch-resolve final listing owners without changing rank or scores."""
+    listing_object_ids = [
+        ObjectId(candidate.id)
+        for candidate in response.candidates
+        if ObjectId.is_valid(candidate.id)
+    ]
+    listing_to_landlord: dict[str, ObjectId] = {}
+    if listing_object_ids:
+        cursor = database["listings"].find(
+            {"_id": {"$in": listing_object_ids}},
+            {"landlord_id": 1},
+        )
+        async for listing in cursor:
+            landlord_id = listing.get("landlord_id")
+            if isinstance(landlord_id, ObjectId):
+                listing_to_landlord[str(listing["_id"])] = landlord_id
+
+    landlord_ids = list(dict.fromkeys(listing_to_landlord.values()))
+    contacts_by_landlord: dict[ObjectId, LandlordContact] = {}
+    if landlord_ids:
+        cursor = database["users"].find(
+            {"_id": {"$in": landlord_ids}, "role": "landlord"},
+            {"name": 1, "email": 1, "phone": 1},
+        )
+        async for user in cursor:
+            contacts_by_landlord[user["_id"]] = LandlordContact(
+                owner_name=_optional_contact_text(user.get("name")),
+                email=_optional_contact_text(user.get("email")),
+                phone_number=_optional_contact_text(user.get("phone")),
+            )
+
+    enriched = []
+    for candidate in response.candidates:
+        landlord_id = listing_to_landlord.get(candidate.id)
+        contact = contacts_by_landlord.get(landlord_id, LandlordContact())
+        enriched.append(
+            candidate.model_copy(update={"landlord_contact": contact})
+        )
+    return response.model_copy(update={"candidates": enriched})

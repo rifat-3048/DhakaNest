@@ -416,24 +416,45 @@ class FakeCollection:
     def __init__(self, documents: list[dict]) -> None:
         self.documents = documents
 
-    def find(self, query: dict) -> FakeCursor:
-        return FakeCursor(
-            [
-                item
-                for item in self.documents
-                if all(item.get(key) == value for key, value in query.items())
+    def find(self, query: dict, projection: dict | None = None) -> FakeCursor:
+        def matches(item: dict) -> bool:
+            for key, expected in query.items():
+                if isinstance(expected, dict) and "$in" in expected:
+                    if item.get(key) not in expected["$in"]:
+                        return False
+                elif item.get(key) != expected:
+                    return False
+            return True
+
+        documents = [item for item in self.documents if matches(item)]
+        if projection is not None:
+            included = {key for key, enabled in projection.items() if enabled}
+            documents = [
+                {
+                    key: value
+                    for key, value in item.items()
+                    if key == "_id" or key in included
+                }
+                for item in documents
             ]
+        return FakeCursor(
+            documents
         )
 
 
 class FakeDatabase:
-    def __init__(self, documents: list[dict]) -> None:
+    def __init__(
+        self, documents: list[dict], users: list[dict] | None = None
+    ) -> None:
         self.collection = FakeCollection(documents)
+        self.users = FakeCollection(users or [])
 
     def __getitem__(self, collection_name: str) -> FakeCollection:
-        if collection_name != "listings":
-            raise KeyError(collection_name)
-        return self.collection
+        if collection_name == "listings":
+            return self.collection
+        if collection_name == "users":
+            return self.users
+        raise KeyError(collection_name)
 
 
 def mongo_listing(**updates: object) -> dict:

@@ -278,7 +278,16 @@ class RecommendationReason(BaseModel):
     strength: RecommendationReasonStrength
 
 
+class LandlordContact(BaseModel):
+    """The only landlord account fields exposed to recommendation tenants."""
+
+    owner_name: str | None = None
+    email: str | None = None
+    phone_number: str | None = None
+
+
 class RankedRecommendationCandidate(PropertySimilarCandidate):
+    landlord_contact: LandlordContact | None = None
     travel_cost_basis: TravelCostBasis = "rent_only_legacy"
     estimated_monthly_travel_cost_bdt: float | None = Field(default=None, ge=0)
     estimated_monthly_spend_bdt: float | None = Field(default=None, ge=0)
