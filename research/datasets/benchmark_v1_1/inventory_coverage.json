@@ -1,0 +1,39 @@
+{
+  "active": 2500,
+  "areas": {
+    "Banani": 210,
+    "Banasree": 210,
+    "Bashundhara R/A": 205,
+    "Dhanmondi": 210,
+    "Gulshan": 210,
+    "Khilgaon": 210,
+    "Lalmatia": 210,
+    "Mirpur": 210,
+    "Mohammadpur": 210,
+    "Motijheel": 205,
+    "Rampura": 205,
+    "Uttara": 205
+  },
+  "fairness_labels": {
+    "above_estimated_range": 500,
+    "below_estimated_range": 501,
+    "fairly_priced": 500,
+    "significantly_above_estimated_range": 500,
+    "significantly_below_estimated_range": 499
+  },
+  "furnishing": {
+    "furnished": 833,
+    "semi_furnished": 834,
+    "unfurnished": 833
+  },
+  "lifecycle": 100,
+  "property_types": {
+    "apartment": 1490,
+    "house": 430,
+    "room": 310,
+    "sublet": 270
+  },
+  "rent_maximum": 198000.0,
+  "rent_minimum": 6000.0,
+  "unique_amenity_combinations": 483
+}

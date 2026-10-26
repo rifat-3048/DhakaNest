@@ -1,0 +1,8 @@
+{
+  "actual_model_calls": 5200,
+  "completed_at_utc": "2026-10-25T04:25:37.602799+00:00",
+  "records": 2600,
+  "source": "Original production assessment builder and frozen saved XGBoost/preprocessors",
+  "started_at_utc": "2026-10-25T04:25:14.643368+00:00",
+  "timing_not_historical_admin_review": true
+}

@@ -1,0 +1,30 @@
+{
+  "backend_log": "........................................................................................................\n----------------------------------------------------------------------\nRan 104 tests in 1.357s\n\nOK\n",
+  "backend_passed": true,
+  "backend_tests": 104,
+  "compilation": "pass",
+  "compose_validation": "docker compose --env-file .env.example -f docker-compose.yml config --quiet passed; no engine needed or started",
+  "downloads": 0,
+  "fixture_readiness": "correctly_blocked_on_30000_missing_pairs",
+  "historical": {
+    "historical": {
+      "historical": {
+        "manifest_revision": 2,
+        "phase_3_output_hashes_verified": 51,
+        "prior_output_hashes_verified": 44
+      },
+      "phase_3b_output_hashes_verified": 52
+    },
+    "phase_3c_hashes_verified": 30
+  },
+  "host_settings_changed": false,
+  "preprocessing_executed": false,
+  "public_metadata_secret_scan": "pass; no private credential files included",
+  "real_local_route_requests": 0,
+  "real_smoke_tests": 0,
+  "research_log": ".........................................................................................................................................\n----------------------------------------------------------------------\nRan 137 tests in 19.106s\n\nOK\n",
+  "research_passed": true,
+  "research_skips": 0,
+  "research_tests": 137,
+  "tracked_diff": "empty"
+}

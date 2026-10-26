@@ -1,0 +1,21 @@
+{
+  "id": "virtualenv-bootstrap-v1",
+  "isolation": "pip --target private helper directory; execute with -I -S; never system site-packages",
+  "packages": {
+    "distlib": "0.4.4",
+    "filelock": "4.2.4",
+    "packaging": "26.3",
+    "platformdirs": "4.13.5",
+    "python-discovery": "1.6.4",
+    "virtualenv": "21.14.5"
+  },
+  "python_minors": [
+    "3.12",
+    "3.13"
+  ],
+  "requirements": "virtualenv-bootstrap-v1.lock.txt",
+  "requirements_sha256": "c6e9b679df69a9539f2e42ae4c248fd367254d65eb4b52a3fa80c19e1af59e59",
+  "seed_policy": "embedded pip only; no periodic updates/downloads; no activators",
+  "source_report_sha256": "ad3f121d343d289b55fefc89a43340d68f0378d7b93c5237e51139bc4f02cd05",
+  "virtualenv_version": "21.14.5"
+}

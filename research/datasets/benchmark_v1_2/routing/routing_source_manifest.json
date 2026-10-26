@@ -1,0 +1,33 @@
+{
+  "configuration": {
+    "acquisition_version": "phase3c-v1",
+    "authorization": {
+      "approved_scope_sha256": null,
+      "endpoint": "https://router.project-osrm.org",
+      "evidence": [],
+      "limits_verified": false,
+      "no_new_billing_or_infrastructure": false,
+      "operator_approved": false,
+      "user_approved": false
+    },
+    "data_version": "unknown",
+    "destination_batch": 12,
+    "endpoint": "https://router.project-osrm.org",
+    "engine_version": "unknown",
+    "interval_seconds": 1.0,
+    "limits_status": "planning_assumptions_not_verified_provider_limits",
+    "max_cells": 480,
+    "max_concurrency": 1,
+    "max_coordinates": 52,
+    "origin_batch": 40,
+    "profile": "driving",
+    "provider": "osrm",
+    "request_ceiling": 189,
+    "retries": 2,
+    "timeout_seconds": 30,
+    "user_agent": "DhakaNest-Research/Phase3C"
+  },
+  "coordinates": "Synthetic listing offsets and area anchors, not verified addresses",
+  "endpoint_audit": "research/benchmark/phase3c/endpoint_audit.json",
+  "scope_sha256": "a1a86259264864673f4731d63a8d813787aa466d59e97e74754b764574737371"
+}

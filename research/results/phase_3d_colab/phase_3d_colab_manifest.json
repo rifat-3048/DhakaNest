@@ -1,0 +1,18 @@
+{
+  "files": {
+    "annotation_pool_finalization.md": "d0c31ea26a7b00220569456ec9efbe8c38a209422dcce441390d26c462f72528",
+    "commute_candidate_coverage.md": "aa3f8319d96e1c5e9db2588236391eb71d4b110d6eb53a613c245efb348055b5",
+    "frozen_matrix_validation.md": "01765dbb41d2046fce2ecbd4e71156a97118b2e04c1af40fd954734327295d9a",
+    "offline_fixture_verification.md": "557f64d28ef9dd4e2310678e0d8cc459cb2261c189417235316387ca039845e2",
+    "osm_dataset_provenance.md": "c3ec2cd6c9cb945423c291fe73500761bb034e7abcbeecf36bca86172d8821da",
+    "osrm_setup.md": "dbebfaab31c8e9b48015321a18007f8fef7ef41f638b506e827e2a8096b7c8aa",
+    "phase_3d_colab_verification.md": "9ee0d0c510d5d5e8ca0f1587790bd1656758ee14cdabb456119388bdd6894d39",
+    "research_limitations.md": "6d95280bced66d820b7e89a5bc6a429900b9597b609c292e1ea82ef131989501",
+    "routing_acquisition.md": "6c1c7c51a9c6dab3a983b77de9c06c378b8ba881e9eddae90d9631d88a4e3ee5",
+    "runtime_readiness.md": "9ac94c03761d6bc9df0c8e9c38309b386c2aadf98b75a266f5e30579247037bf",
+    "verification_results.json": "10fc57ff1a8205dec5cf9ef5d319a57021810985a97aa345d61dc06afd1ee054"
+  },
+  "phase4_authorized": false,
+  "production_modified": false,
+  "status": "partially_complete_colab_execution_outstanding"
+}

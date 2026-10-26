@@ -1,0 +1,83 @@
+{
+  "bootstrap_tools_installed_into_private_target": true,
+  "colab_executed": false,
+  "ensurepip_absence_simulated": true,
+  "fallback": {
+    "diagnostics": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\venv_diagnostics\\e174450616934bfaa9c943e22896e4e2",
+    "method": "pinned-virtualenv-ensurepip-unavailable",
+    "python": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312\\Scripts\\python.exe",
+    "reused": false,
+    "validation": {
+      "base_prefix": "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64",
+      "implementation": "CPython",
+      "paths": [
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\python312.zip",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\DLLs",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\Lib",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64",
+        "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312",
+        "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312\\Lib\\site-packages"
+      ],
+      "pip_file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312\\Lib\\site-packages\\pip\\__init__.py",
+      "pip_version": "26.2.1",
+      "prefix": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312",
+      "python_minor": "3.12",
+      "pyvenv_cfg_sha256": "ea2754c2aa2d14ad98d5f72d3241d94078a228d00caf319a5d3a97c35fb16232",
+      "user_site_enabled": false
+    }
+  },
+  "live_osrm_requests": 0,
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "research_dependencies_installed": false,
+  "reuse": {
+    "diagnostics": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\venv_diagnostics\\290205e936e44aaba30922c26f26c303",
+    "method": "pinned-virtualenv-ensurepip-unavailable",
+    "python": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312\\Scripts\\python.exe",
+    "reused": true,
+    "validation": {
+      "base_prefix": "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64",
+      "implementation": "CPython",
+      "paths": [
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\python312.zip",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\DLLs",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\Lib",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64",
+        "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312",
+        "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312\\Lib\\site-packages"
+      ],
+      "pip_file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312\\Lib\\site-packages\\pip\\__init__.py",
+      "pip_version": "26.2.1",
+      "prefix": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\fallback\\research_venv_cp312",
+      "python_minor": "3.12",
+      "pyvenv_cfg_sha256": "ea2754c2aa2d14ad98d5f72d3241d94078a228d00caf319a5d3a97c35fb16232",
+      "user_site_enabled": false
+    }
+  },
+  "standard": {
+    "diagnostics": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\standard\\venv_diagnostics\\33bd54b1d50a4550985d40a59d8a2de0",
+    "method": "stdlib-venv",
+    "python": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\standard\\research_venv_cp312\\Scripts\\python.exe",
+    "reused": false,
+    "validation": {
+      "base_prefix": "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64",
+      "implementation": "CPython",
+      "paths": [
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\python312.zip",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\DLLs",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64\\Lib",
+        "C:\\Users\\RIFAT\\AppData\\Local\\Python\\pythoncore-3.12-64",
+        "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\standard\\research_venv_cp312",
+        "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\standard\\research_venv_cp312\\Lib\\site-packages"
+      ],
+      "pip_file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\standard\\research_venv_cp312\\Lib\\site-packages\\pip\\__init__.py",
+      "pip_version": "25.0.1",
+      "prefix": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\vs\\c441df3a\\standard\\research_venv_cp312",
+      "python_minor": "3.12",
+      "pyvenv_cfg_sha256": "6686d267542da09d6519d7a52d67b96d75f486c8f86921f302676246367c8156",
+      "user_site_enabled": false
+    }
+  },
+  "status": "local_creation_smoke_passed",
+  "system_packages_modified": false
+}

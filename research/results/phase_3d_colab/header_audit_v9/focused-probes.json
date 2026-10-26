@@ -1,0 +1,33 @@
+{
+  "corrected": {
+    "command": [
+      "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.EXE",
+      "-std=c++17",
+      "-fsyntax-only",
+      "-x",
+      "c++",
+      "-"
+    ],
+    "exit_code": 0,
+    "expected_negative": false,
+    "input": "#include <vector>\n#include <string>\n#include <unordered_set>\nstruct KnownSuffixReproduction { std::vector<std::string> suffixes; };\n",
+    "stderr": "",
+    "stdout": ""
+  },
+  "negative": {
+    "command": [
+      "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.EXE",
+      "-std=c++17",
+      "-fsyntax-only",
+      "-x",
+      "c++",
+      "-"
+    ],
+    "exit_code": 1,
+    "expected_negative": true,
+    "input": "#include <string>\n#include <unordered_set>\nstruct KnownSuffixReproduction { std::vector<std::string> suffixes; };\n",
+    "stderr": "<stdin>:3:39: error: 'vector' in namespace 'std' does not name a template type\n<stdin>:3:34: note: 'std::vector' is defined in header '<vector>'; did you forget to '#include <vector>'?\n",
+    "stdout": ""
+  },
+  "scope": "Known frozen declaration with its standard includes; Boost omitted explicitly"
+}

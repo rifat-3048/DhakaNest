@@ -1,0 +1,204 @@
+{
+  "inventory_version": "phase-0-v1",
+  "classification_definitions": {
+    "verified_and_reusable": "Inspected locally with provenance or checksum evidence sufficient for reuse.",
+    "available_requires_validation": "Located locally or in connected storage, but provenance, equality, or reproducibility is incomplete.",
+    "referenced_not_accessible": "Referenced by documentation but unavailable during this audit.",
+    "missing_future_research": "Required for later research but not currently present."
+  },
+  "assets": [
+    {
+      "category": "dataset",
+      "identifier": "raw-house-rent-dhaka-v1",
+      "source": "ml/data/raw/houserentdhaka.csv",
+      "records": 28800,
+      "sha256": "bcd4590a3520d072e8e9a091b832c03a110cbbe1a877bd5b0fab9f8a09f0078b",
+      "availability": "local_and_google_drive",
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "dataset",
+      "identifier": "processed-rent-training-v1",
+      "source": "ml/data/processed/dhakanest_rent_training_v1.csv",
+      "records": 15248,
+      "sha256": "451eecf5e67460d74095e1a87a4d009255c9ab73ba3e09b4ea4e820dbb908573",
+      "availability": "local_and_google_drive",
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "training",
+      "identifier": "rent-training-splits-v1",
+      "source": "ml/data/splits/",
+      "records": {
+        "train": 10668,
+        "validation": 2289,
+        "test": 2291,
+        "unseen_challenge": 1119
+      },
+      "seed": 42,
+      "scripts": [
+        "ml/notebooks/00_DhakaNest_Data_Preparation.ipynb",
+        "ml/notebooks/01_DhakaNest_Random_Forest.ipynb",
+        "ml/notebooks/02_DhakaNest_XGBoost.ipynb",
+        "ml/notebooks/03_DhakaNest_CatBoost.ipynb",
+        "ml/notebooks/04_DhakaNest_Final_Model_Comparison_and_Export.ipynb"
+      ],
+      "checksums": {
+        "train": "41036273c98520726badbbb22903f37aa1e99591bb33d1238d12014da30d1a87",
+        "validation": "a984aaadede9d6568c339523c3f2479a6f0282debcab840639318bf4258de07f",
+        "test": "05de67d08b0eeca17c7916324ce5a2e1cec1fe1fa060c5d54d1ea08787784f13"
+      },
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "model",
+      "identifier": "rent-model-comparison-v1",
+      "algorithms": ["Random Forest", "CatBoost", "XGBoost"],
+      "winner": "XGBoost",
+      "selection_metric": "validation_mae_bdt",
+      "manifest": "ml/evidence/manifests/winner_selection_manifest.json",
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "model",
+      "identifier": "xgboost-production-bundle-1.0.0",
+      "algorithm": "XGBoost",
+      "configuration": {
+        "target_strategy": "log1p",
+        "fixed_estimators": 468,
+        "production_training_rows": 12957
+      },
+      "artifact": "ml/exports/dhakanest_xgboost_bundle_v1.zip",
+      "manifest": "ml/evidence/manifests/final_production_manifest.json",
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "validation",
+      "identifier": "candidate-validation-results-v1",
+      "metrics_and_predictions": "ml/evidence/metrics/",
+      "report": "ml/evidence/reports/final_model_comparison_report.md",
+      "winner_validation_metrics": {
+        "mae_bdt": 3571.573025262484,
+        "rmse_bdt": 8842.536407928113,
+        "r2": 0.8415461748902432,
+        "mape_percent": 12.681239714384551
+      },
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "official_test",
+      "identifier": "xgboost-official-test-v1",
+      "frozen_test": "ml/data/splits/test.csv",
+      "test_sha256": "05de67d08b0eeca17c7916324ce5a2e1cec1fe1fa060c5d54d1ea08787784f13",
+      "provenance": "ml/evidence/manifests/official_test_evaluation_manifest.json",
+      "metrics": {
+        "mae_bdt": 3193.69,
+        "rmse_bdt": 7667.50,
+        "r2": 0.9001,
+        "mape_percent": 11.88
+      },
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "recommendation_benchmark",
+      "identifier": "recommendation-evaluation-v1",
+      "source": "backend/evaluation/recommendation_ground_truth.json",
+      "profiles": 8,
+      "candidate_properties": 12,
+      "graded_judgments": 96,
+      "sha256": "2589d957e552080a802daf7434cd124c37fd5a780d646551263cf60ff605ad9c",
+      "classification": "available_requires_validation",
+      "limitation": "Labels are frozen, but the 12 complete listing documents and route matrices are not stored in the benchmark file."
+    },
+    {
+      "category": "evaluation",
+      "identifier": "recommendation-evaluation-record-2026-08-27",
+      "script": "backend/scripts/evaluate_recommendations.py",
+      "metrics_implementation": "backend/app/evaluation/recommendation_metrics.py",
+      "result": "docs/evidence/evaluation/recommendation-evaluation.txt",
+      "reported_metrics": {
+        "precision_at_5": 0.95,
+        "precision_at_10": 0.95,
+        "ndcg_at_5": 0.9822,
+        "ndcg_at_10": 0.9822
+      },
+      "scoring_version_context": "historical pre-WSM-v3/v4 implementation",
+      "classification": "available_requires_validation"
+    },
+    {
+      "category": "evaluation",
+      "identifier": "research-paper-recommendation-result-2026-10-07",
+      "source": "Google Drive document: DhakaNest - Current Research Paper Draft",
+      "reported_metrics": {
+        "precision_at_5": 0.95,
+        "precision_at_10": 0.95,
+        "ndcg_at_5": 0.9615,
+        "ndcg_at_10": 0.9615
+      },
+      "scoring_version_context": "paper describes rent-plus-travel affordability associated with WSM v3",
+      "classification": "available_requires_validation",
+      "limitation": "No raw run output or experiment manifest ties this value conclusively to a script invocation."
+    },
+    {
+      "category": "synthetic_inventory",
+      "identifier": "academic-inventory-v1",
+      "generator": "backend/app/services/academic_inventory_service.py",
+      "seed": 20261005,
+      "default_active_count": 2500,
+      "coverage_report": "backend/data/academic_inventory_coverage.json",
+      "classification": "verified_and_reusable",
+      "safety_note": "Generation and coverage analysis are reusable offline; apply/cleanup functions write MongoDB and are excluded from research runs."
+    },
+    {
+      "category": "figures",
+      "identifier": "local-model-figures",
+      "count": 17,
+      "path": "ml/evidence/figures/",
+      "source_data": "ml/evidence/metrics/",
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "external_training_evidence",
+      "identifier": "dhakanest-ml-google-drive",
+      "source": "Google Drive folder 1kyx2lUgeYSGv0lc7rZlcE-e72i5rii6y",
+      "available_external_only": [
+        "data/interim cleaning and quarantine tables",
+        "dataset audit reports and source profiles",
+        "segment evaluation tables",
+        "location reference and alias tables",
+        "split summary and split manifest tables"
+      ],
+      "classification": "available_requires_validation",
+      "limitation": "Metadata was inspected through the connected Drive; content equality and checksums for external-only files were not validated locally."
+    },
+    {
+      "category": "documentation",
+      "identifier": "current-production-methodology",
+      "paths": [
+        "backend/README.md",
+        "docs/architecture.md",
+        "docs/report-update-notes.md"
+      ],
+      "scoring_version": "wsm_v4",
+      "classification": "verified_and_reusable"
+    },
+    {
+      "category": "documentation",
+      "identifier": "current-research-paper-draft",
+      "source": "Google Drive document 1tcB9YFiY4jP4ThvIm7gtGNdlF2daU7UiaU807zt-QyU",
+      "classification": "available_requires_validation",
+      "limitation": "Budget methodology and NDCG evidence are stale relative to WSM v4."
+    },
+    {
+      "category": "recommendation_reproducibility",
+      "identifier": "offline-v4-benchmark-bundle",
+      "classification": "missing_future_research",
+      "missing": [
+        "frozen complete candidate listing documents",
+        "frozen route matrices or deterministic routing fixture",
+        "WSM v4 run-level manifest",
+        "per-profile ranked output and metric audit"
+      ]
+    }
+  ]
+}

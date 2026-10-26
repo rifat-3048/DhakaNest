@@ -1,0 +1,46 @@
+{
+  "active_count": 2500,
+  "configuration_equivalence": "Original defaults generate 2600 before selecting 2500 active; lifecycle_count affects RNG allocation, so it is not set to zero",
+  "dependencies": {
+    "joblib": "1.5.3",
+    "numpy": "2.0.2",
+    "pandas": "2.2.2",
+    "scikit-learn": "1.6.1",
+    "scipy": "1.16.3",
+    "xgboost": "3.3.0"
+  },
+  "effective_protocol": "1.1.0-phase3",
+  "generator_version": "1.0.0",
+  "inference_n_jobs": 1,
+  "inference_timestamp_policy": "Actual interval only in inference_acquisition.json; checked_at/checked_by excluded from computational records",
+  "knn_k": 10,
+  "lifecycle_count": 100,
+  "model_evidence": {
+    "artifact_hashes": {
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/fallback_models/broad_area_preprocessor.joblib": "fa5473bdbc0639ca0588737695fbff1d754769864d48a9083468ec4e47a1de89",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/fallback_models/dhaka_wide_preprocessor.joblib": "b7907e3e37f145cde41fbb7116e94762c75ce050fe4cab27d76c6e7ed54a88c0",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/fallback_models/xgboost_broad_area_model.json": "1a48ca08e2a7e1af855e39db3ae87183f354e4eeb6522d0c5985e37589fdb435",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/fallback_models/xgboost_dhaka_wide_model.json": "c60d805b7458a59a5feb43c2e1e3b3c597566fa463573c0a487e758fbc2ac87b",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/inference_helper.py": "1088abadaf00f2e47b750748a35f1991602dce7fc69728895649293df22c5317",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/metadata/feature_schema.json": "4f3e067c4d25e4f97c6a582c3043b557cf697ccbf01f0638b84d626fb5f4ae54",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/metadata/final_metrics.json": "f2d0c80476cb9a237c237e70b5ef96b61d118fa87919ab45d38c332a334af665",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/metadata/production_manifest.json": "21800644f502a65a78a31e089dcaaab35a33658091f3e7b3a1c56ede3bab6551",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/metadata/routing_reference.json": "7635df269cbcf2ae308d38fa7cb8d4a9dc564466e476209ca371642900d5b834",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/primary_model/primary_preprocessor.joblib": "de79ae2aa98b3aa4b2e320ee384c4c93775617f263f279924af35d137138dca1",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/primary_model/xgboost_primary_model.json": "e63b4c21791a285dba4a3902799358964f3559c4fc73b8eb04479fdcaf9ebbc9",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/requirements.txt": "0244584c92c5151977e4ee22b5d7a3121428e2d9fe104b4d38adebe66288a2fd",
+      "backend/app/ml/artifacts/dhakanest_xgboost_v1/sample_input.json": "45f322ed0948c71f37d4d0d29188a6cb9c7944b3dbc7dfc784efabdc593ca48d"
+    },
+    "bundle_version": "1.0.0",
+    "inference_n_jobs": 1,
+    "model_manifest_sha256": "21800644f502a65a78a31e089dcaaab35a33658091f3e7b3a1c56ede3bab6551",
+    "model_retrained": false
+  },
+  "parent": "benchmark_v1",
+  "profile_policy": "Exact original 200 profiles and 60/140 split retained byte-for-byte",
+  "reconstruction_not_database_export": true,
+  "routing_policy": "Offline only; separate explicit endpoint authorization needed for capture",
+  "scoring_reference": "wsm_v4",
+  "seed": 20261005,
+  "version": "benchmark_v1_1"
+}

@@ -1,0 +1,38 @@
+{
+  "corrected": {
+    "command": [
+      "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.EXE",
+      "-std=c++17",
+      "-fsyntax-only",
+      "-x",
+      "c++",
+      "-I",
+      "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\build_source\\include",
+      "-"
+    ],
+    "exit_code": 1,
+    "expected_negative": false,
+    "input": "#include \"extractor/suffix_table.hpp\"\n",
+    "stderr": "In file included from D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\build_source\\include/extractor/suffix_table.hpp:8,\n                 from <stdin>:1:\nD:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\build_source\\include/util/string_view.hpp:4:10: fatal error: boost/functional/hash.hpp: No such file or directory\n #include <boost/functional/hash.hpp>\n          ^~~~~~~~~~~~~~~~~~~~~~~~~~~\ncompilation terminated.\n",
+    "stdout": ""
+  },
+  "note": "Missing host Boost is a blocked full-header probe, NOT proof that the vector correction failed or passed",
+  "original": {
+    "command": [
+      "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.EXE",
+      "-std=c++17",
+      "-fsyntax-only",
+      "-x",
+      "c++",
+      "-I",
+      "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\pristine\\include",
+      "-"
+    ],
+    "exit_code": 1,
+    "expected_negative": true,
+    "input": "#include \"extractor/suffix_table.hpp\"\n",
+    "stderr": "In file included from D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\pristine\\include/extractor/suffix_table.hpp:7,\n                 from <stdin>:1:\nD:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\pristine\\include/util/string_view.hpp:4:10: fatal error: boost/functional/hash.hpp: No such file or directory\n #include <boost/functional/hash.hpp>\n          ^~~~~~~~~~~~~~~~~~~~~~~~~~~\ncompilation terminated.\n",
+    "stdout": ""
+  },
+  "passed": false
+}

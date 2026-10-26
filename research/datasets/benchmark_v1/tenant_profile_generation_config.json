@@ -1,0 +1,22 @@
+{
+  "annotation_target_per_profile": 24,
+  "base_date": "2026-10-25",
+  "baseline_nomination_reserved": true,
+  "benchmark_version": "benchmark_v1",
+  "database_access": "none",
+  "excluded_inventory": "2500 academic active listings require new model inference and jitter generation or authorized stored export; not reconstructed or called market data",
+  "external_routing_access": "none",
+  "generation_method": "10 substantive need families x 5 need conditions x 4 area contexts; coverage-driven factorial, not unconstrained random sampling",
+  "geographic_scope": "12 repository-claimed OSM area anchors, not verified private property or institution coordinates",
+  "model_inference": "none",
+  "partition_rule": "Seeded shuffle of complete scenario families, 3 development / 7 final; 60/140 profiles; no family crosses folds",
+  "production_config_override": "Inert research-only settings, no secrets/.env; K not changed",
+  "production_knn_k_default": 10,
+  "production_scoring_version": "wsm_v4",
+  "profile_source": "Synthetic researcher-designed scenarios, not consented observations or expert-validated elicitation",
+  "property_cap": 5000,
+  "property_source": "12 original repository seed definitions statically extracted; evaluation fixtures only",
+  "protocol_version": "1.1.0-phase3",
+  "seed": 42,
+  "target_profiles": 200
+}

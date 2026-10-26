@@ -1,0 +1,111 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-hypotheses-v1",
+  "output_paths": ["results/phase_3", "results/phase_9", "results/phase_10"],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "rq_id": "RQ1",
+      "classification": "primary",
+      "null_hypothesis": "The full DhakaNest method has no positive mean paired NDCG@10 difference relative to each prespecified principal baseline.",
+      "alternative_hypothesis": "The full DhakaNest method has a positive mean paired NDCG@10 difference relative to the prespecified principal baselines.",
+      "compared_conditions": ["B_FULL", "B_AREA_FIRST", "B_FILTER", "B_KNN_ONLY", "B_WSM_ONLY"],
+      "primary_outcome": "NDCG@10",
+      "unit_of_analysis": "tenant profile",
+      "required_evidence": ["frozen common candidate universe", "independent graded labels", "per-method ranked outputs"],
+      "statistical_test": "paired permutation tests with profile-level bootstrap confidence intervals and Holm adjustment",
+      "interpretation": "Positive adjusted evidence supports improved relevance; failure to reject is inconclusive and does not establish equivalence."
+    },
+    {
+      "id": "H2",
+      "rq_id": "RQ2",
+      "classification": "primary",
+      "null_hypothesis": "Destination-aware routing, importance, and commute constraints do not improve mean paired NDCG@10 over their prespecified destination-reduced controls.",
+      "alternative_hypothesis": "At least one prespecified destination-aware comparison produces a positive mean paired NDCG@10 difference while maintaining reported constraint satisfaction and coverage.",
+      "compared_conditions": ["B_FULL", "B_NO_DESTINATION", "A_EQUAL_DESTINATION_IMPORTANCE", "A_NO_COMMUTE_CONSTRAINTS", "A_NO_DESTINATION_LOCATION"],
+      "primary_outcome": "NDCG@10",
+      "unit_of_analysis": "tenant profile with valid frozen routes",
+      "required_evidence": ["one-, two-, and three-destination profiles", "frozen route matrices", "independent graded labels"],
+      "statistical_test": "paired permutation tests with Holm adjustment plus destination-count interaction estimates",
+      "interpretation": "Report relevance, commute satisfaction, and empty-result tradeoffs together; a null result is not proof that destinations are irrelevant."
+    },
+    {
+      "id": "H3",
+      "rq_id": "RQ3",
+      "classification": "primary",
+      "null_hypothesis": "Destination-first and area-first workflows have the same distribution of independently assessed selected-property relevance after accounting for participant and task effects.",
+      "alternative_hypothesis": "Destination-first discovery improves independently assessed selected-property relevance after accounting for participant and task effects.",
+      "compared_conditions": ["US_AREA_FIRST", "US_DESTINATION_FIRST"],
+      "primary_outcome": "selected_property_relevance",
+      "unit_of_analysis": "participant-task decision",
+      "required_evidence": ["consented participant sessions", "counterbalanced matched tasks", "blind independent outcome labels"],
+      "statistical_test": "mixed-effects ordinal model with participant and task effects; paired sensitivity analysis",
+      "interpretation": "Objective relevance is primary; perception measures are supporting and cannot substitute for it."
+    },
+    {
+      "id": "H4A",
+      "rq_id": "RQ4",
+      "classification": "supporting",
+      "null_hypothesis": "KNN shortlist selection does not change mean paired NDCG@10 relative to ranking all eligible commute-complete candidates with WSM.",
+      "alternative_hypothesis": "KNN shortlist selection changes mean paired NDCG@10 and/or computational cost relative to ranking all eligible candidates.",
+      "compared_conditions": ["B_FULL", "A_NO_KNN"],
+      "primary_outcome": "NDCG@10",
+      "unit_of_analysis": "tenant profile",
+      "required_evidence": ["pre-KNN candidate sets", "KNN similarities", "ranked outputs", "runtime measurements"],
+      "statistical_test": "two-sided paired permutation test with bootstrap confidence interval",
+      "interpretation": "Quality and efficiency effects must be reported separately; a non-significant quality difference is not equivalence."
+    },
+    {
+      "id": "H4B",
+      "rq_id": "RQ4",
+      "classification": "supporting",
+      "null_hypothesis": "Five-criterion WSM reranking does not improve mean paired NDCG@10 over KNN similarity ordering.",
+      "alternative_hypothesis": "Five-criterion WSM reranking improves mean paired NDCG@10 over KNN similarity ordering.",
+      "compared_conditions": ["B_FULL", "B_KNN_ONLY"],
+      "primary_outcome": "NDCG@10",
+      "unit_of_analysis": "tenant profile",
+      "required_evidence": ["identical KNN shortlists", "independent graded labels", "KNN and WSM rankings"],
+      "statistical_test": "one-sided paired permutation test with bootstrap confidence interval",
+      "interpretation": "Evidence concerns reranking within the same shortlist and does not isolate individual WSM criteria."
+    },
+    {
+      "id": "H4C",
+      "rq_id": "RQ4",
+      "classification": "supporting",
+      "null_hypothesis": "Removing Rent Fairness and renormalizing the remaining WSM weights does not change mean paired NDCG@10.",
+      "alternative_hypothesis": "Including Rent Fairness improves mean paired NDCG@10 over the prespecified no-fairness ablation.",
+      "compared_conditions": ["B_FULL", "A_NO_RENT_FAIRNESS"],
+      "primary_outcome": "NDCG@10",
+      "unit_of_analysis": "tenant profile with complete stored rent assessments",
+      "required_evidence": ["frozen stored XGBoost assessments", "independent graded labels", "ablation outputs"],
+      "statistical_test": "one-sided paired permutation test with bootstrap confidence interval",
+      "interpretation": "Rent Fairness means model-based rent reasonableness, not demographic or societal fairness."
+    },
+    {
+      "id": "H5",
+      "rq_id": "RQ5",
+      "classification": "supporting",
+      "null_hypothesis": "Recommendation overlap under each prespecified realistic perturbation is no greater than the protocol's chance reference distribution.",
+      "alternative_hypothesis": "Recommendation overlap under prespecified perturbations exceeds the chance reference distribution while relevance and coverage changes remain quantified.",
+      "compared_conditions": ["B_FULL", "ROBUSTNESS_VARIANTS"],
+      "primary_outcome": "rank_biased_overlap_10",
+      "unit_of_analysis": "profile-perturbation pair",
+      "required_evidence": ["frozen perturbation definitions", "base and perturbed rankings", "chance reference rankings"],
+      "statistical_test": "profile-level bootstrap confidence intervals and comparison with a seeded random-ranking reference distribution",
+      "interpretation": "High stability can preserve either good or poor rankings, so overlap must be reported with NDCG and constraint outcomes."
+    },
+    {
+      "id": "H6",
+      "rq_id": "RQ6",
+      "classification": "supporting",
+      "null_hypothesis": "Expected absolute XGBoost test error is equal across prespecified rent, size, and geographic groups.",
+      "alternative_hypothesis": "Expected absolute XGBoost test error differs across at least one prespecified group.",
+      "compared_conditions": ["rent bands", "property-size bands", "geographic segments", "prediction fallback routes"],
+      "primary_outcome": "subgroup_MAE_BDT",
+      "unit_of_analysis": "official-test property record",
+      "required_evidence": ["untouched test predictions", "prespecified segment definitions", "prediction-route metadata where available"],
+      "statistical_test": "bootstrap subgroup contrasts with family-wise multiplicity control; omnibus permutation test where sample sizes permit",
+      "interpretation": "Heterogeneity identifies reliability limits; failure to reject does not prove equal subgroup performance or market calibration."
+    }
+  ]
+}

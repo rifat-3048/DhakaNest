@@ -1,0 +1,336 @@
+{
+  "annotation_pool": {
+    "blinding_valid": true,
+    "labels_created": 0,
+    "minimum_human_judgments_at_three_raters": 2580,
+    "pairs": 860
+  },
+  "annotation_pool_per_profile": {
+    "distribution": {
+      "3": 40,
+      "4": 88,
+      "5": 44,
+      "6": 28
+    },
+    "maximum": 6,
+    "median": 4.0,
+    "minimum": 3
+  },
+  "commute_feasible_at_least_10": null,
+  "commute_feasible_distribution": null,
+  "commute_feasible_fewer_than_10": null,
+  "destination_count": 12,
+  "final_ranking_evaluation_executed": false,
+  "geography": {
+    "bounds": {
+      "latitude": [
+        23.5,
+        24.1
+      ],
+      "longitude": [
+        90.15,
+        90.65
+      ]
+    },
+    "destination_areas": {
+      "Banani": 1,
+      "Banasree": 1,
+      "Bashundhara R/A": 1,
+      "Dhanmondi": 1,
+      "Gulshan": 1,
+      "Khilgaon": 1,
+      "Lalmatia": 1,
+      "Mirpur": 1,
+      "Mohammadpur": 1,
+      "Motijheel": 1,
+      "Rampura": 1,
+      "Uttara": 1
+    },
+    "duplicate_coordinate_groups": 0,
+    "independently_verified_precise_property_geocodes": 0,
+    "limitation": "All seed locations are area anchors. Bounds pass is not independent geocode verification. No jitter added.",
+    "listing_areas": {
+      "Banani": 1,
+      "Banasree": 1,
+      "Bashundhara R/A": 1,
+      "Dhanmondi": 1,
+      "Gulshan": 1,
+      "Khilgaon": 1,
+      "Lalmatia": 1,
+      "Mirpur": 1,
+      "Mohammadpur": 1,
+      "Motijheel": 1,
+      "Rampura": 1,
+      "Uttara": 1
+    },
+    "repository_verified_anchor_count": 12,
+    "unique_property_coordinates": 12
+  },
+  "hard_filter_at_least_10": 0,
+  "hard_filter_fewer_than_10": 200,
+  "hard_filter_survivors": {
+    "distribution": {
+      "0": 40,
+      "1": 88,
+      "2": 44,
+      "3": 28
+    },
+    "maximum": 3,
+    "median": 1.0,
+    "minimum": 0
+  },
+  "hard_filter_zero_result_profiles": 40,
+  "human_workload": {
+    "estimated_person_hours_range": [
+      43.0,
+      129.0
+    ],
+    "judgments": 2580,
+    "measured_pilot": false,
+    "minutes_per_judgment_assumption": [
+      1,
+      3
+    ],
+    "raters_per_pair": 3
+  },
+  "profile_count": 200,
+  "profile_property_combinations": 2400,
+  "profiles": {
+    "bathrooms": {
+      "1": 100,
+      "2": 80,
+      "3": 20
+    },
+    "bedrooms": {
+      "1": 80,
+      "2": 60,
+      "3": 60
+    },
+    "budgets": {
+      "12500.0": 4,
+      "15000.0": 4,
+      "16000.0": 4,
+      "17500.0": 4,
+      "18500.0": 4,
+      "20000.0": 4,
+      "21000.0": 4,
+      "22500.0": 4,
+      "23500.0": 4,
+      "26000.0": 4,
+      "30000.0": 4,
+      "32500.0": 4,
+      "35000.0": 8,
+      "37500.0": 8,
+      "40000.0": 16,
+      "42500.0": 12,
+      "45000.0": 16,
+      "47500.0": 12,
+      "50000.0": 16,
+      "52500.0": 8,
+      "55000.0": 8,
+      "57500.0": 4,
+      "60000.0": 4,
+      "65000.0": 4,
+      "67500.0": 4,
+      "70000.0": 8,
+      "72500.0": 8,
+      "75000.0": 8,
+      "77500.0": 4,
+      "80000.0": 4
+    },
+    "commute_limits": {
+      "15": 8,
+      "20": 9,
+      "25": 7,
+      "30": 81,
+      "35": 9,
+      "45": 72,
+      "60": 77,
+      "90": 73,
+      "None": 72
+    },
+    "count": 200,
+    "destination_count": {
+      "1": 61,
+      "2": 70,
+      "3": 69
+    },
+    "destination_importance": {
+      "1": 82,
+      "2": 80,
+      "3": 82,
+      "4": 82,
+      "5": 82
+    },
+    "destination_references": {
+      "destination-01": 38,
+      "destination-02": 31,
+      "destination-03": 32,
+      "destination-04": 37,
+      "destination-05": 31,
+      "destination-06": 36,
+      "destination-07": 37,
+      "destination-08": 31,
+      "destination-09": 32,
+      "destination-10": 37,
+      "destination-11": 30,
+      "destination-12": 36
+    },
+    "family": {
+      "budget_constrained": 20,
+      "family": 20,
+      "flexible_budget": 20,
+      "hospital_access": 20,
+      "multi_worker": 20,
+      "professional": 20,
+      "rent_reasonableness": 20,
+      "size_amenities": 20,
+      "strict_commute": 20,
+      "student": 20
+    },
+    "flexibility": {
+      "0": 92,
+      "10": 72,
+      "5": 36
+    },
+    "furnishing": {
+      "furnished": 56,
+      "semi_furnished": 56,
+      "unfurnished": 36
+    },
+    "limitation": "Grouped family split prevents near-copy leakage but holds entire need families out; this is scenario transfer, not IID or geographic holdout.",
+    "move_in": {
+      "2026-11-01": 40,
+      "2026-11-15": 40,
+      "2026-12-01": 40,
+      "2027-01-01": 40,
+      "None": 40
+    },
+    "must_have": {
+      "Backup Water Supply": 36,
+      "Balcony": 36,
+      "CCTV": 36,
+      "Generator": 20,
+      "Lift": 20
+    },
+    "nice_to_have": {
+      "CCTV": 164,
+      "Lift": 180,
+      "Parking": 200
+    },
+    "partition": {
+      "development": 60,
+      "final_held_out": 140
+    },
+    "preferred_area": {
+      "1000.0": 8,
+      "1050.0": 4,
+      "1100.0": 12,
+      "1150.0": 4,
+      "1200.0": 16,
+      "1250.0": 4,
+      "1300.0": 12,
+      "1400.0": 12,
+      "1450.0": 4,
+      "1500.0": 8,
+      "1550.0": 4,
+      "1600.0": 4,
+      "1650.0": 4,
+      "1750.0": 4,
+      "1850.0": 4,
+      "1900.0": 4,
+      "2000.0": 8,
+      "2100.0": 8,
+      "2200.0": 8,
+      "2300.0": 8,
+      "2400.0": 4,
+      "500.0": 4,
+      "550.0": 4,
+      "600.0": 4,
+      "650.0": 4,
+      "700.0": 4,
+      "750.0": 4,
+      "800.0": 8,
+      "850.0": 8,
+      "900.0": 8,
+      "950.0": 8
+    },
+    "priorities": {
+      "amenities": {
+        "1": 20,
+        "2": 80,
+        "3": 20,
+        "4": 60,
+        "5": 20
+      },
+      "budget": {
+        "2": 40,
+        "3": 80,
+        "4": 40,
+        "5": 40
+      },
+      "location": {
+        "2": 20,
+        "3": 40,
+        "4": 40,
+        "5": 100
+      },
+      "rent_fairness": {
+        "2": 20,
+        "3": 140,
+        "4": 20,
+        "5": 20
+      },
+      "space": {
+        "1": 20,
+        "2": 60,
+        "3": 60,
+        "4": 20,
+        "5": 40
+      }
+    },
+    "property_types": {
+      "apartment": 180,
+      "house": 100,
+      "room": 60,
+      "sublet": 120
+    },
+    "travel_days": {
+      "12": 80,
+      "20": 82,
+      "22": 82,
+      "26": 82,
+      "8": 82
+    }
+  },
+  "properties": {
+    "count": 12,
+    "exact_structural_duplicate_groups": 0,
+    "missing_stored_assessments": 12,
+    "near_duplicate_policy": "Coordinate/area groups retained for diagnostics; listing duplicates must be adjudicated before comparative evaluation.",
+    "source_composition": {
+      "evaluation_fixture": 12
+    },
+    "valid_stored_assessments": 0
+  },
+  "property_count": 12,
+  "relevance_labels_created": 0,
+  "required_hard_survivor_route_pairs": 532,
+  "routing": {
+    "complete": false,
+    "expected_pairs": 144,
+    "missing_pairs": 144,
+    "recorded_pairs": 144,
+    "statuses": {
+      "error": 0,
+      "missing": 144,
+      "unreachable": 0,
+      "valid": 0
+    },
+    "unaccounted_pairs": 0
+  },
+  "status": "partially_complete",
+  "unknown_commute_profiles": 160,
+  "verified_final_zero_result_profiles": 40,
+  "zero_result_interpretation": "Not forced; measured mismatches between fixed scenario design and sparse fixture inventory. Not prevalence estimates."
+}

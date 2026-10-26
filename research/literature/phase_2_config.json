@@ -1,0 +1,54 @@
+{
+  "experiment_id": "phase_2_critical_literature_review",
+  "purpose": "Freeze the verified literature registry, critical analyses, research-gap synthesis, and supporting offline validation for DhakaNest Phase 2.",
+  "dataset": {
+    "identifier": "dhakanest-literature-registry-v1",
+    "path": "research/literature/paper_registry.json"
+  },
+  "input_configuration": {
+    "phase": 2,
+    "search_date": "2026-10-25",
+    "search_scope": "Public scholarly discovery and primary-source reading; bounded structured review",
+    "screened_records": 40,
+    "retained_publications": 31,
+    "full_text_section_reviews": 26,
+    "abstract_and_metadata_reviews": 3,
+    "metadata_only_references": 2,
+    "production_experiments_executed": false,
+    "prior_phase_artifacts_modified": false,
+    "human_data_collected": false,
+    "external_access_limits": "Recorded in search protocol, registry and verification report"
+  },
+  "random_seed": 42,
+  "versions": {
+    "literature_registry": "1.0.0",
+    "search_protocol": "1.0.0",
+    "manifest_schema": "1.0",
+    "production_scoring_reference": "wsm_v4"
+  },
+  "dependencies": ["python"],
+  "output_paths": [
+    "literature/README.md",
+    "literature/search_protocol.json",
+    "literature/paper_registry.json",
+    "literature/screening_additions.json",
+    "literature/screening_log.csv",
+    "literature/literature_matrix.csv",
+    "literature/hypothesis_evidence_map.csv",
+    "literature/references.bib",
+    "literature/export_literature.py",
+    "literature/validate_literature.py",
+    "literature/phase_2_config.json",
+    "tests/test_literature.py",
+    "results/phase_2/search_and_screening_report.md",
+    "results/phase_2/individual_paper_reviews.md",
+    "results/phase_2/thematic_synthesis.md",
+    "results/phase_2/comparative_literature_analysis.md",
+    "results/phase_2/research_gap_analysis.md",
+    "results/phase_2/related_work_manuscript.md",
+    "results/phase_2/xgboost_literature_review.md",
+    "results/phase_2/phase_2_verification.md"
+  ],
+  "database_access": "none",
+  "execution_status": "completed_bounded_review_with_recorded_access_limits"
+}

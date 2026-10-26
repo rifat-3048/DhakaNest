@@ -1,0 +1,62 @@
+{
+  "database_access": "none",
+  "dataset": {
+    "identifier": "dhakanest-benchmark-v1.2-partial",
+    "path": "research/datasets/benchmark_v1_2/dataset_manifest.json"
+  },
+  "dependencies": [
+    "python",
+    "pydantic",
+    "xgboost",
+    "scikit-learn"
+  ],
+  "execution_status": "partially_complete_acquisition_not_authorized",
+  "experiment_id": "phase_3c_approval_gated_routing_foundation",
+  "input_configuration": {
+    "backend_tests": 104,
+    "live_requests": 0,
+    "logical_pairs": 30000,
+    "physical_pairs": 30000,
+    "planned_requests": 63,
+    "research_tests": 124
+  },
+  "output_paths": [
+    "benchmark/phase3c/README.md",
+    "benchmark/phase3c/__init__.py",
+    "benchmark/phase3c/acquire.py",
+    "benchmark/phase3c/endpoint_audit.json",
+    "benchmark/phase3c/fixture.py",
+    "benchmark/phase3c/plan.py",
+    "benchmark/phase3c/verify.py",
+    "benchmark/phase3c/workflow.py",
+    "datasets/benchmark_v1_2/annotation_status.json",
+    "datasets/benchmark_v1_2/candidate_coverage.json",
+    "datasets/benchmark_v1_2/dataset_manifest.json",
+    "datasets/benchmark_v1_2/historical_integrity.json",
+    "datasets/benchmark_v1_2/routing/logical_route_pairs.jsonl",
+    "datasets/benchmark_v1_2/routing/request_plan.json",
+    "datasets/benchmark_v1_2/routing/routing_acquisition_log.json",
+    "datasets/benchmark_v1_2/routing/routing_source_manifest.json",
+    "datasets/benchmark_v1_2/routing/routing_validation.json",
+    "datasets/benchmark_v1_2/routing/unique_physical_routes.jsonl",
+    "results/phase_3c/acquisition_execution_report.md",
+    "results/phase_3c/annotation_pool_finalization.md",
+    "results/phase_3c/commute_candidate_coverage.md",
+    "results/phase_3c/endpoint_authorization_audit.md",
+    "results/phase_3c/frozen_routing_validation.md",
+    "results/phase_3c/geographic_limitations.md",
+    "results/phase_3c/offline_fixture_verification.md",
+    "results/phase_3c/phase_3c_config.json",
+    "results/phase_3c/phase_3c_verification.md",
+    "results/phase_3c/route_deduplication_analysis.md",
+    "results/phase_3c/verification_results.json",
+    "tests/test_phase3c.py"
+  ],
+  "purpose": "Exact routing deduplication, provider audit, bounded acquisition and partial immutable overlay without unauthorized requests.",
+  "random_seed": 42,
+  "versions": {
+    "knn_k": 10,
+    "routing_acquisition": "phase3c-v1",
+    "scoring": "wsm_v4"
+  }
+}

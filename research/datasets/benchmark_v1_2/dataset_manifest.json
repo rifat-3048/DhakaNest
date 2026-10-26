@@ -1,0 +1,27 @@
+{
+  "files": {
+    "annotation_status.json": "84c82c1b7c7bc76430b01654b35c57b748dd97136d0a49aaf9967542c6e2b8a2",
+    "candidate_coverage.json": "4575329b46380b811707e285716a32e43c202b41068c7f5f4c06d7bc8810c544",
+    "historical_integrity.json": "e4194f930c4d95b52ac4148fec94cbf5ce73e35a67ca706592f4a2071871b0e8",
+    "routing/logical_route_pairs.jsonl": "d1098d9d27a1dbc3d1398ed3695a3b449d2d22b666940e1221857d23888909a6",
+    "routing/request_plan.json": "b508038fea99b3b9a05a32e4a80eae060b6ac79b9c90d96b9658548f88345277",
+    "routing/routing_acquisition_log.json": "80731c9d391035fd900e18efd01e3350e42db86d691f62ba35b431f51913af94",
+    "routing/routing_source_manifest.json": "ac0691b10549a600dd1a6a3fdec16802a4eac25860ded3d6d57ce74d4443c39a",
+    "routing/routing_validation.json": "d2e5a46995f3186d3ed30d5d5e0d927277c6c25355a24830b8486740d4ec5beb",
+    "routing/unique_physical_routes.jsonl": "95d7dbfdcf406286381efec136df24ecf4fe9dcbd9f9cd02c7308fcd6424cd25"
+  },
+  "final_ranking_executed": false,
+  "no_large_parent_data_copied": true,
+  "parent_dataset": "datasets/benchmark_v1_1",
+  "parent_manifest_sha256": "73f22971fded832e6a69518bc3fd1e1ce5f91770dd1e29e8f47cb669f758c70a",
+  "parent_references": {
+    "annotation_pool.json": "2c44656c5f9af8b889c6d33ba6fd7eea89d8c97372ec8270c3a5ee570d0f0417",
+    "destinations.json": "3ecf6f17f8dbf825db104a6e7c9bed0251a63792cad5700bb9602230e26f5067",
+    "generation_config.json": "6d439b7ecdd14fa0281e0f71d9e9897857516b9db15186e073a009cb78f08e0a",
+    "profile_splits.json": "436db467c704f0d605af162057cc8a240888c457f0d4e3864dc48a0cd2d67aac",
+    "properties.json": "f2e9c079260a58ba7440768734182e1ae27143550e6abcc2c11b17583ad51356",
+    "tenant_profiles.json": "6adf378fd5174e27bc5ef0a8b567c469d879ef8905e81d08ba53cfe1a057b1b8"
+  },
+  "schema_version": "1.2.0",
+  "status": "partial_no_authorized_routing"
+}

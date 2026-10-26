@@ -1,0 +1,190 @@
+{
+  "dataset": {
+    "bytes": 1860,
+    "identifier": "dhakanest-benchmark-v1.2-partial",
+    "path": "research/datasets/benchmark_v1_2/dataset_manifest.json",
+    "sha256": "333d6b40b17506f6c987a138bb21222e62a99dd13e9581f21df716aa022245b1"
+  },
+  "dependencies": {
+    "pydantic": "2.13.4",
+    "python": "3.12.10",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.3.0"
+  },
+  "executed_at_utc": "2026-10-25T05:23:44.332347+00:00",
+  "execution_status": "partially_complete_acquisition_not_authorized",
+  "experiment_id": "phase_3c_approval_gated_routing_foundation",
+  "git_commit": "45e4d040699c86ed535fa0c8582d77829503697d",
+  "input_configuration": {
+    "backend_tests": 104,
+    "live_requests": 0,
+    "logical_pairs": 30000,
+    "physical_pairs": 30000,
+    "planned_requests": 63,
+    "research_tests": 124
+  },
+  "manifest_schema_version": "1.0",
+  "outputs": [
+    {
+      "bytes": 4455,
+      "path": "benchmark/phase3c/README.md",
+      "sha256": "abeb38610cbf58fe11f0d2eacb865c3317daa7626de423b521c9f2c7597749d3"
+    },
+    {
+      "bytes": 80,
+      "path": "benchmark/phase3c/__init__.py",
+      "sha256": "2bb3b5a339e41589dd87f1a657994c2fdf1e40eb032243e1d72b72f2ab478887"
+    },
+    {
+      "bytes": 10383,
+      "path": "benchmark/phase3c/acquire.py",
+      "sha256": "6463d90685b8130bd4b4da586e0ec25e1f615df5f19f928a4573567f46fd2dc9"
+    },
+    {
+      "bytes": 2288,
+      "path": "benchmark/phase3c/endpoint_audit.json",
+      "sha256": "38feff7078b468eed6b53cc6e636df1eaa8864b4f2217441ce58a7062e4fe314"
+    },
+    {
+      "bytes": 6203,
+      "path": "benchmark/phase3c/fixture.py",
+      "sha256": "05e68732d8005b5885d1d59e765ccd16e2805a1a3ae79ac4b2a727170273221f"
+    },
+    {
+      "bytes": 8797,
+      "path": "benchmark/phase3c/plan.py",
+      "sha256": "14232b9d1d633199776ed206930574ed917e4051efa7c8253e60fdd8295c72e0"
+    },
+    {
+      "bytes": 19071,
+      "path": "benchmark/phase3c/verify.py",
+      "sha256": "268c3eb3f704c65af85c6e1c9e49fe25c09341dd60176f41840ffc961e1cc6f6"
+    },
+    {
+      "bytes": 8367,
+      "path": "benchmark/phase3c/workflow.py",
+      "sha256": "46cd697afa7ad37528f004dd0aad19596feec8e05539abc310db528bb0c8a8aa"
+    },
+    {
+      "bytes": 314,
+      "path": "datasets/benchmark_v1_2/annotation_status.json",
+      "sha256": "84c82c1b7c7bc76430b01654b35c57b748dd97136d0a49aaf9967542c6e2b8a2"
+    },
+    {
+      "bytes": 7063,
+      "path": "datasets/benchmark_v1_2/candidate_coverage.json",
+      "sha256": "4575329b46380b811707e285716a32e43c202b41068c7f5f4c06d7bc8810c544"
+    },
+    {
+      "bytes": 1860,
+      "path": "datasets/benchmark_v1_2/dataset_manifest.json",
+      "sha256": "333d6b40b17506f6c987a138bb21222e62a99dd13e9581f21df716aa022245b1"
+    },
+    {
+      "bytes": 176,
+      "path": "datasets/benchmark_v1_2/historical_integrity.json",
+      "sha256": "e4194f930c4d95b52ac4148fec94cbf5ce73e35a67ca706592f4a2071871b0e8"
+    },
+    {
+      "bytes": 8250000,
+      "path": "datasets/benchmark_v1_2/routing/logical_route_pairs.jsonl",
+      "sha256": "d1098d9d27a1dbc3d1398ed3695a3b449d2d22b666940e1221857d23888909a6"
+    },
+    {
+      "bytes": 19382372,
+      "path": "datasets/benchmark_v1_2/routing/request_plan.json",
+      "sha256": "b508038fea99b3b9a05a32e4a80eae060b6ac79b9c90d96b9658548f88345277"
+    },
+    {
+      "bytes": 113,
+      "path": "datasets/benchmark_v1_2/routing/routing_acquisition_log.json",
+      "sha256": "80731c9d391035fd900e18efd01e3350e42db86d691f62ba35b431f51913af94"
+    },
+    {
+      "bytes": 1115,
+      "path": "datasets/benchmark_v1_2/routing/routing_source_manifest.json",
+      "sha256": "ac0691b10549a600dd1a6a3fdec16802a4eac25860ded3d6d57ce74d4443c39a"
+    },
+    {
+      "bytes": 283,
+      "path": "datasets/benchmark_v1_2/routing/routing_validation.json",
+      "sha256": "d2e5a46995f3186d3ed30d5d5e0d927277c6c25355a24830b8486740d4ec5beb"
+    },
+    {
+      "bytes": 12105912,
+      "path": "datasets/benchmark_v1_2/routing/unique_physical_routes.jsonl",
+      "sha256": "95d7dbfdcf406286381efec136df24ecf4fe9dcbd9f9cd02c7308fcd6424cd25"
+    },
+    {
+      "bytes": 1720,
+      "path": "results/phase_3c/acquisition_execution_report.md",
+      "sha256": "9e1fbfa5063392c561931a229b1fc6ae812ca530e3fcb13d69f11d1373961d2a"
+    },
+    {
+      "bytes": 1344,
+      "path": "results/phase_3c/annotation_pool_finalization.md",
+      "sha256": "b575b562eb384d76f6ee050a6808dd75c239654e25ab2ce973c7a0eb53465256"
+    },
+    {
+      "bytes": 1234,
+      "path": "results/phase_3c/commute_candidate_coverage.md",
+      "sha256": "fb1246fd76597e7fc225aead5574bbad30e0f179ebe6ae7c281aa340bafe710f"
+    },
+    {
+      "bytes": 2281,
+      "path": "results/phase_3c/endpoint_authorization_audit.md",
+      "sha256": "a5a95af5f47547c055f105ae067c5c3446ad5cc3b2bee18f4510d71776a34861"
+    },
+    {
+      "bytes": 1184,
+      "path": "results/phase_3c/frozen_routing_validation.md",
+      "sha256": "8d99b825e27a18e396b5dccebcf64924f6cb129c71e3bf8748fe1f9bfcdac905"
+    },
+    {
+      "bytes": 1387,
+      "path": "results/phase_3c/geographic_limitations.md",
+      "sha256": "2507cac3262c7058e94daa300109eee6ce98a6680ec0698d15b1d4d261fffb39"
+    },
+    {
+      "bytes": 1242,
+      "path": "results/phase_3c/offline_fixture_verification.md",
+      "sha256": "560e87dbd90c938b675f4ac643c2cd8e1b7d0ddc35393fe8a219281e4035c065"
+    },
+    {
+      "bytes": 2395,
+      "path": "results/phase_3c/phase_3c_config.json",
+      "sha256": "ef90d8246a7955a22a1c9326b19505921b1e8dd2c083ee95798ce10132f96364"
+    },
+    {
+      "bytes": 1770,
+      "path": "results/phase_3c/phase_3c_verification.md",
+      "sha256": "41364939f171186f7db8acd93708362d75eb1833d23f42d47d65d36586062c67"
+    },
+    {
+      "bytes": 1469,
+      "path": "results/phase_3c/route_deduplication_analysis.md",
+      "sha256": "ff2e884687a5e54d8169e8fcf56fdc44e2e6c58b0b5a334e8fcf030f4e53b6e8"
+    },
+    {
+      "bytes": 1530,
+      "path": "results/phase_3c/verification_results.json",
+      "sha256": "5c9b27a332e4bf7828fb8e7f70bc1f7df9a4112c9725837d6d1832f26f0d1002"
+    },
+    {
+      "bytes": 13426,
+      "path": "tests/test_phase3c.py",
+      "sha256": "972daad577c90d40cb7760b029269c887b3e762d30c7afe14253139171989218"
+    }
+  ],
+  "purpose": "Exact routing deduplication, provider audit, bounded acquisition and partial immutable overlay without unauthorized requests.",
+  "random_seed": 42,
+  "safety": {
+    "database_access": "none",
+    "production_writes": false
+  },
+  "versions": {
+    "knn_k": 10,
+    "routing_acquisition": "phase3c-v1",
+    "scoring": "wsm_v4"
+  }
+}

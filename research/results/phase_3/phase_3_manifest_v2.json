@@ -1,0 +1,308 @@
+{
+  "dataset": {
+    "bytes": 3788,
+    "identifier": "dhakanest-benchmark-v1",
+    "path": "research/datasets/benchmark_v1/dataset_manifest.json",
+    "sha256": "cbcec814d5bb05ab8dea9ab31873d6ef747d50256c6f6d48870386d96c2c2563"
+  },
+  "dependencies": {
+    "numpy": "2.0.2",
+    "pydantic": "2.13.4",
+    "pydantic-settings": "2.14.2",
+    "python": "3.12.10",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.3.0"
+  },
+  "executed_at_utc": "2026-10-25T04:11:55.359788+00:00",
+  "execution_status": "partially_complete_missing_large_inventory_assessments_and_OSRM_evidence",
+  "experiment_id": "phase_3_offline_benchmark_foundation",
+  "git_commit": "45e4d040699c86ed535fa0c8582d77829503697d",
+  "input_configuration": {
+    "all_research_tests": 75,
+    "annotation_pairs": 860,
+    "backend_regression_tests": 96,
+    "comparative_evaluation_executed": false,
+    "destinations": 12,
+    "external_routing_executed": false,
+    "fixture_properties": 12,
+    "manifest_revision": 2,
+    "missing_route_pairs": 144,
+    "model_inference_executed": false,
+    "new_research_tests": 51,
+    "phase": 3,
+    "prior_artifacts_modified": false,
+    "profiles": 200,
+    "relevance_labels": 0,
+    "supersedes_prior_phase_3_manifest": true
+  },
+  "manifest_schema_version": "1.0",
+  "outputs": [
+    {
+      "bytes": 4243,
+      "path": "benchmark/README.md",
+      "sha256": "5b76368f46aaba5fb416c7276ee39525ef8f5852845c941079714d949e3cdf75"
+    },
+    {
+      "bytes": 70,
+      "path": "benchmark/__init__.py",
+      "sha256": "c45277f06e48ce459553a3011646a74ed9a3caad4691b04375f0176afb69dcb1"
+    },
+    {
+      "bytes": 6171,
+      "path": "benchmark/build_annotation_pool.py",
+      "sha256": "72808a14f5c4888f6310c6c1984f93470888d3d269b26deccb50b86a4f26b91c"
+    },
+    {
+      "bytes": 8682,
+      "path": "benchmark/build_benchmark.py",
+      "sha256": "b0febb3a582aa4ee552390b64f1742b88d51f199cbe8c30d6c5c6c9c99e59aef"
+    },
+    {
+      "bytes": 3313,
+      "path": "benchmark/common.py",
+      "sha256": "14b913648362d29b5f06f58c0742dfb934fb9a5fc7a168d4631d66a040d9c915"
+    },
+    {
+      "bytes": 3576,
+      "path": "benchmark/construct_candidates.py",
+      "sha256": "8b49691d4f0b0877aaa21a993ebc03537f16b62598cefa902c1e379be8c0ab7d"
+    },
+    {
+      "bytes": 2785,
+      "path": "benchmark/export_specification.md",
+      "sha256": "1d8c531441b842bf13b1a3c4425166873edab5bd2ace5ee062a1bd93ea8946ef"
+    },
+    {
+      "bytes": 10314,
+      "path": "benchmark/generate_profiles.py",
+      "sha256": "ee18cf9e8ce214a5224fff6fa98dfe5a0f8c5f5fc6b463570b89d59bef848c69"
+    },
+    {
+      "bytes": 6298,
+      "path": "benchmark/import_properties.py",
+      "sha256": "7567ec0644d98b0f13e590a55f854af941ec8e54ac5b0ebe5816dad9e803ba25"
+    },
+    {
+      "bytes": 8543,
+      "path": "benchmark/offline_fixture.py",
+      "sha256": "9b4112416787062a30039922565903f1245de8f8935f67af2bf507c015320b7b"
+    },
+    {
+      "bytes": 3442,
+      "path": "benchmark/phase_3_config.json",
+      "sha256": "52ef2bba91a95924a620f07a119ec88ca518b8f738c8285a362db5defb38ad63"
+    },
+    {
+      "bytes": 3651,
+      "path": "benchmark/phase_3_config_v2.json",
+      "sha256": "582cb6a27638814ace5dc78c00bdef94499374966acd04b62c0fe1c58714e4c3"
+    },
+    {
+      "bytes": 8559,
+      "path": "benchmark/prepare_routing.py",
+      "sha256": "093dbff121af8b2f48ba258d2870242ad3c793bcc0cd17538e5c57c1c3afb9ef"
+    },
+    {
+      "bytes": 4343,
+      "path": "benchmark/seal_phase3.py",
+      "sha256": "0d7e8092ffa6ae3868acfc170b500e6d313f697e7b180393e44c06da01d44deb"
+    },
+    {
+      "bytes": 1765,
+      "path": "benchmark/validate_benchmark.py",
+      "sha256": "c263f7ec6fb57934e2db1632f9f5ce4feba00d46fd162f97b90dbeb417f02898"
+    },
+    {
+      "bytes": 1407,
+      "path": "benchmark/validate_coordinates.py",
+      "sha256": "bc511c3473ea468502a90444b2f5fb324341b7a564a599f9df2cde9d3faa258a"
+    },
+    {
+      "bytes": 4127,
+      "path": "benchmark/validate_properties.py",
+      "sha256": "5af0c38220351290429b41bbceab1720bc8b52605c62ee76597f60532e4605a2"
+    },
+    {
+      "bytes": 2407,
+      "path": "benchmark/validate_routing.py",
+      "sha256": "ee322f679384668cd00e3bdd87196a6fe3b7f77d8b8124e495c15db745c1f884"
+    },
+    {
+      "bytes": 2086221,
+      "path": "datasets/benchmark_v1/annotation_blinded_export.json",
+      "sha256": "f809bbc513928544f84876b7bd8d08839504769d293389ac9f663b177efc7b9f"
+    },
+    {
+      "bytes": 233547,
+      "path": "datasets/benchmark_v1/annotation_pool.json",
+      "sha256": "9f4fb38e6b99d47e430c5536e9a26d831933c138be2f140b70212e8b30f4f8a3"
+    },
+    {
+      "bytes": 543047,
+      "path": "datasets/benchmark_v1/candidate_universes.json",
+      "sha256": "f974183d38b0e013dd168475aefb24eb1a92de0462287e5e58877dbd24e57597"
+    },
+    {
+      "bytes": 7151,
+      "path": "datasets/benchmark_v1/coverage_report.json",
+      "sha256": "53d7a1e9cf403c8309586bfa06eb667cf6a354a4a45bbbef938b16374060cec5"
+    },
+    {
+      "bytes": 3788,
+      "path": "datasets/benchmark_v1/dataset_manifest.json",
+      "sha256": "cbcec814d5bb05ab8dea9ab31873d6ef747d50256c6f6d48870386d96c2c2563"
+    },
+    {
+      "bytes": 6100,
+      "path": "datasets/benchmark_v1/destinations.json",
+      "sha256": "e567496178b41bb9f5efca0860b5cd23c76e9bd33a9363896a55e9d4081bfd12"
+    },
+    {
+      "bytes": 936,
+      "path": "datasets/benchmark_v1/geographic_coverage.json",
+      "sha256": "0d911fa12f41752704046b960619fb442cc9849e29705cbc1f85abaf6c4dc9e4"
+    },
+    {
+      "bytes": 4052,
+      "path": "datasets/benchmark_v1/profile_splits.json",
+      "sha256": "436db467c704f0d605af162057cc8a240888c457f0d4e3864dc48a0cd2d67aac"
+    },
+    {
+      "bytes": 17350,
+      "path": "datasets/benchmark_v1/properties.json",
+      "sha256": "38db61dc2a25ea4263f2926d426026b8e34ff4895d32fc9ee6aaedcaf6f64526"
+    },
+    {
+      "bytes": 338,
+      "path": "datasets/benchmark_v1/property_validation.json",
+      "sha256": "480ebcfd2694a74ec4455eb40c81a48385c1d3eff5fce15a6bbec9c0d5c50ec3"
+    },
+    {
+      "bytes": 36720,
+      "path": "datasets/benchmark_v1/routes.jsonl",
+      "sha256": "d6c2b50cd52984c0aae7a63dbcf01c2a9af1ebda7394b4c1157ec20075e01c1a"
+    },
+    {
+      "bytes": 669,
+      "path": "datasets/benchmark_v1/routing_matrix_metadata.json",
+      "sha256": "a99c3ea172b0060926270bfbf093a8e2a1d61db717c195d489eb46bceb469cca"
+    },
+    {
+      "bytes": 218,
+      "path": "datasets/benchmark_v1/routing_matrix_validation.json",
+      "sha256": "6117487b23c2c232dfd8da30d3237e827d0ae10bd464f090ba0ccf6a8133021c"
+    },
+    {
+      "bytes": 3563,
+      "path": "datasets/benchmark_v1/tenant_profile_coverage.json",
+      "sha256": "6b1a7629eb9d7238d12304eb92c2e9dc2a7c89ff82806d7f73e3bdf143d84edb"
+    },
+    {
+      "bytes": 1341,
+      "path": "datasets/benchmark_v1/tenant_profile_generation_config.json",
+      "sha256": "3bdd84b4f5d1ccdc7fd36bac4dc7305e1dfe9a0751c3dea7f825f65c95bcd0e0"
+    },
+    {
+      "bytes": 356291,
+      "path": "datasets/benchmark_v1/tenant_profiles.json",
+      "sha256": "6adf378fd5174e27bc5ef0a8b567c469d879ef8905e81d08ba53cfe1a057b1b8"
+    },
+    {
+      "bytes": 2959,
+      "path": "protocols/amendments/phase_3_prebenchmark_amendment.json",
+      "sha256": "29b5e47c060ca69601075e9bacf44ec4ab6c9c9a450d216b6592a3247e98fa52"
+    },
+    {
+      "bytes": 1930,
+      "path": "protocols/amendments/phase_3_prebenchmark_amendment.md",
+      "sha256": "11ae8a5af1e0a729540f625825306a06e34008051a2bb9890f6223a0d59b67f3"
+    },
+    {
+      "bytes": 2310,
+      "path": "results/phase_3/annotation_pool_report.md",
+      "sha256": "cbea8f1c3d34b972e9635fcd1f4592dd3688e3091f4aa7dc6382bb746761e0ba"
+    },
+    {
+      "bytes": 1958,
+      "path": "results/phase_3/benchmark_coverage.md",
+      "sha256": "e11e199664674f5611986430a53d9585092635100bfad45e2b991a101716a40b"
+    },
+    {
+      "bytes": 3077,
+      "path": "results/phase_3/benchmark_design.md",
+      "sha256": "b9b04d1721d85aa5b703b97a21835a2d17e8ea1d4e9f47ee7fdd37b2008de888"
+    },
+    {
+      "bytes": 1923,
+      "path": "results/phase_3/candidate_feasibility.md",
+      "sha256": "2c2e67b83fa37833ddb3c334ee49c303e707cbf4b152bcf8ce06dd9ae98048b5"
+    },
+    {
+      "bytes": 1895,
+      "path": "results/phase_3/geographic_coverage.md",
+      "sha256": "3ab37a347266322ac4a89dd423e01c9b0bbd96d8f787492b323f01a607cc6c4f"
+    },
+    {
+      "bytes": 1040,
+      "path": "results/phase_3/manifest_revision_note.md",
+      "sha256": "b777cddea9aa428afb1808ca5e8fb55ddc1f1159833f572285d9fb6b9d0ed5eb"
+    },
+    {
+      "bytes": 2540,
+      "path": "results/phase_3/offline_reuse_report.md",
+      "sha256": "d6c91f9dd2b53c63dec1584ddb5509cc861b5b84e788fe5a02045b8ddf441295"
+    },
+    {
+      "bytes": 9903,
+      "path": "results/phase_3/phase_3_manifest.json",
+      "sha256": "f2f4c09940413c2db000643d23e263d412e7c1fc3ed2c147ce59989fb44bc023"
+    },
+    {
+      "bytes": 3262,
+      "path": "results/phase_3/phase_3_verification.md",
+      "sha256": "010901c481b72873ef866244894eb9b2243e83ada506f7bdba9add515dc5cdee"
+    },
+    {
+      "bytes": 2488,
+      "path": "results/phase_3/routing_evidence.md",
+      "sha256": "d45407fa110aa788b9a4f8db7116bccaa910b2b7ade7794b0e5461453af41985"
+    },
+    {
+      "bytes": 2253,
+      "path": "tests/test_annotation_pool.py",
+      "sha256": "cdf9cc44a1304d0e1d38f4a69c95acf1e6035f77b512f735ca69c73b80d9be94"
+    },
+    {
+      "bytes": 4255,
+      "path": "tests/test_benchmark_generation.py",
+      "sha256": "e18866a143211302581b1bb5a541b8249d8d5562869507a7fce0d774d3acbd20"
+    },
+    {
+      "bytes": 4542,
+      "path": "tests/test_benchmark_integrity.py",
+      "sha256": "34143665de066fe2e8289729f2edd7bb41e75ba1628f9461f65bd9d71f65564e"
+    },
+    {
+      "bytes": 4247,
+      "path": "tests/test_candidate_construction.py",
+      "sha256": "3f90190076205b6388d6628eac786b67807ec3ed438790ab6974022806e07714"
+    },
+    {
+      "bytes": 8350,
+      "path": "tests/test_offline_fixture.py",
+      "sha256": "9743578b96574243d4eb46b0f1d293dc629ed7e7d542bc7174f54b7beefa7048"
+    }
+  ],
+  "purpose": "Freeze available benchmark inputs and validated offline preparation; record absent inventory/assessment/OSRM evidence without ranking.",
+  "random_seed": 42,
+  "safety": {
+    "database_access": "none",
+    "production_writes": false
+  },
+  "versions": {
+    "benchmark": "1.0.0-partial",
+    "effective_protocol": "1.1.0-phase3",
+    "production_knn_k_default": 10,
+    "production_scoring": "wsm_v4"
+  }
+}

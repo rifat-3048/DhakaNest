@@ -1,0 +1,1475 @@
+[
+  {
+    "header": "contractor/contract_excludable_graph.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "tuple",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "contractor/contracted_edge_container.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "contractor/contracted_metric.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "contractor/files.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "contractor/graph_contractor_adaptors.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "contractor/query_edge.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "contractor/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "customizer/cell_customizer.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "customizer/edge_based_graph.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "customizer/files.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "customizer/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/base_api.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/base_parameters.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/match_api.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/match_parameters.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/match_parameters_tidy.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/nearest_api.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/route_api.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "limits",
+      "memory",
+      "string",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/route_parameters.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/table_api.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/api/trip_api.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/data_watchdog.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade/algorithm_datafacade.hpp",
+    "missing_direct_include_candidates": [
+      "functional"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade/contiguous_internalmem_datafacade.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "functional"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade/datafacade_base.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade/mmap_memory_allocator.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade/shared_memory_allocator.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade_factory.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/datafacade_provider.hpp",
+    "missing_direct_include_candidates": [
+      "memory",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/douglas_peucker.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/geospatial_query.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/guidance/assemble_steps.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/guidance/collapsing_utility.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/guidance/route_step.hpp",
+    "missing_direct_include_candidates": [
+      "limits"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/hint.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/internal_route_result.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/map_matching/hidden_markov_model.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/phantom_node.hpp",
+    "missing_direct_include_candidates": [
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/plugins/plugin_base.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/polyline_compressor.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms/many_to_many.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms/routing_base_ch.hpp",
+    "missing_direct_include_candidates": [
+      "limits",
+      "tuple",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms/routing_base_mld.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms/shortest_path.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms/shortest_path_impl.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms/tile_turns.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/routing_algorithms.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "memory",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/trip/trip_brute_force.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/trip/trip_farthest_insertion.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "engine/trip/trip_nearest_neighbour.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/class_data.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/compressed_edge_container.hpp",
+    "missing_direct_include_candidates": [
+      "memory"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/datasources.hpp",
+    "missing_direct_include_candidates": [
+      "array",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/edge_based_edge.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/edge_based_node.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extraction_containers.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extraction_helper_functions.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extraction_relation.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extraction_turn.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extraction_way.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "unordered_map"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extractor.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "unordered_set",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extractor_callbacks.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "tuple"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/extractor_config.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/files.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/intersection/coordinate_extractor.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/intersection/intersection_analysis.hpp",
+    "missing_direct_include_candidates": [
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/intersection/node_based_graph_walker.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "unordered_set",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/intersection_bearings_container.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/location_dependent_data.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/maneuver_override.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/node_data_container.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/profile_properties.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/raster_source.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "limits",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/restriction.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/restriction_graph.hpp",
+    "missing_direct_include_candidates": [
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/scripting_environment.hpp",
+    "missing_direct_include_candidates": [
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/scripting_environment_lua.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/segment_data_container.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/suffix_table.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/tarjan_scc.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/traffic_signals.hpp",
+    "missing_direct_include_candidates": [
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/turn_lane_types.hpp",
+    "missing_direct_include_candidates": [
+      "tuple"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "extractor/way_restriction_map.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/driveway_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/files.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/guidance_processing.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/intersection.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "limits",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/intersection_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/is_through_street.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/motorway_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/sliproad_handler.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "unordered_set"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/statistics_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/suppress_mode_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/turn_data_container.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/turn_discovery.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/turn_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/turn_instruction.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "guidance/turn_lane_handler.hpp",
+    "missing_direct_include_candidates": [
+      "unordered_set"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "nodejs/node_osrm_support.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/bisection_graph.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/bisection_to_partition.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "tuple"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/cell_statistics.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/cell_storage.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "limits",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/dinic_max_flow.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/files.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/inertial_flow.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/multi_level_graph.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/multi_level_partition.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "memory",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/partitioner_config.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/recursive_bisection.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/remove_unconnected.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/renumber.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "partitioner/tarjan_graph_wrapper.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/base_parameters_grammar.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/match_parameter_grammar.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/nearest_parameter_grammar.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/parameters_parser.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/parsed_url.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/route_parameters_grammar.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/table_parameter_grammar.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/api/trip_parameter_grammar.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/connection.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/http/reply.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/request_handler.hpp",
+    "missing_direct_include_candidates": [
+      "memory"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/base_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/match_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/nearest_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/route_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/table_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/tile_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/trip_service.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service/utils.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "server/service_handler.hpp",
+    "missing_direct_include_candidates": [
+      "memory",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/io.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/io_config.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "functional",
+      "map",
+      "string",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/shared_data_index.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "memory",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/shared_datatype.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "limits",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/shared_memory.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "memory",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/shared_monitor.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/storage.hpp",
+    "missing_direct_include_candidates": [
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/tar.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "storage/view_factory.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "limits",
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "updater/csv_file_parser.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "limits",
+      "string",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "updater/csv_source.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "updater/source.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "limits",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "updater/updater.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "updater/updater_config.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/alias.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/bit_range.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/connectivity_checksum.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/coordinate.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "limits"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/coordinate_calculation.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "limits"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/deallocating_vector.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/debug.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/dynamic_graph.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/exception_utils.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/exclude_flag.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/filtered_graph.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/geojson_debug_policy_toolkit.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/guidance/name_announcements.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/indexed_data.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/integer_range.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/json_deep_compare.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/log.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/mmap_file.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/mmap_tar.hpp",
+    "missing_direct_include_candidates": [
+      "string",
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/msb.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/node_based_graph.hpp",
+    "missing_direct_include_candidates": [
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/opening_hours.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/packed_vector.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "limits",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/permutation.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/query_heap.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/range_table.hpp",
+    "missing_direct_include_candidates": [
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/serialization.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/static_graph.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/static_rtree.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/std_hash.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "utility"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/string_util.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/string_view.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/timed_histogram.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint",
+      "string"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/timezones.hpp",
+    "missing_direct_include_candidates": [
+      "utility",
+      "vector"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/vector_view.hpp",
+    "missing_direct_include_candidates": [
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/xor_fast_hash.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  },
+  {
+    "header": "util/xor_fast_hash_storage.hpp",
+    "missing_direct_include_candidates": [
+      "cstddef",
+      "cstdint"
+    ],
+    "status": "lexical_candidate_not_a_verified_defect"
+  }
+]

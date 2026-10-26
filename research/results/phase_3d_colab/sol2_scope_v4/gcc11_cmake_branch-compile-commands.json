@@ -1,0 +1,20 @@
+[
+{
+  "directory": "D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-5e0ecd72cd5c449d9962ab170e01acfb/gcc11_cmake_branch",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -Wno-error=array-bounds -o CMakeFiles\\EXTRACTOR.dir\\src\\extractor\\scripting_environment_lua.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\scope-v8-5e0ecd72cd5c449d9962ab170e01acfb\\source\\src\\extractor\\scripting_environment_lua.cpp",
+  "file": "D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-5e0ecd72cd5c449d9962ab170e01acfb/source/src/extractor/scripting_environment_lua.cpp",
+  "output": "CMakeFiles/EXTRACTOR.dir/src/extractor/scripting_environment_lua.cpp.obj"
+},
+{
+  "directory": "D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-5e0ecd72cd5c449d9962ab170e01acfb/gcc11_cmake_branch",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -o CMakeFiles\\EXTRACTOR.dir\\src\\extractor\\other.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\scope-v8-5e0ecd72cd5c449d9962ab170e01acfb\\source\\src\\extractor\\other.cpp",
+  "file": "D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-5e0ecd72cd5c449d9962ab170e01acfb/source/src/extractor/other.cpp",
+  "output": "CMakeFiles/EXTRACTOR.dir/src/extractor/other.cpp.obj"
+},
+{
+  "directory": "D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-5e0ecd72cd5c449d9962ab170e01acfb/gcc11_cmake_branch",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -Wno-error=free-nonheap-object -o CMakeFiles\\osrm.dir\\src\\osrm\\osrm.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\scope-v8-5e0ecd72cd5c449d9962ab170e01acfb\\source\\src\\osrm\\osrm.cpp",
+  "file": "D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-5e0ecd72cd5c449d9962ab170e01acfb/source/src/osrm/osrm.cpp",
+  "output": "CMakeFiles/osrm.dir/src/osrm/osrm.cpp.obj"
+}
+]

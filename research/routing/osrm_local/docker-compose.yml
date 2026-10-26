@@ -1,0 +1,19 @@
+name: dhakanest-research-osrm
+services:
+  osrm:
+    image: ${OSRM_IMAGE:?Set a verified OSRM image reference}
+    pull_policy: never
+    command: ["osrm-routed", "--algorithm", "mld", "--max-table-size", "100", "--threads", "2", "/data/bangladesh-latest.osrm"]
+    ports:
+      - "127.0.0.1:${OSRM_PORT:-5001}:5000"
+    volumes:
+      - type: bind
+        source: ${OSRM_DATA_DIR:-./runtime/data}
+        target: /data
+        read_only: true
+    mem_limit: ${OSRM_MEMORY:-4g}
+    cpus: ${OSRM_CPUS:-2}
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    restart: "no"

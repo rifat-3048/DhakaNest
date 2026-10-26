@@ -1,0 +1,22 @@
+{
+  "run_id": "phase3d-colab-001",
+  "drive_workspace": "/content/drive/MyDrive/DhakaNestResearch",
+  "repository_zip": "/content/drive/MyDrive/DhakaNestResearch/dhakanest_colab_input_v2.zip",
+  "repository_zip_sha256": "",
+  "git_url": "",
+  "git_commit": "",
+  "local_root": "/content/dhakanest_phase3d",
+  "port": 5001,
+  "threads": 1,
+  "minimum_free_ram_gib": 6,
+  "minimum_free_disk_gib": 20,
+  "abort_below_ram_gib": 1,
+  "maximum_download_gib": 2,
+  "origin_batch": 40,
+  "destination_batch": 12,
+  "timeout_seconds": 60,
+  "interval_seconds": 0.25,
+  "retries": 2,
+  "request_ceiling": 189,
+  "allow_retry_failed_stage": false
+}

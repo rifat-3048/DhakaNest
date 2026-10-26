@@ -1,0 +1,53 @@
+{
+  "added_sources": {
+    "research/notebooks/DhakaNest_Phase3D_Colab_OSRM_v5.ipynb": "4373d3813cebc48509a931b095a0e23261fe50152981c4289c446d961a07b10e",
+    "research/routing/osrm_colab/NATIVE_BUILD_REPAIR.md": "90fd77253f30a6a83679069141e775fce478d47730662e70ce90a9a845e756a5",
+    "research/routing/osrm_colab/coordinate_probe.cpp": "4f3005947f850d100f9bb6627f59831cf250ebdbedc7b803b8186ca033ec0953",
+    "research/routing/osrm_colab/install_dependencies_v2.sh": "3c8565bff187686c4999f19596ecef446d3e78a051735ca845211f6ab0d1bf0d",
+    "research/routing/osrm_colab/native-build-v2.json": "8c71735d15de098e8dd41eaac2b1b5a677e79fd1d0f7c7d97e2be87bbd9b67f3",
+    "research/routing/osrm_colab/native_build.py": "9a3b338e5cff8b7a45b6a0fb269d5af5b15b2c848f869682ee48543bc5022462",
+    "research/routing/osrm_colab/notebook_native.py": "0a8a22bdb0fcc934757ccfa3341ae0601f0d543a4b3ccd00de0fe3cc2188720d",
+    "research/routing/osrm_colab/setup_osrm_v2.sh": "c952cbc5451b9b6447755c3fa9a39d2f94cef61d60f5fa97ae2904070156fe97",
+    "research/routing/osrm_colab/verify_native_repair.py": "3bfb282acda55fbefebf4c4aea21b9f7634100ff91c3d89d3d04b67c58363762",
+    "research/tests/test_colab_native_build.py": "6f569228e2ade4b1672c66b7231167ae04edb81910c8a9e7f150f93db0a59243"
+  },
+  "at_utc": "2026-10-25T10:07:02.865820+00:00",
+  "historical": {
+    "recovery_outputs_verified": 9,
+    "sealed_phases": {
+      "historical": {
+        "historical": {
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          },
+          "phase_3b_output_hashes_verified": 52
+        },
+        "phase_3c_hashes_verified": 30
+      },
+      "phase_3d_hashes_verified": 26
+    }
+  },
+  "historical_archives": {
+    "v2": "3af83f3eccb4302fa301f66e37206f89e7406cf735e8de5e86c0cfb06993824e",
+    "v3": "af83c869ca1dbe77cb6a9a824c29f5997bdc23ae066ed7250486bf9d5ee886cc",
+    "v4": "60afdf2d0fee64ef9511064f00ce93d95bfe9973b76d2a6ede8e716c3deefc22"
+  },
+  "native_build_executed": false,
+  "reason": "Only retry-safeguard trace supplied, not the original first compiler error",
+  "root_cause_confirmed": false,
+  "routing_executed": false,
+  "shell_syntax": "both v2 scripts pass bash -n; not executed",
+  "tests": {
+    "backend_regression": {
+      "evidence_sha256": "6fe7080f265c7dce6d6ba40cb6e9adf9cee50b53f11d94c04c152038edb3bc8c",
+      "passed": 104
+    },
+    "research": {
+      "evidence_sha256": "d4477a9fa7dec66d9324564c54fd30361026448927700e4020328d93b49b2327",
+      "passed": 212
+    }
+  },
+  "unchanged_v4_members": 445
+}

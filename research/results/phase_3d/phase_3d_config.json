@@ -1,0 +1,57 @@
+{
+  "database_access": "none",
+  "dataset": {
+    "identifier": "benchmark-v1.3-blocked",
+    "path": "research/datasets/benchmark_v1_3/dataset_manifest.json"
+  },
+  "dependencies": [
+    "python",
+    "pydantic",
+    "xgboost",
+    "scikit-learn"
+  ],
+  "execution_status": "blocked_host_virtualization_and_engine",
+  "experiment_id": "phase_3d_local_osrm_infrastructure",
+  "input_configuration": {
+    "backend_tests": 104,
+    "downloaded_extract": false,
+    "host_engine_ready": false,
+    "local_requests": 0,
+    "research_tests": 137
+  },
+  "output_paths": [
+    "benchmark/phase3d.py",
+    "datasets/benchmark_v1_3/benchmark_readiness.json",
+    "datasets/benchmark_v1_3/dataset_manifest.json",
+    "results/phase_3d/annotation_pool_finalization.md",
+    "results/phase_3d/benchmark_extent.json",
+    "results/phase_3d/benchmark_readiness.md",
+    "results/phase_3d/commute_candidate_coverage.md",
+    "results/phase_3d/frozen_matrix_validation.md",
+    "results/phase_3d/infrastructure_readiness.md",
+    "results/phase_3d/local_osrm_validation.md",
+    "results/phase_3d/offline_fixture_verification.md",
+    "results/phase_3d/osm_dataset_provenance.md",
+    "results/phase_3d/phase_3d_config.json",
+    "results/phase_3d/phase_3d_verification.md",
+    "results/phase_3d/routing_acquisition.md",
+    "results/phase_3d/verification_results.json",
+    "routing/osrm_local/.env.example",
+    "routing/osrm_local/.gitignore",
+    "routing/osrm_local/README.md",
+    "routing/osrm_local/dataset_manifest.json",
+    "routing/osrm_local/docker-compose.yml",
+    "routing/osrm_local/host_inspection.json",
+    "routing/osrm_local/operator.py",
+    "routing/osrm_local/routing_config.example.json",
+    "routing/osrm_local/verify_phase3d.py",
+    "tests/test_phase3d.py"
+  ],
+  "purpose": "Implement isolated local setup and gated recovery; preserve blocked routing evidence without host modifications.",
+  "random_seed": 42,
+  "versions": {
+    "knn_k": 10,
+    "planned_osrm_release": "v26.10.0",
+    "scoring": "wsm_v4"
+  }
+}

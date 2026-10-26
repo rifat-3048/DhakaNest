@@ -1,0 +1,56 @@
+{
+  "actual_scope_evidence_sha256": "3cc8e8c2cf1ba477a9d20a2a6e7482250b81c85d0a5f5cb78d98ae1751afa4bf",
+  "added_sources": {
+    "research/notebooks/DhakaNest_Phase3D_Colab_OSRM_v8.ipynb": "d79f10d3b5cd41919d0ad06033960f690de24933a5e2194cf7907531b309a7f8",
+    "research/routing/osrm_colab/SOL2_V8.md": "7d931facd0b8e0e75b1d46205e15760c6e784c0f086b71d89c2cb0b9fc59b82b",
+    "research/routing/osrm_colab/build_v5.py": "8d9d98f06ae893c5308be970bb364485804a5ea388835d58f115d46a08af93e5",
+    "research/routing/osrm_colab/compatibility-v2.json": "32724ea929b53baa0edf82f3cf2542da37399b83864b4780e6396481bab951c9",
+    "research/routing/osrm_colab/compatibility_v2.py": "5f3330fc3bffd72a4240b885e2504794c5759fa97f704edd1b9248eb9b66445e",
+    "research/routing/osrm_colab/native_build_v5.py": "6f4cc4f194d8f8c1ccc5a5094e9efee284346b40868ba37564ad512222a6a001",
+    "research/routing/osrm_colab/notebook_sol2.py": "0e16bd1eca186c0045edce1830cb0c581c73d8300946417c6aa41503d306e9aa",
+    "research/routing/osrm_colab/scope_smoke_v8.py": "956b3988a99430e23148b07b50f62ae0174fda54bde1724c8253426d9c4c4550",
+    "research/routing/osrm_colab/sol2_compat.cmake": "f4e7888137157456d4aec9affb576e6e9bbf7b71713e2b28932646a54e2e25b5",
+    "research/routing/osrm_colab/verify_sol2_v8.py": "af9181755d95819cb47118afad453c6417b7ac70c3da77910e88766e3ea70e99",
+    "research/tests/test_colab_sol2_scope.py": "dd41e9eea5c50c83335fe029477cb102f2908a436410eccdb71c8614e553aa1d"
+  },
+  "at_utc": "2026-10-26T02:16:46.062221+00:00",
+  "bulk_acquisition_enabled": false,
+  "harmlessness_proven": false,
+  "historical": {
+    "recovery_outputs_verified": 9,
+    "sealed_phases": {
+      "historical": {
+        "historical": {
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          },
+          "phase_3b_output_hashes_verified": 52
+        },
+        "phase_3c_hashes_verified": 30
+      },
+      "phase_3d_hashes_verified": 26
+    }
+  },
+  "hook_sha256": "f4e7888137157456d4aec9affb576e6e9bbf7b71713e2b28932646a54e2e25b5",
+  "linux_compilation_executed": false,
+  "osrm_compiled_locally": false,
+  "policy_sha256": "32724ea929b53baa0edf82f3cf2542da37399b83864b4780e6396481bab951c9",
+  "reported_v7_log_sha256_not_independently_verified": "382f4df1d3f0b1b540037cfc51e495de2f1d312312cb9df4feec0443fdd4f382",
+  "routing_executed": false,
+  "sol2_source_sha256_verified_over_https": "ece673cd7b712e372f20d6be21225c4785796b12ef94a405a0d4e432c70e0e81",
+  "source_scope_validation": "Actual CMake 3.31.10 Windows fixture; MinGW 8.1.0 and simulated GCC-11 CMake branch; not OSRM or Linux",
+  "tests": {
+    "backend_regression": {
+      "evidence_sha256": "e5c0df6907637c92025721423313b62e2829dd75d9b169918ea31688f5e5a13e",
+      "passed": 104
+    },
+    "research": {
+      "evidence_sha256": "29a50332660c60893fd0f4ebb10081b523f640a658fea7734641ac81f7ad6271",
+      "passed": 278
+    }
+  },
+  "unchanged_v7_members": 488,
+  "v7_archive_sha256": "4fb71f629d2ffccce4110a47e924c6cf3f24406f590296247fc7f23774610b7b"
+}

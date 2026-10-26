@@ -1,0 +1,3 @@
+# Input and offline ZIP bundles can be large; upload to Drive, not Git.
+*
+!.gitignore

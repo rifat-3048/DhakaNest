@@ -1,0 +1,20 @@
+{
+  "id": "osrm-5.27.1-sol2-v8",
+  "commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990",
+  "original_coordinate_header_sha256": "3effbc646484885e53150589c3287852c3133a85fe258de4035eddf08c9c4361",
+  "original_warning_configuration_sha256": "76719432644394a2f879beb20338192909ed0d051008a61cd633f8e3d4eab79b",
+  "original_sol2_header_sha256": "ece673cd7b712e372f20d6be21225c4785796b12ef94a405a0d4e432c70e0e81",
+  "cxx_flags": ["-fdiagnostics-color=never", "-include", "cstdint"],
+  "warning_overrides": [
+    {"compiler": "GNU", "source": "src/extractor/scripting_environment_lua.cpp", "flag": "-Wno-error=array-bounds"},
+    {"compiler": "GNU 11", "source": "src/osrm/osrm.cpp", "flag": "-Wno-error=free-nonheap-object"}
+  ],
+  "source_policy": "Pristine pinned source; no Sol2 patch or version change; inherited cstdint correction is build-only",
+  "warning_policy": "Global Werror retained; no whole-target or global demotion; exact exported commands must prove both source scopes",
+  "harmful_bounds_error_ruled_out": false,
+  "runtime_gate": "Successful extraction, partition, customize, server startup and validated Table response required; V8 bulk acquisition remains disabled pending separate approval",
+  "reported_v7_log_sha256": "382f4df1d3f0b1b540037cfc51e495de2f1d312312cb9df4feec0443fdd4f382",
+  "original_full_log_available_locally": false,
+  "upstream_reports": ["https://github.com/Project-OSRM/osrm-backend/issues/6704", "https://github.com/Project-OSRM/osrm-backend/issues/6867", "https://github.com/ThePhD/sol2/issues/1535"],
+  "linux_compilation_executed": false
+}

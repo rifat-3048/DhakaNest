@@ -1,0 +1,10 @@
+{
+  "count": 12,
+  "exact_structural_duplicate_groups": 0,
+  "missing_stored_assessments": 12,
+  "near_duplicate_policy": "Coordinate/area groups retained for diagnostics; listing duplicates must be adjudicated before comparative evaluation.",
+  "source_composition": {
+    "evaluation_fixture": 12
+  },
+  "valid_stored_assessments": 0
+}

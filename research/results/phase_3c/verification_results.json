@@ -1,0 +1,41 @@
+{
+  "backend_log": "........................................................................................................\n----------------------------------------------------------------------\nRan 104 tests in 1.316s\n\nOK\n",
+  "backend_passed": true,
+  "backend_tests": 104,
+  "compilation": "pass",
+  "historical": {
+    "historical": {
+      "manifest_revision": 2,
+      "phase_3_output_hashes_verified": 51,
+      "prior_output_hashes_verified": 44
+    },
+    "phase_3b_output_hashes_verified": 52
+  },
+  "live_routing_requests": 0,
+  "overlay_reproduction": "byte_identical",
+  "production_database_access": "none",
+  "research_log": "............................................................................................................................\n----------------------------------------------------------------------\nRan 124 tests in 14.211s\n\nOK\n",
+  "research_passed": true,
+  "research_skips": 0,
+  "research_tests": 124,
+  "routing_validation": {
+    "complete": false,
+    "logical_pairs": 30000,
+    "missing_logical_pairs": 30000,
+    "physical_keys": 30000,
+    "statuses": {
+      "invalid_request": 0,
+      "missing": 30000,
+      "temporary_provider_failure": 0,
+      "unreachable": 0,
+      "unverified_response": 0,
+      "valid": 0
+    }
+  },
+  "secret_scan": {
+    "artifact_files_checked": 10,
+    "scope": "New JSON/JSONL exports; not a claim of exhaustive secret detection across private files",
+    "sensitive_fields_or_credential_urls_found": 0
+  },
+  "tracked_diff": "empty"
+}

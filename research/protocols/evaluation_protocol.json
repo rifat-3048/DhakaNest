@@ -1,0 +1,111 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-recommendation-evaluation-v1",
+  "output_paths": ["results/phase_7/evaluation"],
+  "scope": "Future journal recommendation benchmark; historical eight-profile results remain preliminary and are not WSM v4 evidence.",
+  "relevance": {
+    "scale": [0, 1, 2, 3],
+    "labels": {
+      "0": "Not suitable or violates an expressed need",
+      "1": "Marginally suitable with substantial compromises",
+      "2": "Suitable with acceptable compromises",
+      "3": "Highly suitable for the profile"
+    },
+    "binary_relevance_threshold": 2,
+    "source": "Independent human annotation only; never system scores or rankings."
+  },
+  "metrics": [
+    {
+      "id": "NDCG@5",
+      "role": "primary",
+      "k": 5,
+      "definition": "DCG divided by ideal DCG over the complete judged candidate universe.",
+      "gain": "2^relevance - 1",
+      "discount": "log2(rank + 1)",
+      "short_list_policy": "Unreturned ranks have zero gain."
+    },
+    {
+      "id": "NDCG@10",
+      "role": "primary",
+      "k": 10,
+      "definition": "DCG divided by ideal DCG over the complete judged candidate universe.",
+      "gain": "2^relevance - 1",
+      "discount": "log2(rank + 1)",
+      "short_list_policy": "Unreturned ranks have zero gain."
+    },
+    {
+      "id": "Precision@5",
+      "role": "supporting",
+      "k": 5,
+      "definition": "Count of returned labels >=2 divided by fixed K=5.",
+      "short_list_policy": "Missing positions are non-relevant; denominator remains 5."
+    },
+    {
+      "id": "Precision@10",
+      "role": "supporting",
+      "k": 10,
+      "definition": "Count of returned labels >=2 divided by fixed K=10.",
+      "short_list_policy": "Missing positions are non-relevant; denominator remains 10."
+    },
+    {
+      "id": "Recall@10",
+      "role": "supporting",
+      "k": 10,
+      "definition": "Returned relevant properties divided by all relevant properties in the judged common universe."
+    },
+    {
+      "id": "MAP@10",
+      "role": "supporting",
+      "k": 10,
+      "definition": "Mean precision at each relevant rank through 10, divided by min(number relevant in the universe, 10)."
+    },
+    {
+      "id": "MRR",
+      "role": "supporting",
+      "definition": "Reciprocal rank of the first label >=2, or zero when none is returned."
+    },
+    {
+      "id": "HitRate@10",
+      "role": "supporting",
+      "k": 10,
+      "definition": "One when at least one label >=2 is returned in the first 10, otherwise zero."
+    },
+    {
+      "id": "eligible_coverage",
+      "role": "supporting",
+      "definition": "Profiles returning at least one result divided by all evaluated profiles."
+    },
+    {
+      "id": "empty_result_rate",
+      "role": "supporting",
+      "definition": "Profiles returning zero results divided by all evaluated profiles."
+    },
+    {
+      "id": "commute_constraint_satisfaction",
+      "role": "supporting",
+      "definition": "Returned property-destination pairs satisfying an expressed maximum commute divided by all returned pairs with a maximum."
+    },
+    {
+      "id": "intra_list_diversity",
+      "role": "exploratory",
+      "definition": "Mean pairwise dissimilarity in prespecified property type, micro-area, rent band, and size-band features; report only when feature definitions are frozen."
+    }
+  ],
+  "aggregation": {
+    "primary": "Macro-average profile metrics so each tenant profile has equal weight.",
+    "micro": "Report only as a labeled sensitivity analysis, never as a substitute for macro results.",
+    "zero_relevant_profiles": "Exclude from NDCG, Recall, MAP, and MRR aggregation; report their count and include them in coverage/empty-result measures.",
+    "multiple_profiles": "Compute each metric per profile first, then aggregate with profile-level confidence intervals."
+  },
+  "comparison_modes": {
+    "end_to_end": "Methods start from the common frozen universe but may create different candidate sets; report coverage and attrition at every stage.",
+    "controlled_reranking": "Methods receive the exact same candidate set to isolate ordering behavior."
+  },
+  "integrity": {
+    "candidate_universe": "Frozen and checksummed before annotation.",
+    "routing": "Frozen OSRM matrices shared by all route-aware methods.",
+    "top_k": [5, 10],
+    "label_leakage_prevention": "Annotators and profile constructors cannot see system ranks, similarities, criterion scores, or final suitability.",
+    "historical_difference": "The existing evaluator uses returned-count precision for short lists. Future journal results must use fixed-K precision and be versioned separately."
+  }
+}

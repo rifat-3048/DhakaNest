@@ -1,0 +1,22 @@
+{
+  "experiment_id": "phase_3d_recovery_2026_10_25_verified",
+  "purpose": "Preserve approved Windows corrections, pending restart, original recovery evidence and explicit model-read verification clarification.",
+  "dataset": {"identifier": "benchmark-v1.3-blocked-parent", "path": "research/datasets/benchmark_v1_3/dataset_manifest.json"},
+  "input_configuration": {"restart_performed": false, "windows_changes_approved": true, "model_reads_during_tests": true, "research_tests_passed": 137, "backend_tests_passed": 104, "route_requests": 0},
+  "random_seed": 42,
+  "versions": {"scoring": "wsm_v4", "recovery_record": "1.0.1"},
+  "dependencies": ["python"],
+  "output_paths": [
+    "routing/osrm_local/recovery/diagnose_windows.ps1",
+    "routing/osrm_local/recovery/enable_virtualization.ps1",
+    "routing/osrm_local/recovery/administrator_diagnostics.json",
+    "routing/osrm_local/recovery/approved_changes.json",
+    "results/phase_3d/recovery_2026_10_25/recovery_report.md",
+    "results/phase_3d/recovery_2026_10_25/manifest_config.json",
+    "results/phase_3d/recovery_2026_10_25/recovery_manifest.json",
+    "results/phase_3d/recovery_2026_10_25/verification_note.md",
+    "results/phase_3d/recovery_2026_10_25/manifest_config_v2.json"
+  ],
+  "database_access": "none",
+  "execution_status": "windows_corrections_verified_pending_user_restart"
+}

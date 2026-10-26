@@ -1,0 +1,9 @@
+{
+  "archive": "D:\\DhakaNest\\research\\exports\\dhakanest_colab_input_v6.zip",
+  "bytes": 38055095,
+  "extracted_apt_tests_exit_code": 0,
+  "extracted_member_manifest_verified": true,
+  "sha256": "7797c6013442480f4ba392a1c04c38de56a78f46e8a30ed42f2903fa7b68d29c",
+  "stderr": ".....................\n----------------------------------------------------------------------\nRan 21 tests in 0.108s\n\nOK\n",
+  "stdout": ""
+}

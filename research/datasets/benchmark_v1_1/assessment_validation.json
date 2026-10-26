@@ -1,0 +1,10 @@
+{
+  "circularity_warning": "Synthetic asking rents are rounded model predictions times fixed multipliers. Rent Fairness is internally consistent, not independent market-fairness validation.",
+  "fixture_expected_rents_used": 0,
+  "missing": 0,
+  "model_route_counts": {
+    "primary": 2600
+  },
+  "prediction_replay_executed": false,
+  "verified": 2600
+}

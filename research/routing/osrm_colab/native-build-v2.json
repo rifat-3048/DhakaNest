@@ -1,0 +1,21 @@
+{
+  "id": "osrm-5.27.1-native-v2",
+  "osrm_version": "5.27.1",
+  "commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990",
+  "tag": "v5.27.1",
+  "platform": "Ubuntu 22.04 or 24.04 amd64",
+  "compiler": "/usr/bin/g++-11",
+  "c_compiler": "/usr/bin/gcc-11",
+  "compiler_major": 11,
+  "boost_version": "1.74.0",
+  "boost_header_macro": 107400,
+  "cmake": "/usr/bin/cmake (3.x)",
+  "cpp_standard": 17,
+  "build_type": "Release",
+  "build_parallelism": 1,
+  "lto": false,
+  "ccache": false,
+  "source_patches": false,
+  "retry_policy": "Explicit initial authorization; exact next setup attempt authorization after any failure. No automatic retry; no deletion of failures/logs/build trees.",
+  "validation_status": "Supported configuration candidate based on OSRM Ubuntu 22.04 build instructions. Actual Linux/Colab compilation remains unexecuted; original earliest compiler error not yet supplied."
+}

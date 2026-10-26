@@ -1,0 +1,21 @@
+{
+    "started_at_utc":  "2026-10-25T05:42:22.3288635Z",
+    "approval":  "Explicit user approval via execution permission; no reboot authorized",
+    "virtual_machine_platform_before":  "Disabled",
+    "attempted_actions":  [
+                              "Enable VirtualMachinePlatform with dependencies; NoRestart",
+                              "bcdedit /set hypervisorlaunchtype auto"
+                          ],
+    "restart_performed":  false,
+    "restart_required_before_docker_validation":  true,
+    "feature_restart_needed":  true,
+    "boot_command_output":  [
+                                "The operation completed successfully."
+                            ],
+    "virtual_machine_platform_after":  "EnablePending",
+    "hypervisor_launch_after":  [
+                                    "hypervisorlaunchtype    Auto"
+                                ],
+    "status":  "Changes applied; restart and live verification still required",
+    "completed_at_utc":  "2026-10-25T05:42:53.1107397Z"
+}

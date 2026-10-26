@@ -1,0 +1,19 @@
+{
+  "review_date": "2026-10-26",
+  "release_metadata_url": "https://api.github.com/repos/Project-OSRM/osrm-backend/releases/tags/v5.27.1",
+  "release_uploaded_assets": 15,
+  "release_asset_observation": "All uploaded asset names are node_osrm-v5.27.1 binding packages; asset digest fields are null. Contents were not downloaded, so no standalone four-CLI package is validated.",
+  "official_image_page": "https://github.com/project-osrm/osrm-backend/pkgs/container/osrm-backend/45826644?tag=v5.27.1",
+  "official_image": "ghcr.io/project-osrm/osrm-backend:v5.27.1",
+  "published_index_digest": "sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124",
+  "published_linux_amd64_manifest_digest": "sha256:b1ca5d72da456e82f81b8732a095c2357b00710099efa844040d1eb40b4b5386",
+  "digest_bytes_independently_recomputed": false,
+  "source_commit_label_verified": false,
+  "four_executable_versions_verified": false,
+  "colab_elf_runtime_verified": false,
+  "table_api_verified": false,
+  "daemonless_candidate": "Explicitly authorized OCI manifest/layer verification and rootfs extraction could avoid a Docker daemon; not implemented or validated here",
+  "artifacts_downloaded_or_executed": false,
+  "selection": "Retain controlled native workflow; no automatic binary/public-service fallback",
+  "next_authorization_requirements": ["Exact manifest/layer SHA-256 verification and source provenance", "All four ELF architecture/version/loader/library checks", "Matching car.lua/profile tree", "Successful extraction/MLD/server/Table smoke with frozen methodology"]
+}

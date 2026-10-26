@@ -1,0 +1,22 @@
+{
+  "status": "venv_creation_repair_packaged_colab_execution_pending",
+  "archive": "research/exports/dhakanest_colab_input_v4.zip",
+  "sha256": "60afdf2d0fee64ef9511064f00ce93d95bfe9973b76d2a6ede8e716c3deefc22",
+  "bytes": 37997883,
+  "archived_files": 445,
+  "isolated_extraction_and_member_checksums": "passed",
+  "isolated_historical_seals_and_environment_selection": "passed",
+  "isolated_v4_notebook_generation": "passed",
+  "research_tests_passed": 191,
+  "backend_regression_tests_passed": 104,
+  "real_local_creation_smoke": "passed on Windows CPython 3.12; ensurepip absence simulated to test actual fallback",
+  "colab_executed": false,
+  "research_dependency_lock_unchanged": true,
+  "previous_notebooks_archives_and_manifests_preserved": true,
+  "system_packages_modified": false,
+  "bootstrap_install_scope": "private ignored research-local targets only",
+  "live_osrm_requests": 0,
+  "osm_downloads": 0,
+  "phase3d_complete": false,
+  "note": "Post-packaging evidence is separate to avoid a circular self-hash. Use the new v4 notebook/archive and its new run ID/local_root defaults."
+}

@@ -1,0 +1,13 @@
+{
+  "records": [
+    {"id": "S32", "title": "House Rent Estimation in Dhaka City by Multi Layer Perceptions Neural Network", "url": "https://article.nadiapub.com/IJUNESST/vol7_no4/26.pdf", "decision": "defer", "reason": "Full text located, but venue-quality verification and inconsistent attribute/data descriptions require further audit; excluded from retained and deep counts."},
+    {"id": "S33", "title": "Real Estate Recommender Systems: A PRISMA-Compliant Systematic Review of Multimodal, Spatio-Temporal, Explainable, and Fairness-Aware Innovations", "url": "https://www.mdpi.com/2076-3417/16/13/6339", "decision": "defer", "reason": "2026 publisher-indexed discovery; direct full-text retrieval failed. Retrieve and verify before using its aggregate claims."},
+    {"id": "S34", "title": "Explainable Recommendation: A Survey and New Perspectives", "url": "https://arxiv.org/abs/1804.11192", "decision": "defer", "reason": "Abstract verified; PDF exceeded tool size limit. Useful expanded review, but not counted toward full-text coverage."},
+    {"id": "S35", "title": "Hybrid Recommender Systems: Survey and Experiments", "url": "https://link.springer.com/article/10.1023/A:1021240730564", "decision": "defer", "reason": "Subscription preview only. Retain as discovery lead; hybrid taxonomy covered by included full-text review P13."},
+    {"id": "S36", "title": "Sequence Modeling with Unconstrained Generation Order", "url": "https://arxiv.org/pdf/1911.00176", "decision": "exclude", "reason": "Identifier lookup returned an unrelated sequence-generation paper; not relevant to this review."},
+    {"id": "S37", "title": "Deep Learning on Radar Centric 3D Object Detection", "url": "https://arxiv.org/pdf/2003.00851", "decision": "exclude", "reason": "Identifier lookup mismatch; unrelated application."},
+    {"id": "S38", "title": "Resistivity near a nematic quantum critical point: Impact of acoustic phonons", "url": "https://arxiv.org/pdf/1906.03205", "decision": "exclude", "reason": "Identifier lookup mismatch; unrelated physics paper."},
+    {"id": "S39", "title": "Binary Classification with Bounded Abstention Rate", "url": "https://arxiv.org/pdf/1905.09561", "decision": "exclude", "reason": "Identifier lookup mismatch; not the intended uncertainty paper."},
+    {"id": "S40", "title": "Orbital carriers and inheritance in discrete-time quadratic dynamics", "url": "https://arxiv.org/pdf/2008.01073", "decision": "exclude", "reason": "Identifier lookup mismatch; unrelated dynamics paper."}
+  ]
+}

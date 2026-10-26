@@ -1,0 +1,55 @@
+{
+  "bounds": {
+    "latitude": [
+      23.5,
+      24.1
+    ],
+    "longitude": [
+      90.15,
+      90.65
+    ]
+  },
+  "destination_areas": {
+    "Banani": 1,
+    "Banasree": 1,
+    "Bashundhara R/A": 1,
+    "Dhanmondi": 1,
+    "Gulshan": 1,
+    "Khilgaon": 1,
+    "Lalmatia": 1,
+    "Mirpur": 1,
+    "Mohammadpur": 1,
+    "Motijheel": 1,
+    "Rampura": 1,
+    "Uttara": 1
+  },
+  "destination_coordinate_duplicates": 0,
+  "duplicate_coordinate_groups": 0,
+  "independently_verified_destinations": 0,
+  "independently_verified_precise_property_geocodes": 0,
+  "independently_verified_properties": 0,
+  "limitation": "Synthetic coordinates retain original seeded offsets; destinations remain area proxies, not institutions. No external verification performed.",
+  "listing_areas": {
+    "Banani": 210,
+    "Banasree": 210,
+    "Bashundhara R/A": 205,
+    "Dhanmondi": 210,
+    "Gulshan": 210,
+    "Khilgaon": 210,
+    "Lalmatia": 210,
+    "Mirpur": 210,
+    "Mohammadpur": 210,
+    "Motijheel": 205,
+    "Rampura": 205,
+    "Uttara": 205
+  },
+  "property_coordinate_precision": "synthetic offsets around 12 repository area anchors",
+  "property_type_counts": {
+    "apartment": 1490,
+    "house": 430,
+    "room": 310,
+    "sublet": 270
+  },
+  "repository_verified_anchor_count": 12,
+  "unique_property_coordinates": 2500
+}

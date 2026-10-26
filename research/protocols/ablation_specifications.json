@@ -1,0 +1,98 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-ablations-v1",
+  "output_paths": ["results/phase_6/ablations"],
+  "control_baseline_id": "B_FULL",
+  "ablations": [
+    {
+      "id": "A_FULL",
+      "component_removed": "none",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Unchanged production reference using WSM v4.",
+      "weight_policy": "Production five-criterion normalization.",
+      "evaluation_metrics": ["NDCG@5", "NDCG@10", "coverage", "empty_result_rate"],
+      "interpretation": "Anchor only; not an intervention.",
+      "confounders": []
+    },
+    {
+      "id": "A_NO_KNN",
+      "component_removed": "Content-Based KNN candidate selection",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Rank every hard-filtered, route-complete, commute-valid candidate with unchanged WSM v4.",
+      "weight_policy": "Production five-criterion normalization unchanged.",
+      "evaluation_metrics": ["NDCG@10", "coverage", "runtime_ms"],
+      "interpretation": "Separates shortlist quality and computational reduction from WSM ranking.",
+      "confounders": ["larger WSM candidate count", "runtime environment"]
+    },
+    {
+      "id": "A_EQUAL_DESTINATION_IMPORTANCE",
+      "component_removed": "Tenant destination-importance weighting",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Retain all routes and commute constraints but assign equal importance to each destination during access scoring.",
+      "weight_policy": "WSM criterion weights unchanged.",
+      "evaluation_metrics": ["NDCG@10", "commute_constraint_satisfaction"],
+      "interpretation": "Tests importance weighting, not multi-destination routing itself.",
+      "confounders": ["profiles whose destination priorities are already equal"]
+    },
+    {
+      "id": "A_NO_COMMUTE_CONSTRAINTS",
+      "component_removed": "Maximum-commute hard constraints",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Keep frozen routes and destination-access scoring but do not reject candidates exceeding a profile commute limit.",
+      "weight_policy": "WSM criterion weights unchanged.",
+      "evaluation_metrics": ["NDCG@10", "commute_constraint_satisfaction", "coverage", "empty_result_rate"],
+      "interpretation": "Measures relevance/coverage tradeoff caused by hard commute enforcement.",
+      "confounders": ["profiles without commute limits", "route failures"]
+    },
+    {
+      "id": "A_NO_DESTINATION_LOCATION",
+      "component_removed": "Destination-aware Location Suitability",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Remove routing-derived location from WSM and do not apply destination commute constraints; retain non-route mandatory eligibility and KNN.",
+      "weight_policy": "Renormalize the original budget, space, amenities, and rent-fairness priorities to sum to one.",
+      "evaluation_metrics": ["NDCG@10", "commute_constraint_satisfaction", "coverage"],
+      "interpretation": "Estimates the combined location-signal contribution; it is broader than importance or constraint ablations.",
+      "confounders": ["changed candidate eligibility", "criterion-weight redistribution"]
+    },
+    {
+      "id": "A_NO_RENT_FAIRNESS",
+      "component_removed": "Rent Fairness WSM criterion",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Keep the same KNN shortlist and remove stored rent-reasonableness score from WSM.",
+      "weight_policy": "Renormalize original location, budget, space, and amenities priorities to sum to one.",
+      "evaluation_metrics": ["NDCG@10", "rank_biased_overlap_10"],
+      "interpretation": "Tests model-based rent reasonableness, not demographic fairness.",
+      "confounders": ["prediction error", "criterion correlation with budget"]
+    },
+    {
+      "id": "A_NO_AMENITIES",
+      "component_removed": "Amenities Suitability WSM criterion",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Keep the same shortlist and remove nice-to-have amenity coverage from WSM; must-have amenities remain mandatory eligibility.",
+      "weight_policy": "Renormalize original location, budget, space, and rent-fairness priorities to sum to one.",
+      "evaluation_metrics": ["NDCG@10", "rank_biased_overlap_10"],
+      "interpretation": "Does not remove safety or must-have amenity filters.",
+      "confounders": ["profiles with no nice-to-have amenities"]
+    },
+    {
+      "id": "A_NO_PREFERRED_FLOOR_SIZE",
+      "component_removed": "Preferred floor-size matching within Space Suitability",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Compute Space Suitability as the mean bedroom and bathroom components only; hard size eligibility remains intact.",
+      "weight_policy": "WSM criterion weights unchanged; only the internal space component changes.",
+      "evaluation_metrics": ["NDCG@10", "rank_biased_overlap_10"],
+      "interpretation": "Tests soft preferred-size matching without weakening mandatory size limits.",
+      "confounders": ["profiles without a preferred size", "bedroom-size correlation"]
+    },
+    {
+      "id": "A_NO_TRAVEL_FREQUENCY",
+      "component_removed": "Travel frequency from informational monthly travel spending",
+      "comparison_control": "B_FULL",
+      "architectural_effect": "Suppress frequency-derived travel and total-spend displays while leaving all production ranking inputs unchanged.",
+      "weight_policy": "Production five-criterion normalization unchanged.",
+      "evaluation_metrics": ["exact_ranking_invariance", "travel_cost_display_coverage", "user_study_usefulness"],
+      "interpretation": "This is an informational sensitivity/invariance check, not removal of a WSM ranking factor.",
+      "confounders": ["missing travel frequencies", "user interpretation of total spending"]
+    }
+  ]
+}

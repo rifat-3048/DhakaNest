@@ -1,0 +1,16 @@
+{
+  "command": [
+    "D:\\DhakaNest\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "unittest",
+    "tests.test_recommendation_part1",
+    "tests.test_recommendation_part2",
+    "tests.test_recommendation_part5",
+    "tests.test_recommendation_part7",
+    "tests.test_academic_inventory"
+  ],
+  "cwd": "D:\\DhakaNest\\backend",
+  "exit_code": 0,
+  "stderr": "........................................................................................................\n----------------------------------------------------------------------\nRan 104 tests in 1.083s\n\nOK\n",
+  "stdout": ""
+}

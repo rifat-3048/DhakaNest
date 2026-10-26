@@ -1,0 +1,14 @@
+{
+  "acquisition_timestamp": null,
+  "backend_version": "unknown_not_acquired",
+  "coordinate_order": "longitude,latitude",
+  "coordinate_sha256": "2f047650ee18bc968803b0bd40c0da5f0e475971fa21c869a415b9522d2e6bde",
+  "external_calls_executed": false,
+  "format": "JSON Lines; one listing-destination status record per line; seconds/meters; null != zero",
+  "map_extract_version": "unknown_not_acquired",
+  "provider": "osrm",
+  "route_file_sha256": "d6c2b50cd52984c0aae7a63dbcf01c2a9af1ebda7394b4c1157ec20075e01c1a",
+  "source": "No verifiable captured OSRM matrices in inspected repository sources",
+  "status": "incomplete_not_acquired",
+  "travel_mode": "driving"
+}

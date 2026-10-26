@@ -1,0 +1,19 @@
+{
+  "amendment_id": "phase_3_prebenchmark_v1",
+  "original_protocol_version": "1.0.0",
+  "effective_protocol_version": "1.1.0-phase3",
+  "approval": {"implementation_authorized_by": "User Phase 3 brief, 2026-10-25", "supervisor_approved": false},
+  "timing": "Specified before benchmark generation and any comparative evaluation; Phase 1 files remain frozen.",
+  "changes": {
+    "A": {"id": "B_JOURNEY_INSPIRED", "type": "literature_inspired_independent_baseline", "evidence": ["P04", "P31"], "specification": "Future independently implemented journey-aware Pareto baseline: use shared road durations for all destinations, hard structural eligibility, nondominated rent/commute/size alternatives; prespecify deterministic tie handling on development profiles before final evaluation. Not a reproduction of trajectory-based reachability or inaccessible original algorithms.", "implemented": false},
+    "B": {"id": "A_SINGLE_DESTINATION", "selection": "Highest preference; ties resolved by original request order; retain selected destination's commute bound and travel frequency. Single-destination profiles unchanged on this dimension.", "implemented": false},
+    "C": {"id": "COMMON_ANNOTATION_POOL", "specification": "Stratified random common eligible homes plus varied areas/types/rents/structural matches and near-boundary negatives, with explicit sampling provenance stored separately. Add future baseline nominations by pair union; never depend exclusively on proposed Top-K. Pooled labels estimate relevance within judged pool, not whole-market recall. Record unjudged rate and pool-incompleteness sensitivity.", "labels_created": false},
+    "D": {"id": "BLINDED_INDEPENDENT_ANNOTATION", "hidden": ["algorithm names", "ranks", "WSM scores", "KNN similarity", "model explanations", "nomination sources", "model rent assessments"], "specification": "Human labels collected before outcome analysis; no model-derived pseudo-ground-truth. Any future model-assessment-visible condition must be separate and prespecified.", "annotation_started": false}
+  },
+  "additional_clarifications": {
+    "location_ablation": "Future criterion-only ablation keeps shared commute-feasible pool; end-to-end no-routing condition separately removes constraints. Do not interpret the confounded Phase 1 condition as criterion-only evidence.",
+    "candidate_designs": "End-to-end methods start from frozen inventory with their declared eligibility stages. Controlled ranking shares hard-and-commute eligible pool; neither pool is KNN-selected. Area-first is not forced into proposed Top-K.",
+    "sparse_profiles": "Retain and report zero/small eligible sets; do not force ten results. Sparse cases support coverage diagnostics, not claims of competitive Top-10 ranking."
+  },
+  "changelog": [{"date": "2026-10-25", "version": "1.1.0-phase3", "action": "Add four authorized refinements and explicit candidate/annotation safeguards; no existing protocol overwritten."}]
+}

@@ -1,0 +1,10 @@
+--- a/include/extractor/suffix_table.hpp
++++ b/include/extractor/suffix_table.hpp
+@@ -1,6 +1,7 @@
+ #ifndef OSRM_EXTRACTOR_SUFFIX_LIST_HPP_
+ #define OSRM_EXTRACTOR_SUFFIX_LIST_HPP_
+ 
++#include <vector>
+ #include <string>
+ #include <unordered_set>
+ 

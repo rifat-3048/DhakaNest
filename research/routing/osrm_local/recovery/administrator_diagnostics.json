@@ -1,0 +1,26 @@
+{
+    "checked_at_utc":  "2026-10-25T05:41:33.0962413Z",
+    "features":  [
+                     {
+                         "name":  "VirtualMachinePlatform",
+                         "state":  "Disabled"
+                     },
+                     {
+                         "name":  "Microsoft-Windows-Subsystem-Linux",
+                         "state":  "Enabled"
+                     },
+                     {
+                         "name":  "Microsoft-Hyper-V-All",
+                         "state":  "Disabled"
+                     }
+                 ],
+    "hypervisor_launch_entries":  [
+                                      "hypervisorlaunchtype    Off"
+                                  ],
+    "launch_entry_absent_means":  "Not explicitly shown; do not infer disabled from absence.",
+    "virtualization_firmware_enabled":  true,
+    "vm_monitor_mode_extensions":  true,
+    "second_level_address_translation":  true,
+    "hypervisor_present":  false,
+    "system_settings_changed":  false
+}

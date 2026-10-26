@@ -1,0 +1,19 @@
+{
+  "status": "compatibility_fix_packaged_colab_execution_pending",
+  "archive": "research/exports/dhakanest_colab_input_v3.zip",
+  "sha256": "af83c869ca1dbe77cb6a9a824c29f5997bdc23ae066ed7250486bf9d5ee886cc",
+  "bytes": 37961268,
+  "source_files": 430,
+  "isolated_archive_extraction": "passed; all member checksums verified",
+  "isolated_python313_environment_selection": "passed for version string 3.13.16; this was NOT a Python 3.13 runtime execution",
+  "isolated_historical_seals": "passed",
+  "isolated_frozen_fixture": "passed; 30000 missing route pairs retained",
+  "research_tests": 177,
+  "backend_regression_tests": 104,
+  "old_zip_preserved": "research/exports/dhakanest_colab_input_v2.zip",
+  "old_zip_sha256": "3af83f3eccb4302fa301f66e37206f89e7406cf735e8de5e86c0cfb06993824e",
+  "python313_runtime_executed": false,
+  "live_osrm_requests": 0,
+  "phase3d_complete": false,
+  "note": "Post-packaging evidence stored separately to avoid a circular archive self-hash. Original notebook, original requirements, prior ZIP and historical records were not overwritten."
+}

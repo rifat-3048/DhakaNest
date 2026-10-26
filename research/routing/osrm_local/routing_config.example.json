@@ -1,0 +1,22 @@
+{
+  "image": "ghcr.io/project-osrm/osrm-backend:v26.10.0",
+  "image_status": "Version-pinned candidate, not pulled or runtime-verified",
+  "endpoint": "http://127.0.0.1:5001",
+  "port": 5001,
+  "algorithm": "mld",
+  "profile": "/opt/car.lua",
+  "threads": 2,
+  "cpus": 2,
+  "memory_gib": 4,
+  "minimum_free_disk_gib": 15,
+  "minimum_free_ram_gib": 4,
+  "resource_estimates_not_measured_preprocessing_requirements": true,
+  "server_max_table_size": 100,
+  "acquisition_max_coordinates": 52,
+  "acquisition_max_cells": 480,
+  "acquisition_concurrency": 1,
+  "acquisition_retries": 2,
+  "acquisition_request_ceiling": 189,
+  "runtime_directory": "research/routing/osrm_local/runtime",
+  "network_policy": "Isolated self-hosted loopback only; never public providers"
+}

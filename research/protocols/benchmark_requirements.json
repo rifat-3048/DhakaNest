@@ -1,0 +1,44 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-future-benchmark-requirements-v1",
+  "output_paths": ["datasets/benchmark_v1", "results/phase_3/benchmark"],
+  "status": "planned_not_generated",
+  "target_profile_count": {"minimum": 100, "maximum": 300},
+  "profile_design": {
+    "sources": ["consented de-identified real preference elicitation", "expert-constructed coverage profiles clearly marked synthetic"],
+    "strata": ["budget band", "Dhaka region", "property type", "one/two/three destinations", "commute-limit strictness", "household need"],
+    "required_fields": ["one to three destinations", "destination importance", "optional commute limits", "maximum budget", "property types", "bedrooms", "bathrooms", "floor-size preference", "furnishing", "must-have and nice-to-have amenities", "area-first preferred micro-area"],
+    "construction_rule": "Freeze profile facts before candidate rankings or relevance labels are viewed.",
+    "real_synthetic_separation": "Store source_type and provenance for each profile; report results separately before any combined estimate."
+  },
+  "property_snapshot": {
+    "source_identification": "Every property stores source_type as real_market_observation or deterministic_synthetic plus source reference and observation timestamp.",
+    "quality_checks": ["schema validity", "approved and available snapshot status", "valid coordinates", "canonical property/furnishing/amenity values", "positive rent and floor size", "complete stored rent assessment", "duplicate audit"],
+    "real_synthetic_separation": "Never describe synthetic listings as market observations; report source composition and subgroup results.",
+    "duplicate_policy": "Remove exact duplicates by canonical fingerprint; cluster near-duplicates using address/location, rent, size, room counts, text, and image hashes, then retain one or mark a shared cluster so folds and pools do not split copies.",
+    "candidate_competition": "Each profile must have enough eligible and plausible alternatives for Top-10 ranking; sparse profiles are retained only for coverage analysis and flagged."
+  },
+  "routing_freeze": {
+    "inputs": ["profile destination coordinates", "listing coordinates"],
+    "record": ["OSRM engine/version when available", "profile mode", "base dataset/date", "request coordinates", "duration and distance matrices", "unreachable cells", "retrieval timestamp", "SHA-256"],
+    "policy": "All compared route-aware methods use the same immutable matrix; no live route call during scoring."
+  },
+  "partitioning": {
+    "development_fraction": 0.3,
+    "final_evaluation_fraction": 0.7,
+    "grouping": "Keep near-duplicate profile families and property clusters in one partition.",
+    "stratification": "Balance destination count, region, budget, and source type where feasible.",
+    "final_access": "Keep final labels and rankings sealed until methods, metrics, and exclusions are frozen."
+  },
+  "annotation_workload": {
+    "pooling": "For each profile, blind-union top candidates from every baseline/full method, random eligible candidates, and prespecified hard negatives; deduplicate before annotation.",
+    "target_pool_per_profile": "Use a pilot to choose a manageable pool, expected approximately 20-30 properties without treating that range as achieved evidence.",
+    "minimum_annotators_per_judgment": 3,
+    "incompleteness_reporting": "Record unjudged candidate rate and pool source; do not silently treat unjudged items as irrelevant."
+  },
+  "provenance": {
+    "required": ["dataset identifier", "source/license or consent basis", "geographic scope", "collection timestamp", "cleaning decisions", "checksums", "schema version", "random seeds"],
+    "privacy": "Remove direct identifiers and precise private-address details not needed for evaluation."
+  },
+  "acceptance_checks": ["profile strata coverage", "property quality pass", "duplicate audit", "route completeness report", "development/final separation", "annotation feasibility pilot", "manifest and checksum validation"]
+}

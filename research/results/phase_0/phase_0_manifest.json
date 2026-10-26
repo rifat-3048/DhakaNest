@@ -1,0 +1,65 @@
+{
+  "dataset": {
+    "bytes": 18328,
+    "identifier": "recommendation-evaluation-v1",
+    "path": "backend/evaluation/recommendation_ground_truth.json",
+    "sha256": "2589d957e552080a802daf7434cd124c37fd5a780d646551263cf60ff605ad9c"
+  },
+  "dependencies": {
+    "python": "3.12.10"
+  },
+  "executed_at_utc": "2026-10-25T02:23:30.642311+00:00",
+  "execution_status": "completed_with_unresolved_external_reproduction",
+  "experiment_id": "phase_0_codebase_and_evidence_audit",
+  "git_commit": "45e4d040699c86ed535fa0c8582d77829503697d",
+  "input_configuration": {
+    "external_evidence": "Google Drive metadata inspected; no files imported",
+    "mode": "read_only_audit",
+    "phase": 0,
+    "recommendation_evaluation_executed": false
+  },
+  "manifest_schema_version": "1.0",
+  "outputs": [
+    {
+      "bytes": 7264,
+      "path": "results/phase_0/codebase_audit.md",
+      "sha256": "91c9e48873d3cfcea98057337aded3977e202df86f67e31a4cc245eb93f25704"
+    },
+    {
+      "bytes": 3630,
+      "path": "results/phase_0/evidence_inventory.md",
+      "sha256": "591a73b4dc46a7de02b8446fb11aa31470064fa904e967056873f84cab5fb87d"
+    },
+    {
+      "bytes": 4213,
+      "path": "results/phase_0/methodology_discrepancies.md",
+      "sha256": "ae0f04df4ca7e64e0f33d8ef818c709a8a6c7f0c7d42c7cfb26175b30d1e90e3"
+    },
+    {
+      "bytes": 2997,
+      "path": "results/phase_0/research_reuse_plan.md",
+      "sha256": "0a1402de2d0eb136f1ffb5da818c3309b4c757fe077419415ceeac718c2d1500"
+    },
+    {
+      "bytes": 2778,
+      "path": "results/phase_0/phase_0_verification.md",
+      "sha256": "2bd1fd2635a0bb00799e764e804cc61ba1388498b5a00ee2d058dfbe29905df4"
+    },
+    {
+      "bytes": 8241,
+      "path": "datasets/evidence_inventory.json",
+      "sha256": "7198586e9de7695972090c3a6f9f089e06de97ef7ea6c0d8120573973e384d99"
+    }
+  ],
+  "purpose": "Record the frozen inputs and outputs of the DhakaNest Phase 0 research audit.",
+  "random_seed": 42,
+  "safety": {
+    "database_access": "none",
+    "production_writes": false
+  },
+  "versions": {
+    "benchmark_dataset": "recommendation-evaluation-v1",
+    "manifest_schema": "1.0",
+    "production_scoring": "wsm_v4"
+  }
+}

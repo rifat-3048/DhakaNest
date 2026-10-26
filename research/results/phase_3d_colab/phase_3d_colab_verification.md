@@ -1,0 +1,86 @@
+# Phase 3D Colab Verification
+
+PARTIALLY COMPLETE: executable workflow implemented and locally validated.
+
+{
+  "status": "partially_complete_colab_execution_outstanding",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.10",
+  "research_tests": 165,
+  "research_passed": true,
+  "research_skipped": 0,
+  "backend_tests": 104,
+  "backend_passed": true,
+  "research_log": ".....................................................................................................................................................................\n----------------------------------------------------------------------\nRan 165 tests in 26.667s\n\nOK\n",
+  "backend_log": "........................................................................................................\n----------------------------------------------------------------------\nRan 104 tests in 1.387s\n\nOK\n",
+  "compilation": "passed",
+  "notebook_json_and_code": "passed",
+  "shell_syntax": "bash -n passed in setup tests",
+  "historical": {
+    "sealed_phases": {
+      "phase_3d_hashes_verified": 26,
+      "historical": {
+        "phase_3c_hashes_verified": 30,
+        "historical": {
+          "phase_3b_output_hashes_verified": 52,
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          }
+        }
+      }
+    },
+    "recovery_outputs_verified": 9
+  },
+  "historical_routing": {
+    "logical_pairs": 30000,
+    "physical_keys": 30000,
+    "statuses": {
+      "valid": 0,
+      "unreachable": 0,
+      "missing": 30000,
+      "temporary_provider_failure": 0,
+      "invalid_request": 0,
+      "unverified_response": 0
+    },
+    "missing_logical_pairs": 30000,
+    "complete": false
+  },
+  "source_files": {
+    "notebooks/DhakaNest_Phase3D_Colab_OSRM.ipynb": "3ce05e44722cc930b9b442baffc2028e219580b979a27ad2777aca60e4873268",
+    "routing/osrm_colab/.gitignore": "fd98bc584b76d28f4848c9ae6f8881404a151dc4d585df0e1cf106260f8476cc",
+    "routing/osrm_colab/__init__.py": "1b36a1526cbbb9429c129dbf86ace7b5521dc469a9c75468b32bf1767157b671",
+    "routing/osrm_colab/colab_config.example.json": "0dc00ae30bc2ffe060a919b6403fb02eded94d4cce9d611526d025b5aabb1a3a",
+    "routing/osrm_colab/install_dependencies.sh": "7cd33e2f3b5aa062f028580e35e5d593e61704b1bc27615f4ede2c00586bd3a5",
+    "routing/osrm_colab/notebook.py": "c66d19febb33516682a4a3618188ab8841f92ea99c0a15930a38e2c09690b162",
+    "routing/osrm_colab/preprocess_osm.sh": "e3ab5ed3989cab0c0e18ff39f000c1f4305abae7ce69e2e60852763da6d24f1e",
+    "routing/osrm_colab/README.md": "a6214ecb34d526df5c7c987ebe2bb2dc7ab05a45ad54cc7d33f1982b7d209028",
+    "routing/osrm_colab/report.py": "7a9d3942d3018f0c91b315e6a4baba06ce774e55012950770994d4743ba7ea49",
+    "routing/osrm_colab/requirements-colab.txt": "7d3a6901baa7feaf3d2e42b3366d14aa0784b0ffd02f1c15a1435fa75c5849e7",
+    "routing/osrm_colab/setup_osrm.sh": "b0be9ee39ec180073da895cd6994d71e8bb0d5ce98396c22b84e805fe93a55df",
+    "routing/osrm_colab/start_osrm.sh": "84fe2e61972497757fc1bff7004c24bbe7d9a25dba6fd170498bd49656fd73d8",
+    "routing/osrm_colab/storage.py": "a690e92f93d9306dec1659e78c8d39f73d63bdc62ddcf754e6f41400575b2ed9",
+    "routing/osrm_colab/verify.py": "ee20b44b95dedf0e7e91d0370eda1aa8b6cbff9301759b5c82eb352fcc87c603",
+    "routing/osrm_colab/verify_osrm.py": "8c353c99ea6954c766af722044915e71e5d7a891a05c4977d616b35944b69dab",
+    "routing/osrm_colab/workflow.py": "b24349222ac7789793e0dd65c9ee571a527686c171ec76e39700ab613a320d8c",
+    "tests/test_colab_checkpointing.py": "c7d55385f9e10cc72549c2c10e1fc019f6a2658f16a72e1abc09b96c37b4ccff",
+    "tests/test_colab_routing.py": "554c6778f18cdcd19d6c5ad3414056595eab55f864298ff0504ad8294ffddcc4",
+    "tests/test_colab_setup.py": "11e80bac5f869b70b8dcda31d5009944874bf0c640262e1e0f8197e80156b00b"
+  },
+  "production_diff": "empty",
+  "git_status": "?? research/\n",
+  "database_access": false,
+  "colab_executed": false,
+  "downloads": 0,
+  "preprocessing_executed": false,
+  "live_route_requests": 0,
+  "new_measured_pairs": 0,
+  "new_verified_unreachable_pairs": 0,
+  "commute_feasible_distribution": null,
+  "final_annotation_pool_size": null,
+  "offline_routing_benchmark_ready": false,
+  "phase4_ready": false
+}
+
+Historical route evidence remains 0 valid, 0 unreachable, 30,000 missing. Final candidate distribution and pool size remain unknown. Phase 4 is not ready or authorized.

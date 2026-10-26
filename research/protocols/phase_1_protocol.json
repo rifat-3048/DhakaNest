@@ -1,0 +1,46 @@
+{
+  "experiment_id": "phase_1_research_protocol_design",
+  "purpose": "Record the frozen DhakaNest research contribution, hypotheses, comparison methods, and future experimental protocols without executing experiments.",
+  "dataset": {
+    "identifier": "phase-0-evidence-inventory-v1",
+    "path": "research/datasets/evidence_inventory.json"
+  },
+  "input_configuration": {
+    "phase": 1,
+    "mode": "protocol_design_only",
+    "experiments_executed": false,
+    "human_data_collected": false,
+    "model_training_executed": false,
+    "historical_results_modified": false
+  },
+  "random_seed": 42,
+  "versions": {
+    "manifest_schema": "1.0",
+    "research_protocols": "1.0.0",
+    "production_scoring_reference": "wsm_v4",
+    "future_evaluation_protocol": "dhakanest-recommendation-evaluation-v1"
+  },
+  "dependencies": ["python"],
+  "output_paths": [
+    "protocols/research_questions.json",
+    "protocols/hypotheses.json",
+    "protocols/baseline_specifications.json",
+    "protocols/ablation_specifications.json",
+    "protocols/evaluation_protocol.json",
+    "protocols/benchmark_requirements.json",
+    "protocols/annotation_protocol.json",
+    "protocols/statistical_analysis_plan.json",
+    "protocols/validate_protocols.py",
+    "tests/test_protocol_validation.py",
+    "results/phase_1/research_contribution.md",
+    "results/phase_1/research_questions_and_hypotheses.md",
+    "results/phase_1/experimental_design.md",
+    "results/phase_1/evaluation_and_statistics_plan.md",
+    "results/phase_1/benchmark_and_annotation_plan.md",
+    "results/phase_1/xgboost_analysis_plan.md",
+    "results/phase_1/user_study_plan.md",
+    "results/phase_1/phase_1_verification.md"
+  ],
+  "database_access": "none",
+  "execution_status": "completed_with_prespecified_unresolved_decisions"
+}

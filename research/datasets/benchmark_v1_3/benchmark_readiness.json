@@ -1,0 +1,29 @@
+{
+  "area_first_full_comparison": "not_ready",
+  "commute_constraints": "not_ready",
+  "destination_importance": "not_ready",
+  "human_annotation": "not_ready",
+  "journey_aware_baseline": "not_ready",
+  "knn_structural_candidates": "ready_with_limitations",
+  "large_parent_data_copied": false,
+  "phase4_authorized": false,
+  "profiles_modified": false,
+  "rent_fairness": "arithmetic_ready_market_validity_limited_by_synthetic_model_linked_rents",
+  "routing": {
+    "complete": false,
+    "logical_pairs": 30000,
+    "missing_logical_pairs": 30000,
+    "physical_keys": 30000,
+    "statuses": {
+      "invalid_request": 0,
+      "missing": 30000,
+      "temporary_provider_failure": 0,
+      "unreachable": 0,
+      "unverified_response": 0,
+      "valid": 0
+    }
+  },
+  "single_destination": "not_ready",
+  "status": "blocked_host_virtualization_and_engine",
+  "wsm_ranking": "not_ready_missing_routes_and_labels"
+}

@@ -1,0 +1,33 @@
+{
+  "experiment_id": "phase_0_codebase_and_evidence_audit",
+  "purpose": "Record the frozen inputs and outputs of the DhakaNest Phase 0 research audit.",
+  "dataset": {
+    "identifier": "recommendation-evaluation-v1",
+    "path": "backend/evaluation/recommendation_ground_truth.json"
+  },
+  "input_configuration": {
+    "phase": 0,
+    "mode": "read_only_audit",
+    "external_evidence": "Google Drive metadata inspected; no files imported",
+    "recommendation_evaluation_executed": false
+  },
+  "random_seed": 42,
+  "versions": {
+    "manifest_schema": "1.0",
+    "production_scoring": "wsm_v4",
+    "benchmark_dataset": "recommendation-evaluation-v1"
+  },
+  "dependencies": [
+    "python"
+  ],
+  "output_paths": [
+    "results/phase_0/codebase_audit.md",
+    "results/phase_0/evidence_inventory.md",
+    "results/phase_0/methodology_discrepancies.md",
+    "results/phase_0/research_reuse_plan.md",
+    "results/phase_0/phase_0_verification.md",
+    "datasets/evidence_inventory.json"
+  ],
+  "database_access": "none",
+  "execution_status": "completed_with_unresolved_external_reproduction"
+}

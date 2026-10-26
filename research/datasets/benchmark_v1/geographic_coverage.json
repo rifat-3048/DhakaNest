@@ -1,0 +1,45 @@
+{
+  "bounds": {
+    "latitude": [
+      23.5,
+      24.1
+    ],
+    "longitude": [
+      90.15,
+      90.65
+    ]
+  },
+  "destination_areas": {
+    "Banani": 1,
+    "Banasree": 1,
+    "Bashundhara R/A": 1,
+    "Dhanmondi": 1,
+    "Gulshan": 1,
+    "Khilgaon": 1,
+    "Lalmatia": 1,
+    "Mirpur": 1,
+    "Mohammadpur": 1,
+    "Motijheel": 1,
+    "Rampura": 1,
+    "Uttara": 1
+  },
+  "duplicate_coordinate_groups": 0,
+  "independently_verified_precise_property_geocodes": 0,
+  "limitation": "All seed locations are area anchors. Bounds pass is not independent geocode verification. No jitter added.",
+  "listing_areas": {
+    "Banani": 1,
+    "Banasree": 1,
+    "Bashundhara R/A": 1,
+    "Dhanmondi": 1,
+    "Gulshan": 1,
+    "Khilgaon": 1,
+    "Lalmatia": 1,
+    "Mirpur": 1,
+    "Mohammadpur": 1,
+    "Motijheel": 1,
+    "Rampura": 1,
+    "Uttara": 1
+  },
+  "repository_verified_anchor_count": 12,
+  "unique_property_coordinates": 12
+}

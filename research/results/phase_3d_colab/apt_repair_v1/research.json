@@ -1,0 +1,14 @@
+{
+  "command": [
+    "D:\\DhakaNest\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "research/tests"
+  ],
+  "cwd": "D:\\DhakaNest",
+  "exit_code": 0,
+  "stderr": ".........................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 233 tests in 31.090s\n\nOK\n",
+  "stdout": "{\n  \"log\": \"setup-123.log\",\n  \"sha256\": \"ea60864c1cd8ce02b9d0dba5f28962e1c32d88f33f95f4b6df3e66bd29b8e124\",\n  \"first_diagnostic\": {\n    \"line\": 1,\n    \"diagnostic\": \"x: error: first compiler failure\",\n    \"context\": [\n      \"x: error: first compiler failure\"\n    ]\n  }\n}\nCompleted run restored and verified offline; no server or HTTP request needed\n"
+}

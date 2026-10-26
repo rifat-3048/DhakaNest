@@ -1,0 +1,105 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "OSRM",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "EXTRACTOR::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-EXTRACTOR-de91ac2862a2b5776deb.json",
+					"name" : "EXTRACTOR",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "osrm::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-osrm-ad1363b03b488a156547.json",
+					"name" : "osrm",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "osrm-customize::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-osrm-customize-51d96d9721d6aeaae7aa.json",
+					"name" : "osrm-customize",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "osrm-extract::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-osrm-extract-ad93b749bfd44c6a7765.json",
+					"name" : "osrm-extract",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "osrm-partition::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-osrm-partition-a18eb05f46b70fb9edd1.json",
+					"name" : "osrm-partition",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "osrm-routed::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-osrm-routed-50ecf346b2e00a7d6dc2.json",
+					"name" : "osrm-routed",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/DhakaNest/research/routing/osrm_colab/runtime/file-api-v9-cdbc66480e6646f3940eed5071acc97c/host",
+		"source" : "D:/DhakaNest/research/routing/osrm_colab/runtime/file-api-v9-cdbc66480e6646f3940eed5071acc97c/source"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

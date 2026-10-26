@@ -1,0 +1,9 @@
+{
+  "labels": 0,
+  "missing_commute_pairs": 4800,
+  "pairs": 4800,
+  "parent_blinded_export": "research/datasets/benchmark_v1_1/annotation_blinded_export.json",
+  "parent_pool": "research/datasets/benchmark_v1_1/annotation_pool.json",
+  "phase4_ready": false,
+  "status": "provisional_parent_pool_not_finalized"
+}

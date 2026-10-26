@@ -1,0 +1,51 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-statistical-analysis-v1",
+  "output_paths": ["results/phase_8/statistics"],
+  "status": "prespecified_before_main_experiments",
+  "recommendation_analysis": {
+    "paired_unit": "tenant profile",
+    "primary_estimand": "mean paired difference in NDCG@10 between named methods",
+    "confidence_intervals": "Two-sided 95% percentile and BCa bootstrap intervals where stable, using 10000 profile-level paired resamples and recorded seed 42.",
+    "primary_test": "Paired randomization/permutation test on profile-level metric differences using exact enumeration when feasible or 10000 recorded sign permutations.",
+    "sensitivity_test": "Two-sided Wilcoxon signed-rank test when enough nonzero pairs exist; report assumptions and ties.",
+    "effect_sizes": ["mean paired metric difference", "median paired difference", "paired rank-biserial correlation"],
+    "multiplicity": "Holm family-wise adjustment within each research-question family; retain unadjusted and adjusted p-values.",
+    "alpha": 0.05,
+    "alpha_status": "Prespecified conventional decision threshold, not empirical evidence.",
+    "random_baseline": "Aggregate each profile across 1000 seeded random rankings before paired method comparison."
+  },
+  "subgroup_analysis": {
+    "predefined_groups": ["one/two/three destinations", "budget band", "Dhaka region", "property type need", "commute-limit strictness", "real versus synthetic property pool"],
+    "policy": "Report estimates and intervals even when underpowered; label post hoc groups exploratory and do not make broad generalization claims from sparse cells."
+  },
+  "robustness": {
+    "checks": ["candidate-pool resampling", "small budget perturbations", "destination-coordinate/route perturbation within declared bounds", "different random seeds", "near-duplicate exclusion", "real-only and synthetic-only analyses"],
+    "sensitivity": ["fixed-K versus returned-count precision shown only to connect historical evidence", "macro versus labeled micro aggregation", "profiles with zero relevant candidates", "route-unreachable profiles"]
+  },
+  "xgboost_analysis": {
+    "unit": "official-test property record",
+    "intervals": "Bootstrap record-level confidence intervals for aggregate and subgroup errors; preserve the untouched official-test role.",
+    "comparisons": "Use validation evidence for model selection history; official test is descriptive confirmatory evaluation, not a new tuning source.",
+    "multiplicity": "Adjust prespecified subgroup contrasts within rent, size, and geography families."
+  },
+  "user_study": {
+    "paired_unit": "participant with repeated tasks",
+    "primary_model": "Mixed-effects ordinal regression for selected-property relevance with workflow and period fixed effects and participant/task random effects when estimable.",
+    "continuous_outcomes": "Mixed-effects models or paired robust alternatives selected from prespecified diagnostics.",
+    "binary_outcomes": "Mixed-effects logistic models where estimable.",
+    "order_effects": "Include period/order and workflow-by-period sensitivity terms.",
+    "effect_sizes": ["odds ratio for ordinal primary outcome", "paired median/mean differences", "confidence intervals"],
+    "sample_size": "Determine before recruitment by simulation or power analysis using a smallest effect of practical interest chosen with domain input; no sample size is claimed in Phase 1."
+  },
+  "missing_data": {
+    "recommendations": "Do not impute absent ranks; apply metric short-list rules and report coverage.",
+    "annotations": "Do not label unjudged items as zero; report missingness and use only protocol-valid labels.",
+    "user_study": "Report attrition and reasons; define primary complete-case analysis and a justified sensitivity analysis before unblinding."
+  },
+  "reporting": {
+    "inconclusive": "Report estimate, interval, adjusted p-value, power/coverage limitations, and avoid equivalence language unless a separate equivalence margin was prospectively justified.",
+    "negative_results": "Retain and report prespecified null or adverse outcomes.",
+    "no_significance_claim": "No hypothesis is considered supported until its required data and planned analysis have been executed."
+  }
+}

@@ -1,0 +1,7 @@
+# Private bootstrap tools ONLY; never install into system or research site-packages.
+distlib==0.4.4 --hash=sha256:cf09d55b1e85a89576b036aeb71550bfd68320f3f21761ca329eadadad918638
+filelock==4.2.4 --hash=sha256:301241438c57936ef93f4243a94f2559022268bfcf9b375a9a72eb0f8db8358e
+packaging==26.3 --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
+platformdirs==4.13.5 --hash=sha256:53d3ec4280b815c1e0b02edad7f9ee8fda1ba9c0865dd9c2e6e63849ce82fc1e
+python-discovery==1.6.4 --hash=sha256:530179cc51a1816d512b15635b3dc931295ae12efb183783ad31190a5d425d2b
+virtualenv==21.14.5 --hash=sha256:b0651e0174982bba17cc6f0aaa2ef496730cb85a3f35eb5d1119d1c904f7d1da

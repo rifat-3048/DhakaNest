@@ -1,0 +1,50 @@
+{
+  "added_sources": {
+    "research/notebooks/DhakaNest_Phase3D_Colab_OSRM_v6.ipynb": "e63a70bf90187825853dc415c72beba5c31728ef2d2b10947abdb0857c4a8511",
+    "research/routing/osrm_colab/APT_REPAIR_V6.md": "09619b9dbaae82e39461720f18de830d3f9b222c333a2130154241c6a41ea699",
+    "research/routing/osrm_colab/boost_probe.cpp": "1ee4f093413d0f8e3d5b1e89fed753955086d434e2b61d3e33f70e63bd0cdfcc",
+    "research/routing/osrm_colab/build_v3.py": "13a5e6727ffa9aa583d8a7a848b3cfe8cf01089103531656a2a29d632c372891",
+    "research/routing/osrm_colab/dependencies_v3.py": "7f04032fd94141e33f1d22d04012a392b985ef80f5f66c5b72b396d724df6246",
+    "research/routing/osrm_colab/native-build-v3.json": "f986a6ad9b918230d7ce2f9711d7ed92d142f9f47c959113dc6546956bbec5f0",
+    "research/routing/osrm_colab/native_build_v3.py": "e2fc8d8eaa34636465083e417b7236ca4f16cba76ed084a96da371525cdc2398",
+    "research/routing/osrm_colab/notebook_apt.py": "128c0787104c72059ed9d853c6502ff954a65c51d6ab669bb49e0fab2c0cb45e",
+    "research/routing/osrm_colab/verify_apt_repair.py": "91d6569be9963aab9521774f0a1367f7d0f0612b128cd25049c48d725173c232",
+    "research/tests/test_colab_apt_repair.py": "9901590449bc65959546d491544a6a2af8d018d0fe74d021407c251fe12590e7"
+  },
+  "at_utc": "2026-10-25T10:38:47.753587+00:00",
+  "authorization": "Default false; no build attempted",
+  "compatibility_evidence": "Official CMake requires Boost >=1.70; full Boost 1.83 compatibility awaits actual probes/build",
+  "confirmed_failure": "APT proposed removing four existing packages to install Boost 1.74",
+  "historical": {
+    "recovery_outputs_verified": 9,
+    "sealed_phases": {
+      "historical": {
+        "historical": {
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          },
+          "phase_3b_output_hashes_verified": 52
+        },
+        "phase_3c_hashes_verified": 30
+      },
+      "phase_3d_hashes_verified": 26
+    }
+  },
+  "linux_apt_simulation_executed": false,
+  "native_build_executed": false,
+  "routing_executed": false,
+  "tests": {
+    "backend_regression": {
+      "evidence_sha256": "93b3ba5a0d3fd333e7c1dc2b872b090d583fe9c04a6fe814c475a13c4c05fa85",
+      "passed": 104
+    },
+    "research": {
+      "evidence_sha256": "cb1afb781a056d40982a70fdf51a78c1716a481c0374c08a79b720966f88a04b",
+      "passed": 233
+    }
+  },
+  "unchanged_v5_members": 460,
+  "v5_archive_sha256": "016a9a02b10d8ea99d7421469333b7c257aaf613514722da8b46654dc1a55c2f"
+}

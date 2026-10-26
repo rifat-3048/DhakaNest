@@ -1,0 +1,91 @@
+{
+  "commute_feasible": null,
+  "commute_unknown_profiles": 200,
+  "commute_verified_profiles": 0,
+  "first_exclusion_reasons": {
+    "after_area": 4980,
+    "after_bathrooms": 5700,
+    "after_bedrooms": 59656,
+    "after_budget": 109348,
+    "after_furnishing": 89536,
+    "after_must_have_amenities": 47240,
+    "after_property_type": 95876
+  },
+  "hard_count_by_family": {
+    "budget_constrained": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "family": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "flexible_budget": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "hospital_access": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "multi_worker": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "professional": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "rent_reasonableness": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "size_amenities": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "strict_commute": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    },
+    "student": {
+      "five_to_nine": 0,
+      "one_to_four": 0,
+      "ten_or_more": 20,
+      "zero": 0
+    }
+  },
+  "hard_count_max": 1512,
+  "hard_count_median": 336.5,
+  "hard_count_min": 55,
+  "hard_count_total": 87664,
+  "hard_filter": {
+    "five_to_nine": 0,
+    "one_to_four": 0,
+    "ten_or_more": 200,
+    "zero": 0
+  },
+  "knn_executed": false,
+  "pre_knn_count_status": "Unknown for missing-route profiles; hard-filter counts are not commute-feasible counts",
+  "profiles_with_ten_commute_feasible": null,
+  "sparse_profile_exclusions": {},
+  "wsm_executed": false
+}

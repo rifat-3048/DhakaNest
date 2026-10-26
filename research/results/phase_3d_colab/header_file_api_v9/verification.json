@@ -1,0 +1,131 @@
+{
+  "cases": {
+    "gcc11_branch": {
+      "compiler_version_branch_simulated": true,
+      "host_compiler_version": "8.1.0",
+      "scope_proof": {
+        "compatibility_policy_sha256": "32724ea929b53baa0edf82f3cf2542da37399b83864b4780e6396481bab951c9",
+        "compile_commands_sha256": "6da2853945b221c38fed3e3a7d62796a483ffb42d019b060f68f823d4acad972",
+        "cpp_commands_verified": 8,
+        "header_policy_sha256": "6957f03297c1ac671daacf8ea7e0318abe20467245e2162abf0352bebbe617ef",
+        "source_scopes": {
+          "src/extractor/scripting_environment_lua.cpp": [
+            {
+              "arguments": [
+                "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE",
+                "-Werror",
+                "-include",
+                "cstdint",
+                "-Wno-error=array-bounds",
+                "-o",
+                "CMakeFiles\\EXTRACTOR.dir\\src\\extractor\\scripting_environment_lua.cpp.obj",
+                "-c",
+                "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\extractor\\scripting_environment_lua.cpp"
+              ],
+              "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -Wno-error=array-bounds -o CMakeFiles\\EXTRACTOR.dir\\src\\extractor\\scripting_environment_lua.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\extractor\\scripting_environment_lua.cpp",
+              "file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\extractor\\scripting_environment_lua.cpp",
+              "output": "CMakeFiles/EXTRACTOR.dir/src/extractor/scripting_environment_lua.cpp.obj",
+              "visible_warning_exceptions": [
+                "-Wno-error=array-bounds"
+              ]
+            }
+          ],
+          "src/osrm/osrm.cpp": [
+            {
+              "arguments": [
+                "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE",
+                "-Werror",
+                "-include",
+                "cstdint",
+                "-Wno-error=free-nonheap-object",
+                "-o",
+                "CMakeFiles\\osrm.dir\\src\\osrm\\osrm.cpp.obj",
+                "-c",
+                "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\osrm\\osrm.cpp"
+              ],
+              "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -Wno-error=free-nonheap-object -o CMakeFiles\\osrm.dir\\src\\osrm\\osrm.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\osrm\\osrm.cpp",
+              "file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\osrm\\osrm.cpp",
+              "output": "CMakeFiles/osrm.dir/src/osrm/osrm.cpp.obj",
+              "visible_warning_exceptions": [
+                "-Wno-error=free-nonheap-object"
+              ]
+            }
+          ]
+        },
+        "warning_hook_sha256": "f4e7888137157456d4aec9affb576e6e9bbf7b71713e2b28932646a54e2e25b5"
+      },
+      "source_count": 12,
+      "target_closure": [
+        "EXTRACTOR",
+        "osrm",
+        "osrm-customize",
+        "osrm-extract",
+        "osrm-partition",
+        "osrm-routed"
+      ]
+    },
+    "host": {
+      "compiler_version_branch_simulated": false,
+      "host_compiler_version": "8.1.0",
+      "scope_proof": {
+        "compatibility_policy_sha256": "32724ea929b53baa0edf82f3cf2542da37399b83864b4780e6396481bab951c9",
+        "compile_commands_sha256": "2a713eda55cfe5cc85e39610c1783e5f576cd7823cde4ed45a93a452565daa41",
+        "cpp_commands_verified": 8,
+        "header_policy_sha256": "6957f03297c1ac671daacf8ea7e0318abe20467245e2162abf0352bebbe617ef",
+        "source_scopes": {
+          "src/extractor/scripting_environment_lua.cpp": [
+            {
+              "arguments": [
+                "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE",
+                "-Werror",
+                "-include",
+                "cstdint",
+                "-Wno-error=array-bounds",
+                "-o",
+                "CMakeFiles\\EXTRACTOR.dir\\src\\extractor\\scripting_environment_lua.cpp.obj",
+                "-c",
+                "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\extractor\\scripting_environment_lua.cpp"
+              ],
+              "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -Wno-error=array-bounds -o CMakeFiles\\EXTRACTOR.dir\\src\\extractor\\scripting_environment_lua.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\extractor\\scripting_environment_lua.cpp",
+              "file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\extractor\\scripting_environment_lua.cpp",
+              "output": "CMakeFiles/EXTRACTOR.dir/src/extractor/scripting_environment_lua.cpp.obj",
+              "visible_warning_exceptions": [
+                "-Wno-error=array-bounds"
+              ]
+            }
+          ],
+          "src/osrm/osrm.cpp": [
+            {
+              "arguments": [
+                "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE",
+                "-Werror",
+                "-include",
+                "cstdint",
+                "-o",
+                "CMakeFiles\\osrm.dir\\src\\osrm\\osrm.cpp.obj",
+                "-c",
+                "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\osrm\\osrm.cpp"
+              ],
+              "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\G__~1.EXE    -Werror -include cstdint -o CMakeFiles\\osrm.dir\\src\\osrm\\osrm.cpp.obj -c D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\osrm\\osrm.cpp",
+              "file": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\file-api-v9-cdbc66480e6646f3940eed5071acc97c\\source\\src\\osrm\\osrm.cpp",
+              "output": "CMakeFiles/osrm.dir/src/osrm/osrm.cpp.obj",
+              "visible_warning_exceptions": []
+            }
+          ]
+        },
+        "warning_hook_sha256": "f4e7888137157456d4aec9affb576e6e9bbf7b71713e2b28932646a54e2e25b5"
+      },
+      "source_count": 12,
+      "target_closure": [
+        "EXTRACTOR",
+        "osrm",
+        "osrm-customize",
+        "osrm-extract",
+        "osrm-partition",
+        "osrm-routed"
+      ]
+    }
+  },
+  "fixture_only": true,
+  "linux_osrm_build_executed": false
+}

@@ -1,0 +1,9 @@
+{
+  "archive": "D:\\DhakaNest\\research\\exports\\dhakanest_colab_input_v9.zip",
+  "bytes": 38501899,
+  "extracted_header_tests_exit_code": 0,
+  "extracted_member_manifest_verified": true,
+  "sha256": "2cc82bdd736f7bd7506cff5ff609d15e9ad0b4ed7213f3c5c67bb07c91bf725a",
+  "stderr": ".........................................\n----------------------------------------------------------------------\nRan 41 tests in 0.559s\n\nOK\n",
+  "stdout": "=== EXPECTED NEGATIVE PROBE: negative ===\n{\"label\": \"negative\", \"exit_code\": 1, \"expected_negative\": true, \"diagnostic_preview\": [\"missing vector\"]}\n=== PREFLIGHT REQUIRED PROBE: required ===\n{\"label\": \"required\", \"exit_code\": null, \"expected_negative\": false, \"diagnostic_preview\": []}\n"
+}

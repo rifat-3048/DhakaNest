@@ -1,0 +1,128 @@
+{
+  "dataset": {
+    "bytes": 8241,
+    "identifier": "phase-0-evidence-inventory-v1",
+    "path": "research/datasets/evidence_inventory.json",
+    "sha256": "7198586e9de7695972090c3a6f9f089e06de97ef7ea6c0d8120573973e384d99"
+  },
+  "dependencies": {
+    "python": "3.12.10"
+  },
+  "executed_at_utc": "2026-10-25T02:31:15.444639+00:00",
+  "execution_status": "completed_with_prespecified_unresolved_decisions",
+  "experiment_id": "phase_1_research_protocol_design",
+  "git_commit": "45e4d040699c86ed535fa0c8582d77829503697d",
+  "input_configuration": {
+    "experiments_executed": false,
+    "historical_results_modified": false,
+    "human_data_collected": false,
+    "mode": "protocol_design_only",
+    "model_training_executed": false,
+    "phase": 1
+  },
+  "manifest_schema_version": "1.0",
+  "outputs": [
+    {
+      "bytes": 9297,
+      "path": "protocols/research_questions.json",
+      "sha256": "effadaec0ac66f12b7e545a8b1f15a1401387502ffa6a2a26964b593c314ec72"
+    },
+    {
+      "bytes": 7924,
+      "path": "protocols/hypotheses.json",
+      "sha256": "639892c6909399fb60afe2909104e78dcfb02032f921b4db1389071d9c2e0ad1"
+    },
+    {
+      "bytes": 5934,
+      "path": "protocols/baseline_specifications.json",
+      "sha256": "840f2ab4abb4f7a555be918e807202d51a3671b01861e857b49658b1579f34d7"
+    },
+    {
+      "bytes": 5875,
+      "path": "protocols/ablation_specifications.json",
+      "sha256": "0780dd16335c61aa7d1620dae447bec89ecc665f357821aa6165ec51dedd97ab"
+    },
+    {
+      "bytes": 4654,
+      "path": "protocols/evaluation_protocol.json",
+      "sha256": "a9f169585f3fd732954fd3793a8984bbef598c4d62aebd319b4e36f7419ad0d9"
+    },
+    {
+      "bytes": 4050,
+      "path": "protocols/benchmark_requirements.json",
+      "sha256": "d3777773a50ff6b2c88db9f31baec15722bc255c68db30ae04650f0ff391f35f"
+    },
+    {
+      "bytes": 4115,
+      "path": "protocols/annotation_protocol.json",
+      "sha256": "ac297473b2fd1ad1fe1dd52817ae550609ba3a9fd0d4681aca4ff3a2975c5e4a"
+    },
+    {
+      "bytes": 4285,
+      "path": "protocols/statistical_analysis_plan.json",
+      "sha256": "d52a55ae05fd85798adedf2d0d9a4645ecb4590a2c0d33c1be089f6817c20435"
+    },
+    {
+      "bytes": 10193,
+      "path": "protocols/validate_protocols.py",
+      "sha256": "b528a950790bf69a7c815b39c3acdab01fa2cddcc90d1ce26bd76877822d6a63"
+    },
+    {
+      "bytes": 3339,
+      "path": "tests/test_protocol_validation.py",
+      "sha256": "58f97033b9ecc50d695b888d52beea58ba7e610d3242c44ed4753b4d4d5667ab"
+    },
+    {
+      "bytes": 4640,
+      "path": "results/phase_1/research_contribution.md",
+      "sha256": "0d799015e5406db59f4914599ac01f6d0b17d1a58675c4e2a0b3037a6c694fd7"
+    },
+    {
+      "bytes": 3992,
+      "path": "results/phase_1/research_questions_and_hypotheses.md",
+      "sha256": "f43535d970c2e4da44377619dc7659b562e46de8fb3d47a4fdbe383ff667a5ce"
+    },
+    {
+      "bytes": 4188,
+      "path": "results/phase_1/experimental_design.md",
+      "sha256": "fef6789bfe747c791a75220709c8c4126b0aec9afc5e825580c4516bc93cbbd5"
+    },
+    {
+      "bytes": 3902,
+      "path": "results/phase_1/evaluation_and_statistics_plan.md",
+      "sha256": "508e68b623b72c849641165299b7a2a85d5d206cb98207e113322aaded0f5e04"
+    },
+    {
+      "bytes": 4337,
+      "path": "results/phase_1/benchmark_and_annotation_plan.md",
+      "sha256": "8f55a9019a1bcce4775998275109c5aded41dc996bd764dc1ae512909b54f000"
+    },
+    {
+      "bytes": 4233,
+      "path": "results/phase_1/xgboost_analysis_plan.md",
+      "sha256": "78590adfd2117090b73c8dd3b0f1f784fd09b186257dec193b4c033bb9baf15c"
+    },
+    {
+      "bytes": 3629,
+      "path": "results/phase_1/user_study_plan.md",
+      "sha256": "291aadb928a1428a2c7e7b7b792b73bfff24b9d466e9a95031389f32bdc4d896"
+    },
+    {
+      "bytes": 2876,
+      "path": "results/phase_1/phase_1_verification.md",
+      "sha256": "ba371eb9ca447b7f5a8fae69ebce928865284042d31267379025af44a3c06f4a"
+    }
+  ],
+  "purpose": "Record the frozen DhakaNest research contribution, hypotheses, comparison methods, and future experimental protocols without executing experiments.",
+  "random_seed": 42,
+  "safety": {
+    "database_access": "none",
+    "production_writes": false
+  },
+  "versions": {
+    "future_evaluation_protocol": "dhakanest-recommendation-evaluation-v1",
+    "manifest_schema": "1.0",
+    "production_scoring_reference": "wsm_v4",
+    "research_protocols": "1.0.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "status": "reference_only_not_downloaded",
+  "provider": "Geofabrik",
+  "region": "Bangladesh",
+  "source_url": "https://download.geofabrik.de/asia/bangladesh-latest.osm.pbf",
+  "source_page": "https://download.geofabrik.de/asia/bangladesh.html",
+  "coverage_polygon_url": "https://download.geofabrik.de/asia/bangladesh.poly",
+  "provider_advertised_size_mb_on_2026_10_25": 339,
+  "provider_advertised_data_timestamp": "2026-10-24T20:20:51Z",
+  "downloaded_size_bytes": null,
+  "downloaded_sha256": null,
+  "downloaded_timestamp": null,
+  "license": "Open Database License 1.0",
+  "attribution": "OpenStreetMap contributors; extract by Geofabrik",
+  "license_reference": "https://www.openstreetmap.org/copyright",
+  "limitation": "Latest URL changes. Actual download bytes, hash, timestamp and polygon containment must be verified before preprocessing. No extract or graph has been fabricated.",
+  "download_deferred_reason": "Docker Linux engine unavailable, WSL virtualization prerequisite unmet and current free RAM below provisional resource gate"
+}

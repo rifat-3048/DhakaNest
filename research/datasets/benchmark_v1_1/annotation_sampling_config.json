@@ -1,0 +1,9 @@
+{
+  "boundary_negative_quota": 3,
+  "commute_diversity_quota": 4,
+  "random_eligible_quota": 6,
+  "seed": 42,
+  "source": "Independent strata/random/boundary pool, never KNN/WSM results",
+  "status": "provisional_until_genuine_routing_and_annotation_pilot",
+  "target_per_profile": 24
+}

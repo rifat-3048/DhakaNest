@@ -1,0 +1,17 @@
+{
+  "command": [
+    "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\cmake_scope_tools\\unpacked\\cmake\\data\\bin\\cmake.exe",
+    "-S",
+    "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\scope-v8-ce5503bf5a1c4aa8a5a2dccf267a83c2\\source",
+    "-B",
+    "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\scope-v8-ce5503bf5a1c4aa8a5a2dccf267a83c2\\gcc11_cmake_branch",
+    "-G",
+    "MinGW Makefiles",
+    "-DCMAKE_CXX_COMPILER=C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.EXE",
+    "-DCMAKE_MAKE_PROGRAM=C:\\Program Files\\CodeBlocks\\MinGW\\bin\\mingw32-make.exe",
+    "-DTEST_GCC11_BRANCH=ON"
+  ],
+  "exit_code": 0,
+  "stderr": "",
+  "stdout": "-- The CXX compiler identification is GNU 8.1.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: C:/Program Files/CodeBlocks/MinGW/bin/g++.EXE - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- DhakaNest: GCC 11 only, osrm.cpp only: keep free-nonheap-object visible but nonfatal\n-- DhakaNest: scripting_environment_lua.cpp only: array-bounds remains visible but nonfatal\n-- Configuring done (0.8s)\n-- Generating done (0.0s)\n-- Build files have been written to: D:/DhakaNest/research/routing/osrm_colab/runtime/scope-v8-ce5503bf5a1c4aa8a5a2dccf267a83c2/gcc11_cmake_branch\n"
+}

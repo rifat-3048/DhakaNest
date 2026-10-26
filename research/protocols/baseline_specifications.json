@@ -1,0 +1,100 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-baselines-v1",
+  "output_paths": ["results/phase_5/baselines"],
+  "common_rules": {
+    "candidate_universe": "One frozen property snapshot per benchmark version; every method receives the same profile-specific starting universe.",
+    "mandatory_eligibility": "Apply data validity, approved status, availability, property type, budget flexibility, bedroom, bathroom, size, furnishing, move-in, and must-have amenity rules unless a named intervention explicitly removes one.",
+    "routing": "Use the same frozen OSRM matrix whenever a method requires routes; no method may query live routing during evaluation.",
+    "top_k": [5, 10],
+    "short_output_policy": "Do not pad results. Missing ranks contribute zero gain and precision uses fixed K; report coverage and empty-result rate.",
+    "ties": "Resolve ties by stable frozen listing identifier ascending after method-specific keys.",
+    "label_blinding": true,
+    "random_seed": 42
+  },
+  "baselines": [
+    {
+      "id": "B_RANDOM",
+      "name": "Seeded random ranking",
+      "kind": "end_to_end",
+      "safety_eligibility": true,
+      "candidate_selection": "All mandatory-eligible properties; enforce commute constraints only in the route-aware random comparison stratum.",
+      "ordering": "Uniform random permutation using 1000 trials with trial seed 42 + trial_index.",
+      "top_k_policy": "Return first 10 or all available when fewer than 10.",
+      "purpose": "Estimate chance-level ranking while preserving eligibility.",
+      "notes": "Report mean and interval across trials before profile aggregation."
+    },
+    {
+      "id": "B_FILTER",
+      "name": "Conventional filtering-only",
+      "kind": "end_to_end",
+      "safety_eligibility": true,
+      "candidate_selection": "All mandatory-eligible properties without KNN or WSM.",
+      "ordering": "Published/created timestamp descending, then frozen listing identifier ascending; missing timestamps sort last.",
+      "top_k_policy": "Return first 10 or all available when fewer than 10.",
+      "purpose": "Represent a deterministic portal that filters but does not personalize ranking."
+    },
+    {
+      "id": "B_AREA_FIRST",
+      "name": "Area-first rental search",
+      "kind": "end_to_end",
+      "safety_eligibility": true,
+      "candidate_selection": "Apply mandatory eligibility, then prioritize the profile's independently declared conventional preferred micro-area, followed by its broad area, then outside-area properties.",
+      "ordering": "Area tier ascending; absolute distance from advertised rent to the profile maximum budget ascending; timestamp descending; identifier ascending.",
+      "top_k_policy": "Return first 10 or all available when fewer than 10.",
+      "purpose": "Operationalize ordinary neighborhood-first discovery without deriving the neighborhood from DhakaNest rankings or labels.",
+      "notes": "Every benchmark profile must declare an area-first neighborhood before annotation."
+    },
+    {
+      "id": "B_KNN_ONLY",
+      "name": "Content-Based KNN only",
+      "kind": "controlled_reranking",
+      "safety_eligibility": true,
+      "candidate_selection": "Apply mandatory eligibility and the common route/commute policy, then use the production content feature space and configured K=10.",
+      "ordering": "Cosine property-similarity descending, then identifier ascending.",
+      "top_k_policy": "Return the selected KNN shortlist, up to 10.",
+      "purpose": "Measure similarity ordering without WSM reranking."
+    },
+    {
+      "id": "B_WSM_ONLY",
+      "name": "WSM only without KNN shortlist",
+      "kind": "controlled_reranking",
+      "safety_eligibility": true,
+      "candidate_selection": "Apply mandatory eligibility, routing, maximum-commute constraints, and destination scoring; pass every survivor to WSM.",
+      "ordering": "WSM v4 final suitability descending, then identifier ascending.",
+      "top_k_policy": "Return top 10 WSM-ranked survivors.",
+      "purpose": "Measure WSM ranking without KNN candidate restriction."
+    },
+    {
+      "id": "B_NO_DESTINATION",
+      "name": "KNN plus WSM without destination awareness",
+      "kind": "controlled_ablation_baseline",
+      "safety_eligibility": true,
+      "candidate_selection": "Apply non-route mandatory eligibility and production KNN; do not use destination coordinates, route scores, or commute limits.",
+      "ordering": "WSM over budget, space, amenities, and rent fairness with their original priority values renormalized to sum to one; identifier breaks ties.",
+      "top_k_policy": "Return top 10.",
+      "purpose": "Provide a commute-agnostic hybrid control without granting a neutral location bonus."
+    },
+    {
+      "id": "B_NO_RENT_FAIRNESS",
+      "name": "KNN plus WSM without Rent Fairness",
+      "kind": "controlled_ablation_baseline",
+      "safety_eligibility": true,
+      "candidate_selection": "Use the same candidates and KNN shortlist as the full method.",
+      "ordering": "WSM over location, budget, space, and amenities with original priorities renormalized; identifier breaks ties.",
+      "top_k_policy": "Return top 10.",
+      "purpose": "Isolate the stored rent-reasonableness criterion."
+    },
+    {
+      "id": "B_FULL",
+      "name": "Full DhakaNest WSM v4",
+      "kind": "production_reference",
+      "safety_eligibility": true,
+      "candidate_selection": "Production hard filters, frozen OSRM commute processing and constraints, destination-access scoring, then production content KNN with configured K=10.",
+      "ordering": "Production five-criterion WSM v4, then production property-similarity and stable input-order tie handling.",
+      "top_k_policy": "Return the production KNN-limited ranked output, up to 10.",
+      "purpose": "Reference treatment representing the unchanged implemented framework.",
+      "scoring_version": "wsm_v4"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "bounds": {
+    "latitude": [
+      23.7257602,
+      23.8762989
+    ],
+    "longitude": [
+      90.362855,
+      90.4302289
+    ]
+  },
+  "context": "Full Bangladesh extract proposed for connectivity; not downloaded",
+  "coordinate_count": 2512,
+  "polygon_file_verified": false
+}

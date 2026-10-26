@@ -1,0 +1,74 @@
+{
+  "dataset": {
+    "bytes": 445,
+    "identifier": "benchmark-v1.3-blocked-historical-parent",
+    "path": "research/datasets/benchmark_v1_3/dataset_manifest.json",
+    "sha256": "71345a341e0fa844af002452ebf533e66346c28a4e6ac35b6e63802fb47a1f76"
+  },
+  "dependencies": {
+    "python": "3.12.10"
+  },
+  "executed_at_utc": "2026-10-25T05:45:32.808828+00:00",
+  "execution_status": "approved_windows_corrections_applied_pending_user_restart_and_live_verification",
+  "experiment_id": "phase_3d_recovery_2026_10_25",
+  "git_commit": "45e4d040699c86ed535fa0c8582d77829503697d",
+  "input_configuration": {
+    "administrator_changes_explicitly_approved": true,
+    "backend_tests_passed": 104,
+    "continuation_of": "phase_3d",
+    "docker_linux_engine_verified_working": false,
+    "firmware_virtualization_enabled": true,
+    "hypervisor_launch_after": "Auto",
+    "hypervisor_launch_before": "Off",
+    "new_powershell_parser_checks_passed": 2,
+    "real_route_requests": 0,
+    "research_tests_passed": 137,
+    "restart_performed": false,
+    "virtual_machine_platform_after": "EnablePending",
+    "virtual_machine_platform_before": "Disabled"
+  },
+  "manifest_schema_version": "1.0",
+  "outputs": [
+    {
+      "bytes": 1803,
+      "path": "routing/osrm_local/recovery/diagnose_windows.ps1",
+      "sha256": "e0206cfb48fd66cee9142cfc9b7b361f2c4003b280fc4a2dc6be2302a754bb8c"
+    },
+    {
+      "bytes": 2502,
+      "path": "routing/osrm_local/recovery/enable_virtualization.ps1",
+      "sha256": "6a8b8627ab1cf35563c2b2824e5d648a201abe5c0e1967e855b14bc17a10621e"
+    },
+    {
+      "bytes": 1033,
+      "path": "routing/osrm_local/recovery/administrator_diagnostics.json",
+      "sha256": "de10388ae27e1cdb3292253450b31ecd7bf3c023c01be019eaa7ad9367b2c857"
+    },
+    {
+      "bytes": 1029,
+      "path": "routing/osrm_local/recovery/approved_changes.json",
+      "sha256": "adac996c67a87e1578a117d959801a8929aa00fbb24ec09c17cc6777f1757684"
+    },
+    {
+      "bytes": 5830,
+      "path": "results/phase_3d/recovery_2026_10_25/recovery_report.md",
+      "sha256": "2fd4bd5291bca2934f35d5e882ba2f431d71ee333b9f347a6c8ac93f7b70b9f1"
+    },
+    {
+      "bytes": 1613,
+      "path": "results/phase_3d/recovery_2026_10_25/manifest_config.json",
+      "sha256": "6e924cc8b320e9f9d0eac41ef743cda3c1fabbe5b5edae867e1f6a42f60b4b3e"
+    }
+  ],
+  "purpose": "Record administrator-verified virtualization root causes, approved minimal Windows corrections and pending restart without claiming routing completion.",
+  "random_seed": 42,
+  "safety": {
+    "database_access": "none",
+    "production_writes": false
+  },
+  "versions": {
+    "knn_k": 10,
+    "recovery": "1.0.0",
+    "scoring": "wsm_v4"
+  }
+}

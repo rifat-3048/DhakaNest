@@ -1,0 +1,48 @@
+{
+  "all_passed": true,
+  "backend_tests": 104,
+  "bootstrap_tools_installed_into_private_targets": true,
+  "colab_executed": false,
+  "confirmed_cause": "User diagnostics: /usr/bin/python3 has no ensurepip; child venv pip-seeding invocation fails",
+  "historical": {
+    "recovery_outputs_verified": 9,
+    "sealed_phases": {
+      "historical": {
+        "historical": {
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          },
+          "phase_3b_output_hashes_verified": 52
+        },
+        "phase_3c_hashes_verified": 30
+      },
+      "phase_3d_hashes_verified": 26
+    }
+  },
+  "live_osrm_requests": 0,
+  "local_real_smoke": "passed on Windows CPython 3.12; missing ensurepip simulated to test actual virtualenv fallback",
+  "osm_downloads": 0,
+  "phase3d_complete": false,
+  "prior_v3_source_hashes_unchanged": true,
+  "production_diff": "empty",
+  "research_dependencies_installed_locally": false,
+  "research_lock_sha256": "19ab66d3f5b609cd1324e071d7fa8eb962d933f776574fd614b5afe8232cf435",
+  "research_skips": 0,
+  "research_tests": 191,
+  "source_files": {
+    "research/notebooks/DhakaNest_Phase3D_Colab_OSRM_v4.ipynb": "6e35231b51175efbbc7cffd14d3b45f47d2d6ffcdbf435ae383ef053f3de4130",
+    "research/routing/osrm_colab/VENV_CREATION.md": "8af542b9b282675afa9867a0640d9fb8746ce789212e12fdf0012d92d7cf6738",
+    "research/routing/osrm_colab/build_bootstrap_spec.py": "1c285976b6957712690b1e94eb7c6610f235688ae5dde619069d4460a297ae4a",
+    "research/routing/osrm_colab/notebook_venv.py": "84db0ba95ef6349b124a7640af7b8b61a487ab044b2877950f23be75000c6185",
+    "research/routing/osrm_colab/venv_setup.py": "bac0769633bcec220d09fc0426bbb29748e783c5c295dcc12bffd0284efd8895",
+    "research/routing/osrm_colab/venv_smoke.py": "952bc4b199beabbb7606ad208d680fb5042c76a11802f9af527c613f6eebcee1",
+    "research/routing/osrm_colab/virtualenv-bootstrap-v1.json": "08d545540053abe3ddf66be6eab7c43ef6fb2f8d769322b08c501c71008fde3a",
+    "research/routing/osrm_colab/virtualenv-bootstrap-v1.lock.txt": "c6e9b679df69a9539f2e42ae4c248fd367254d65eb4b52a3fa80c19e1af59e59",
+    "research/tests/test_colab_venv_creation.py": "c22fab633b5b170dc86779a9f57984579c1f53a23b14ef2943b866e5e4e8715c"
+  },
+  "status": "venv_creation_repaired_colab_execution_pending",
+  "system_packages_modified": false,
+  "v3_zip_sha256": "af83c869ca1dbe77cb6a9a824c29f5997bdc23ae066ed7250486bf9d5ee886cc"
+}

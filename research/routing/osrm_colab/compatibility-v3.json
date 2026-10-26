@@ -1,0 +1,16 @@
+{
+  "id": "osrm-5.27.1-headers-v9",
+  "commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990",
+  "pristine_suffix_sha256": "4035f945b7507677586cab639971293d34ea8f526df66dedf01ff23887af7945",
+  "corrected_suffix_sha256": "7c1dc301eaf255452ec05b994bf6026dfc61a567554d6cdb4f549a1cfe3d9203",
+  "source_policy": "Keep upstream Git checkout pristine. Build a separate copy with exactly one additional vector include in extractor/suffix_table.hpp. Verify every other source file unchanged.",
+  "forced_includes": ["cstdint"],
+  "warning_policy": "Inherit v8 exact source scopes without additional suppression",
+  "header_audit": "Lexical inventory is candidate discovery only; CMake File API identifies four-target dependency closure; bounded standalone compiler probes must pass before full compilation. No automatic additional includes.",
+  "negative_probe_policy": "Original coordinate/suffix probes may intentionally fail; corrected probes and target-header preflight are mandatory",
+  "preflight_candidate_cap": 256,
+  "preflight_time_budget_seconds": 300,
+  "reported_v8_log_sha256_not_verified_locally": "58eb2db15ade38d2ed3531bd604906f7634ae6e02626fe6dc0667fedb59e7cc9",
+  "alternative_binary_download_authorized": false,
+  "full_linux_build_executed": false
+}

@@ -1,0 +1,24 @@
+{
+  "experiment_id": "example_experiment",
+  "purpose": "Describe one reproducible research question.",
+  "dataset": {
+    "identifier": "explicit-dataset-version",
+    "path": "path/from/repository/root.json"
+  },
+  "input_configuration": {
+    "method": "explicit configuration values belong here"
+  },
+  "random_seed": 42,
+  "versions": {
+    "algorithm": "algorithm_version",
+    "scoring": "scoring_version"
+  },
+  "dependencies": [
+    "python"
+  ],
+  "output_paths": [
+    "results/example/output.json"
+  ],
+  "database_access": "none",
+  "execution_status": "completed"
+}

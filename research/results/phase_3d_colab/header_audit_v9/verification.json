@@ -1,0 +1,20 @@
+{
+  "candidate_headers": 188,
+  "corrected_suffix_sha256": "7c1dc301eaf255452ec05b994bf6026dfc61a567554d6cdb4f549a1cfe3d9203",
+  "disposable_source_path": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\build_source",
+  "focused_negative_failed_and_corrected_passed": true,
+  "full_header_host_probe_passed": false,
+  "full_linux_compilation_executed": false,
+  "git_archive_sha256": "25aa41a2dede8e10f6ec438d07875aadc340741a86ddaf7388ab2abd6188d191",
+  "host_compiler": "g++.EXE (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0\nCopyright (C) 2018 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "inventory_is_not_verified_defect_count": true,
+  "omitted_nonregular_archive_members": [
+    "example/cmake/FindTBB.cmake",
+    "third_party/flatbuffers/docs/source/CONTRIBUTING.md"
+  ],
+  "original_suffix_sha256": "4035f945b7507677586cab639971293d34ea8f526df66dedf01ff23887af7945",
+  "patch_sha256": "01516e0aeeaf0aae873ecdecfc98dbdfd7dabbaf8c2dc567010c44f9374f741c",
+  "pristine_path": "D:\\DhakaNest\\research\\routing\\osrm_colab\\runtime\\header-audit-v9-be9eb38b4f63448898d9feff698e0a2d\\pristine",
+  "routing_executed": false,
+  "source_commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "osrm-5.27.1-cstdint-v1",
+  "osrm_version": "5.27.1",
+  "commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990",
+  "cxx_flags": ["-fdiagnostics-color=never", "-include", "cstdint"],
+  "source_policy": "Pristine official build checkout; test one-line explicit cstdint include only in disposable probe copy",
+  "boost_policy": "Retain v6 additive-only APT strategy and existing Boost",
+  "warning_overrides": [{"compiler": "GNU 11", "source": "src/osrm/osrm.cpp", "flag": "-Wno-error=free-nonheap-object", "evidence": "User-provided v6 log line 11834: GCC 11 allocator diagnostic in Mapbox variant destruction in OSRM::Route"}],
+  "warning_policy": "Keep upstream warnings and Werror; only the identified GCC 11 category in osrm.cpp may remain a visible warning. No global demotion or disabled diagnostic. False-positive classification remains unverified without Linux reproduction.",
+  "original_coordinate_header_sha256": "3effbc646484885e53150589c3287852c3133a85fe258de4035eddf08c9c4361",
+  "original_warning_configuration_sha256": "76719432644394a2f879beb20338192909ed0d051008a61cd633f8e3d4eab79b",
+  "compiler_policy": "Existing GNU >=11 then an already installed GCC 11; corrected probes required; no automatic compiler installation",
+  "local_linux_validation": "Not executed: installed Ubuntu WSL cannot start (HCS_E_SERVICE_NOT_AVAILABLE)",
+  "original_log_sha256_user_reported": "4871e777c71a3df501917dbaa23f0f333dd8775007d0a738226a51744424a3cd"
+}

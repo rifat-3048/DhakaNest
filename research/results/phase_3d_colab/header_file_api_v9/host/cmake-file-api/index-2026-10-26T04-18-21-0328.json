@@ -1,0 +1,51 @@
+{
+	"cmake" : 
+	{
+		"generator" : 
+		{
+			"multiConfig" : false,
+			"name" : "MinGW Makefiles"
+		},
+		"paths" : 
+		{
+			"cmake" : "D:/DhakaNest/research/routing/osrm_colab/runtime/cmake_scope_tools/unpacked/cmake/data/bin/cmake.exe",
+			"cpack" : "D:/DhakaNest/research/routing/osrm_colab/runtime/cmake_scope_tools/unpacked/cmake/data/bin/cpack.exe",
+			"ctest" : "D:/DhakaNest/research/routing/osrm_colab/runtime/cmake_scope_tools/unpacked/cmake/data/bin/ctest.exe",
+			"root" : "D:/DhakaNest/research/routing/osrm_colab/runtime/cmake_scope_tools/unpacked/cmake/data/share/cmake-3.31"
+		},
+		"version" : 
+		{
+			"isDirty" : false,
+			"major" : 3,
+			"minor" : 31,
+			"patch" : 10,
+			"string" : "3.31.10",
+			"suffix" : ""
+		}
+	},
+	"objects" : 
+	[
+		{
+			"jsonFile" : "codemodel-v2-a21b93fc2634bb61316e.json",
+			"kind" : "codemodel",
+			"version" : 
+			{
+				"major" : 2,
+				"minor" : 7
+			}
+		}
+	],
+	"reply" : 
+	{
+		"codemodel-v2" : 
+		{
+			"jsonFile" : "codemodel-v2-a21b93fc2634bb61316e.json",
+			"kind" : "codemodel",
+			"version" : 
+			{
+				"major" : 2,
+				"minor" : 7
+			}
+		}
+	}
+}

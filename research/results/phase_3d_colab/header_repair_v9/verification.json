@@ -1,0 +1,65 @@
+{
+  "actual_host_file_api_and_scope_checks_passed": true,
+  "actual_host_scope_evidence_sha256": "33022b942a7cbc904419088e553a2d31453979d324776f9deff8cd82a4e59b6c",
+  "added_sources": {
+    "research/notebooks/DhakaNest_Phase3D_Colab_OSRM_v9.ipynb": "a8af04e1de5190e73ad421b7d180a8e6a7d3641c7fd96d8788e1462d42971907",
+    "research/routing/osrm_colab/HEADERS_V9.md": "e820cd8161033260a9e3ab7d9b127b54f5cdd0bdc511a8d6ce9bb3f23b624232",
+    "research/routing/osrm_colab/build_v6.py": "8189a450a2ba65b8610a2c3d1ee70daa1401841c0239c442192a199723c6b3b1",
+    "research/routing/osrm_colab/compatibility-v3.json": "6957f03297c1ac671daacf8ea7e0318abe20467245e2162abf0352bebbe617ef",
+    "research/routing/osrm_colab/compatibility_v3.py": "4483a4bbac3663166aa956c021eb6e7d72113bad47991cf73c314290de93e433",
+    "research/routing/osrm_colab/file_api_smoke_v9.py": "3980322e92961fdb64800d3818df2caca8739bb760794ed396682cf20f0f3ac7",
+    "research/routing/osrm_colab/headers_v9.py": "3d6e19d2449407ba7e0b3b8d8367dc5458dfa4c86c9b5ebcdf4cd9698ec04e07",
+    "research/routing/osrm_colab/local_header_audit_v9.py": "901f75b5caceb95aec6608c10ce6c788d2087f1ebaf5c43b083fe06e9579666e",
+    "research/routing/osrm_colab/native_build_v6.py": "83604200ed23c91a0abd08846b88e4a074f57d11f8cefda8af0167c300e170b4",
+    "research/routing/osrm_colab/notebook_headers.py": "c0782b65190b8dc70467ea4cb3c7ab0b877634591c94a0193a65ea689be393fa",
+    "research/routing/osrm_colab/prebuilt-v9.json": "1c533b8481e31822aa8472ef451f3c9e294079091ff6c809c39fea41902cfb4f",
+    "research/routing/osrm_colab/verify_headers_v9.py": "5631a80d6ae58c9f530accbf71810e700017e22f4f16634a9fb247bc3922210f",
+    "research/tests/fixtures/headers_v9/LICENSE.osrm": "8e739b347faa1d1573d2a172a4292875a5f350502bdaf1e5eddf95e420daecc5",
+    "research/tests/fixtures/headers_v9/suffix_table.hpp": "4035f945b7507677586cab639971293d34ea8f526df66dedf01ff23887af7945",
+    "research/tests/test_colab_headers_v9.py": "94f0cbc8d1ead8211eceef18c9e0db333ea535da83a5ab09b224a303e02714f7"
+  },
+  "alternative_binary_downloaded_or_selected": false,
+  "at_utc": "2026-10-26T04:23:17.082241+00:00",
+  "candidate_headers_not_verified_defects": 188,
+  "corrected_suffix_sha256": "7c1dc301eaf255452ec05b994bf6026dfc61a567554d6cdb4f549a1cfe3d9203",
+  "full_colab_header_preflight_executed": false,
+  "full_host_header_probe_passed": false,
+  "historical": {
+    "recovery_outputs_verified": 9,
+    "sealed_phases": {
+      "historical": {
+        "historical": {
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          },
+          "phase_3b_output_hashes_verified": 52
+        },
+        "phase_3c_hashes_verified": 30
+      },
+      "phase_3d_hashes_verified": 26
+    }
+  },
+  "host_full_header_probe_blocker": "Boost headers absent in Windows MinGW; not treated as pass",
+  "isolated_focused_reproduction_passed": true,
+  "linux_compilation_executed": false,
+  "original_suffix_sha256": "4035f945b7507677586cab639971293d34ea8f526df66dedf01ff23887af7945",
+  "patch_sha256": "01516e0aeeaf0aae873ecdecfc98dbdfd7dabbaf8c2dc567010c44f9374f741c",
+  "policy_sha256": "6957f03297c1ac671daacf8ea7e0318abe20467245e2162abf0352bebbe617ef",
+  "prebuilt_review_sha256": "1c533b8481e31822aa8472ef451f3c9e294079091ff6c809c39fea41902cfb4f",
+  "routing_executed": false,
+  "source_commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990",
+  "tests": {
+    "backend_regression": {
+      "evidence_sha256": "ca0a79bac82e03b2a57f4ab2e30e836fc855e494a0e8632cc3a035f4acf9279b",
+      "passed": 104
+    },
+    "research": {
+      "evidence_sha256": "620f3c80c6ee3693078597de57b2a7ccca8ec749cf8752fe021f22452913a397",
+      "passed": 319
+    }
+  },
+  "unchanged_v8_members": 520,
+  "v8_archive_sha256": "1d68b7dac19adbd730a94dcdee79d4ee4cd16310e8b5b7b8b9de027f661547b1"
+}

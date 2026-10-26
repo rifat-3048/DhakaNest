@@ -1,0 +1,50 @@
+{
+  "dataset_id": "dhakanest-benchmark-v1",
+  "effective_protocol": "1.1.0-phase3",
+  "execution": {
+    "database_access": "none",
+    "external_requests": 0,
+    "labels": 0,
+    "predictions": 0,
+    "rankings": 0
+  },
+  "files": {
+    "annotation_blinded_export.json": "f809bbc513928544f84876b7bd8d08839504769d293389ac9f663b177efc7b9f",
+    "annotation_pool.json": "9f4fb38e6b99d47e430c5536e9a26d831933c138be2f140b70212e8b30f4f8a3",
+    "candidate_universes.json": "f974183d38b0e013dd168475aefb24eb1a92de0462287e5e58877dbd24e57597",
+    "coverage_report.json": "53d7a1e9cf403c8309586bfa06eb667cf6a354a4a45bbbef938b16374060cec5",
+    "destinations.json": "e567496178b41bb9f5efca0860b5cd23c76e9bd33a9363896a55e9d4081bfd12",
+    "geographic_coverage.json": "0d911fa12f41752704046b960619fb442cc9849e29705cbc1f85abaf6c4dc9e4",
+    "profile_splits.json": "436db467c704f0d605af162057cc8a240888c457f0d4e3864dc48a0cd2d67aac",
+    "properties.json": "38db61dc2a25ea4263f2926d426026b8e34ff4895d32fc9ee6aaedcaf6f64526",
+    "property_validation.json": "480ebcfd2694a74ec4455eb40c81a48385c1d3eff5fce15a6bbec9c0d5c50ec3",
+    "routes.jsonl": "d6c2b50cd52984c0aae7a63dbcf01c2a9af1ebda7394b4c1157ec20075e01c1a",
+    "routing_matrix_metadata.json": "a99c3ea172b0060926270bfbf093a8e2a1d61db717c195d489eb46bceb469cca",
+    "routing_matrix_validation.json": "6117487b23c2c232dfd8da30d3237e827d0ae10bd464f090ba0ccf6a8133021c",
+    "tenant_profile_coverage.json": "6b1a7629eb9d7238d12304eb92c2e9dc2a7c89ff82806d7f73e3bdf143d84edb",
+    "tenant_profile_generation_config.json": "3bdd84b4f5d1ccdc7fd36bac4dc7305e1dfe9a0751c3dea7f825f65c95bcd0e0",
+    "tenant_profiles.json": "6adf378fd5174e27bc5ef0a8b567c469d879ef8905e81d08ba53cfe1a057b1b8"
+  },
+  "random_seed": 42,
+  "schema_version": "1.0.0",
+  "scoring_reference": "wsm_v4",
+  "source_files": {
+    "backend/app/config.py": "08e120730a84b75a40f38f09b688475d3b8323c57f5647b7e8756c7d65b31410",
+    "backend/app/evaluation/recommendation_evaluator.py": "7961f7ce196f718b7aeec9afe97b34a9ae95315b33527f0a32aab43ea7e6e8e8",
+    "backend/app/schemas/listing_schema.py": "f3e2712588eb98bf98a098bf5569a427ab482b85bad1df285d94ab9dcfdae7c2",
+    "backend/app/schemas/recommendation_schema.py": "642550ca66921d6b43f51d0cc2c2b4ee9fa8aa4825ece1d726da99681955f7d8",
+    "backend/app/services/academic_inventory_service.py": "40705f17d9e5e3e6130d2914602288e6de35ff7a99e06754f705f9e2b08310ae",
+    "backend/app/services/listing_eligibility.py": "4c2924ff6dd3eddb9dbc80639779b435ff753107b156aa0e731dd427b595708c",
+    "backend/app/services/property_knn_service.py": "32d65fcf10605534472805abb72136ac4f0d8426e06e134e7da5193d5bf46c8e",
+    "backend/app/services/recommendation_service.py": "ede6f566808a7e04ead6622d220bc388bc950cebf68504af4c9f81327c87062d",
+    "backend/app/services/rent_fairness_service.py": "db3f316ab4b979aa79dac5245cf5011e172d94fe1b9550fa96fd2936cc1a3d98",
+    "backend/app/services/routing_infrastructure.py": "0b9d99f0f375f3e00d63ffc9cdc78aada3e56196fc29d0744bfff195a293190f",
+    "backend/app/services/routing_service.py": "7219766c4d04db59275ea7b1dbeff2f9e4b75e963e33b476148f40a58684e5d1",
+    "backend/app/services/wsm_service.py": "3ec00ffe40b2306763fab63b5aab47a87573dbf70426ff9a944d2397e2599df4",
+    "backend/data/academic_inventory_coverage.json": "b35d2e7408927d7701815758b3db73c6d3e53601b644cef2c213fa16c863e600",
+    "backend/scripts/seed_recommendation_listings.py": "2187fc67b28ed449cf35b658557bfadec6923b112a17fa13791275a0bbab54c9",
+    "research/protocols/amendments/phase_3_prebenchmark_amendment.json": "29b5e47c060ca69601075e9bacf44ec4ab6c9c9a450d216b6592a3247e98fa52",
+    "research/protocols/benchmark_requirements.json": "d3777773a50ff6b2c88db9f31baec15722bc255c68db30ae04650f0ff391f35f"
+  },
+  "status": "partially_complete"
+}

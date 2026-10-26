@@ -1,0 +1,158 @@
+[
+  {
+    "broad_area": "Mirpur",
+    "destination": "Mirpur / Pallabi area anchor",
+    "id": "destination-01",
+    "latitude": 23.8248253,
+    "longitude": 90.3675809,
+    "model_micro_area": "Pallabi",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Dhanmondi",
+    "destination": "Dhanmondi / Dhanmondi area anchor",
+    "id": "destination-02",
+    "latitude": 23.744561,
+    "longitude": 90.3731398,
+    "model_micro_area": "Dhanmondi",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Mohammadpur",
+    "destination": "Mohammadpur / Tajmahal Road area anchor",
+    "id": "destination-03",
+    "latitude": 23.7655571,
+    "longitude": 90.3643427,
+    "model_micro_area": "Tajmahal Road",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Uttara",
+    "destination": "Uttara / Sector 7 area anchor",
+    "id": "destination-04",
+    "latitude": 23.8747993,
+    "longitude": 90.396733,
+    "model_micro_area": "Sector 7",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Banasree",
+    "destination": "Banasree / Block D area anchor",
+    "id": "destination-05",
+    "latitude": 23.7586297,
+    "longitude": 90.4287494,
+    "model_micro_area": "Block D",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Bashundhara R/A",
+    "destination": "Bashundhara R/A / Block C area anchor",
+    "id": "destination-06",
+    "latitude": 23.8220479,
+    "longitude": 90.4274078,
+    "model_micro_area": "Block C",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Banani",
+    "destination": "Banani / Banani area anchor",
+    "id": "destination-07",
+    "latitude": 23.7911603,
+    "longitude": 90.4013777,
+    "model_micro_area": "Banani",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Gulshan",
+    "destination": "Gulshan / Gulshan 2 area anchor",
+    "id": "destination-08",
+    "latitude": 23.7947191,
+    "longitude": 90.4136986,
+    "model_micro_area": "Gulshan 2",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Rampura",
+    "destination": "Rampura / East Rampura area anchor",
+    "id": "destination-09",
+    "latitude": 23.765714,
+    "longitude": 90.4230068,
+    "model_micro_area": "East Rampura",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Khilgaon",
+    "destination": "Khilgaon / Tilpapara area anchor",
+    "id": "destination-10",
+    "latitude": 23.7479161,
+    "longitude": 90.4269893,
+    "model_micro_area": "Tilpapara",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Motijheel",
+    "destination": "Motijheel / Naya Paltan area anchor",
+    "id": "destination-11",
+    "latitude": 23.7272598,
+    "longitude": 90.4211957,
+    "model_micro_area": "Naya Paltan",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  },
+  {
+    "broad_area": "Lalmatia",
+    "destination": "Lalmatia / Lalmatia area anchor",
+    "id": "destination-12",
+    "latitude": 23.7567008,
+    "longitude": 90.3691554,
+    "model_micro_area": "Lalmatia",
+    "provenance": {
+      "coordinate_precision": "area_anchor_not_verified_institution",
+      "coordinate_source": "Repository seed: OSM Nominatim, claimed verified 2026-08-26; not independently reverified",
+      "source_reference": "backend/scripts/seed_recommendation_listings.py"
+    }
+  }
+]

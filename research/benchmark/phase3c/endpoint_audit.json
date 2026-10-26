@@ -1,0 +1,28 @@
+{
+  "checked_date": "2026-10-25",
+  "configured_endpoint": "https://router.project-osrm.org",
+  "configuration_source": "Application default; no ROUTING_BASE_URL override in current process/backend .env",
+  "operator": "FOSSGIS, according to OSRM wiki and operator about page",
+  "endpoint_type": "public_demonstration_service",
+  "documented_max_requests_per_second": 1,
+  "usage_summary": "Operator disallows scraping/heavy usage; one-per-second is not explicit permission for this matrix capture.",
+  "workload_explicitly_approved": false,
+  "operator_workload_permission_verified": false,
+  "table_api": "OSRM documents Table with explicit sources/destinations and duration,distance annotations; this endpoint's current Table deployment was not probed",
+  "deployed_coordinate_limit": "unknown_not_operator_verified",
+  "deployed_matrix_cell_limit": "unknown_not_operator_verified",
+  "road_network": "OpenStreetMap, according to operator",
+  "profile": "driving; actual deployment profile differs from generic stock profiles as documented by operator",
+  "operator_advertised_engine": "v5.27.1 on about page; not verified through a current route response",
+  "captured_engine_version": "unknown",
+  "captured_extract_version": "unknown",
+  "traffic_model": "unknown; no observed or traffic-aware commute measurements established",
+  "live_route_requests_executed": 0,
+  "decision": "Do not acquire from this endpoint without explicit operator and user approval plus verified batching limits. Prefer an already authorized controlled/local instance; none established.",
+  "sources": [
+    {"url": "https://github.com/Project-OSRM/osrm-backend/wiki/Demo-server", "access": "read", "supports": "public demo identity, sponsor and one-per-second guidance"},
+    {"url": "https://routing.openstreetmap.de/about.html", "access": "read", "supports": "operator identity, no scraping/heavy usage, rate, advertised engine and OSM provenance"},
+    {"url": "https://www.fossgis.de/arbeitsgruppen/osm-server/nutzungsbedingungen/", "access": "access_denied", "supports": "No full-policy verification claimed"},
+    {"url": "https://project-osrm.org/docs/v26.4.0/http", "access": "read", "supports": "Table units/parameters, longitude-first coordinates, null cells and optional data_version"}
+  ]
+}

@@ -1,0 +1,3 @@
+# Commute Candidate Coverage
+
+NOT EXECUTED in Colab. No runtime, OSM download, preprocessing, smoke or routing evidence was generated on Windows.

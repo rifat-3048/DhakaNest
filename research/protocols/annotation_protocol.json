@@ -1,0 +1,42 @@
+{
+  "protocol_version": "1.0.0",
+  "protocol_id": "dhakanest-independent-annotation-v1",
+  "output_paths": ["annotation/benchmark_v1", "results/phase_4/annotation"],
+  "status": "planned_no_human_data",
+  "annotator_eligibility": {
+    "minimum": ["adult", "able to understand the profile language", "familiar with renting or housing decisions in Dhaka"],
+    "disclose": ["real-estate professional status", "relationship to DhakaNest", "prior participation in profile construction"],
+    "exclusions": ["author of the profile being judged", "access to hidden system ranking or score outputs"]
+  },
+  "minimum_independent_annotators_per_judgment": 3,
+  "displayed_information": {
+    "tenant_profile": ["budget and flexibility", "household/property requirements", "one to three destinations", "destination importance", "commute limits", "amenity preferences"],
+    "property": ["rent", "type", "bedrooms", "bathrooms", "size", "furnishing", "amenities", "availability", "map-neutral area label", "frozen route time/distance to each destination", "stored rent-assessment facts without WSM score"],
+    "hidden": ["method identity", "rank", "KNN similarity", "WSM criterion scores", "final suitability", "recommendation explanations", "other annotators' labels"]
+  },
+  "relevance_scale": [
+    {"value": 0, "label": "not_relevant", "rule": "Violates an expressed mandatory need or is clearly unsuitable overall.", "example": "Exceeds a no-flexibility budget or misses a required bedroom/commute constraint."},
+    {"value": 1, "label": "marginal", "rule": "Technically possible but requires substantial compromises on important preferences.", "example": "Meets mandatory needs but has poor access to high-priority destinations and few desired amenities."},
+    {"value": 2, "label": "relevant", "rule": "Suitable with acceptable compromises and no hidden mandatory violation.", "example": "Meets housing needs and commute limits, with a moderate tradeoff in size or amenities."},
+    {"value": 3, "label": "highly_relevant", "rule": "Strongly satisfies the profile across its most important needs with only minor compromises.", "example": "Meets mandatory requirements and provides strong access, affordability, space, and preferred features."}
+  ],
+  "presentation": {
+    "affordability": "Show advertised rent against maximum budget. Show estimated travel and total monthly spend separately and label them estimates, not WSM Budget Suitability.",
+    "commute": "Show frozen road-network time and distance for each destination plus the profile limit; do not show a location score.",
+    "randomization": "Randomize property order independently per annotator and profile using recorded seeds.",
+    "independence": "No discussion or shared labels until initial judgments are locked."
+  },
+  "quality_control": {
+    "training": "Use a written guide and practice items with explanations; practice labels are excluded from the benchmark.",
+    "checks": ["attention checks", "repeated-item consistency subset", "completion-time flags", "mandatory-constraint comprehension checks"],
+    "exclusion": "Apply prespecified quality rules at annotator-session level before agreement or consensus calculations; retain an audit record.",
+    "agreement": ["quadratic-weighted pairwise Cohen kappa when exactly two raters are compared", "ordinal Krippendorff alpha as the primary multi-rater agreement measure"]
+  },
+  "label_derivation": {
+    "initial_label": "Median of at least three valid independent ordinal ratings.",
+    "adjudication_trigger": "Rating range of at least two levels, no stable median due to missing ratings, or a documented mandatory-rule disagreement.",
+    "adjudication": "A blinded senior annotator reviews the profile, property, and written rationales without seeing system outputs; preserve original ratings and adjudicated decision.",
+    "missing_labels": "Remain unjudged; never convert to relevance zero."
+  },
+  "ethics": "Obtain institutional approval where required, informed consent, data minimization, withdrawal procedures, access control, and a retention policy before collection."
+}

@@ -1,0 +1,214 @@
+{
+  "backend_log": "........................................................................................................\n----------------------------------------------------------------------\nRan 104 tests in 1.019s\n\nOK\n",
+  "backend_passed": true,
+  "backend_tests": 104,
+  "compilation": "pass",
+  "dataset_validation": {
+    "active_properties": 2500,
+    "annotation": {
+      "annotation_ready": false,
+      "blinding_valid": true,
+      "commute_incomplete_pairs": 4800,
+      "judgments_at_three_raters": 14400,
+      "labels_created": 0,
+      "minimum_human_judgments_at_three_raters": 14400,
+      "pairs": 4800,
+      "per_profile_distribution": {
+        "24": 200
+      },
+      "person_hours_at_one_to_three_minutes_assumption": [
+        240.0,
+        720.0
+      ],
+      "pilot_measured": false,
+      "routing_ready": false,
+      "sampling_source_counts": {
+        "hard_filter_boundary_negative:after_area": 16,
+        "hard_filter_boundary_negative:after_bathrooms": 4,
+        "hard_filter_boundary_negative:after_bedrooms": 8,
+        "hard_filter_boundary_negative:after_budget": 76,
+        "hard_filter_boundary_negative:after_furnishing": 224,
+        "hard_filter_boundary_negative:after_must_have_amenities": 116,
+        "hard_filter_boundary_negative:after_property_type": 156,
+        "random_eligible_fill": 4200,
+        "random_hard_eligible": 1200,
+        "rent_boundary_eligible": 400,
+        "stratum:broad_area:Banani": 186,
+        "stratum:broad_area:Banasree": 195,
+        "stratum:broad_area:Bashundhara R/A": 193,
+        "stratum:broad_area:Dhanmondi": 186,
+        "stratum:broad_area:Gulshan": 189,
+        "stratum:broad_area:Khilgaon": 193,
+        "stratum:broad_area:Lalmatia": 191,
+        "stratum:broad_area:Mirpur": 195,
+        "stratum:broad_area:Mohammadpur": 195,
+        "stratum:broad_area:Motijheel": 191,
+        "stratum:broad_area:Rampura": 194,
+        "stratum:broad_area:Uttara": 192,
+        "stratum:property_type:apartment": 180,
+        "stratum:property_type:house": 100,
+        "stratum:property_type:room": 60,
+        "stratum:property_type:sublet": 120,
+        "stratum:rent_band:0": 120,
+        "stratum:rent_band:1": 200,
+        "stratum:rent_band:2": 180,
+        "stratum:rent_band:3": 160,
+        "stratum:rent_band:4": 136,
+        "stratum:rent_band:5": 80,
+        "stratum:rent_band:6": 48,
+        "stratum:rent_band:7": 28,
+        "stratum:rent_band:8": 12,
+        "stratum:structural:1beds:0size": 66,
+        "stratum:structural:1beds:1size": 80,
+        "stratum:structural:2beds:0size": 56,
+        "stratum:structural:2beds:1size": 140,
+        "stratum:structural:2beds:2size": 121,
+        "stratum:structural:3beds:1size": 82,
+        "stratum:structural:3beds:2size": 193,
+        "stratum:structural:3beds:3size": 145,
+        "stratum:structural:4beds:2size": 135,
+        "stratum:structural:4beds:3size": 155,
+        "stratum:structural:4beds:4size": 105,
+        "stratum:structural:5beds:3size": 114,
+        "stratum:structural:5beds:4size": 142,
+        "stratum:structural:5beds:5size": 56,
+        "stratum:structural:6beds:4size": 27,
+        "stratum:structural:6beds:5size": 90,
+        "stratum:structural:6beds:6size": 8
+      }
+    },
+    "assessments": {
+      "circularity_warning": "Synthetic asking rents are rounded model predictions times fixed multipliers. Rent Fairness is internally consistent, not independent market-fairness validation.",
+      "fixture_expected_rents_used": 0,
+      "missing": 0,
+      "model_route_counts": {
+        "primary": 2600
+      },
+      "prediction_replay_executed": true,
+      "verified": 2600
+    },
+    "candidates": {
+      "commute_feasible": null,
+      "commute_unknown_profiles": 200,
+      "commute_verified_profiles": 0,
+      "first_exclusion_reasons": {
+        "after_area": 4980,
+        "after_bathrooms": 5700,
+        "after_bedrooms": 59656,
+        "after_budget": 109348,
+        "after_furnishing": 89536,
+        "after_must_have_amenities": 47240,
+        "after_property_type": 95876
+      },
+      "hard_count_by_family": {
+        "budget_constrained": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "family": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "flexible_budget": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "hospital_access": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "multi_worker": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "professional": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "rent_reasonableness": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "size_amenities": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "strict_commute": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        },
+        "student": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 20,
+          "zero": 0
+        }
+      },
+      "hard_count_max": 1512,
+      "hard_count_median": 336.5,
+      "hard_count_min": 55,
+      "hard_count_total": 87664,
+      "hard_filter": {
+        "five_to_nine": 0,
+        "one_to_four": 0,
+        "ten_or_more": 200,
+        "zero": 0
+      },
+      "knn_executed": false,
+      "pre_knn_count_status": "Unknown for missing-route profiles; hard-filter counts are not commute-feasible counts",
+      "profiles_with_ten_commute_feasible": null,
+      "sparse_profile_exclusions": {},
+      "wsm_executed": false
+    },
+    "final_ranking_executed": false,
+    "historical": {
+      "manifest_revision": 2,
+      "phase_3_output_hashes_verified": 51,
+      "prior_output_hashes_verified": 44
+    },
+    "integrity": "pass",
+    "lifecycle_properties": 100,
+    "profile_count": 200,
+    "routing": {
+      "complete": false,
+      "expected_pairs": 30000,
+      "missing_pairs": 30000,
+      "recorded_pairs": 30000,
+      "statuses": {
+        "error": 0,
+        "missing": 30000,
+        "unreachable": 0,
+        "valid": 0
+      },
+      "unaccounted_pairs": 0
+    },
+    "status": "partial"
+  },
+  "external_requests": 0,
+  "final_ranking_benchmark_executed": false,
+  "full_inventory_deterministic_reconstruction": "identical active and lifecycle records",
+  "production_database_access": "none",
+  "research_log": ".................................................................................................\n----------------------------------------------------------------------\nRan 97 tests in 6.366s\n\nOK\n",
+  "research_passed": true,
+  "research_skipped": 0,
+  "research_tests": 97,
+  "tracked_diff": "empty"
+}

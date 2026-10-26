@@ -1,0 +1,32 @@
+{
+  "dependency_closure": "passed",
+  "pip_resolver_host": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.12.10",
+    "os_name": "nt",
+    "platform_machine": "AMD64",
+    "platform_python_implementation": "CPython",
+    "platform_release": "11",
+    "platform_system": "Windows",
+    "platform_version": "10.0.26100",
+    "python_full_version": "3.12.10",
+    "python_version": "3.12",
+    "sys_platform": "win32"
+  },
+  "resolved_packages": 33,
+  "runtime_imports_executed": false,
+  "target": {
+    "extra": "",
+    "implementation_name": "cpython",
+    "implementation_version": "3.13.16",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_python_implementation": "CPython",
+    "platform_release": "",
+    "platform_system": "Linux",
+    "platform_version": "",
+    "python_full_version": "3.13.16",
+    "python_version": "3.13",
+    "sys_platform": "linux"
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "all": {
+    "commute_feasible": {
+      "bins": null,
+      "known_profiles": 0,
+      "known_subset_bins": {
+        "five_to_nine": 0,
+        "one_to_four": 0,
+        "ten_or_more": 0,
+        "zero": 0
+      },
+      "maximum": null,
+      "median": null,
+      "minimum": null,
+      "profiles": 200,
+      "unknown_profiles": 200
+    },
+    "hard_filter": {
+      "bins": {
+        "five_to_nine": 0,
+        "one_to_four": 0,
+        "ten_or_more": 200,
+        "zero": 0
+      },
+      "known_profiles": 200,
+      "known_subset_bins": {
+        "five_to_nine": 0,
+        "one_to_four": 0,
+        "ten_or_more": 200,
+        "zero": 0
+      },
+      "maximum": 1512,
+      "median": 336.5,
+      "minimum": 55,
+      "profiles": 200,
+      "unknown_profiles": 0
+    }
+  },
+  "commute_requirement": {
+    "flexible_or_unspecified": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 148,
+        "unknown_profiles": 148
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 148,
+          "zero": 0
+        },
+        "known_profiles": 148,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 148,
+          "zero": 0
+        },
+        "maximum": 1003,
+        "median": 252.0,
+        "minimum": 55,
+        "profiles": 148,
+        "unknown_profiles": 0
+      }
+    },
+    "strict_at_most_30_minutes": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 52,
+        "unknown_profiles": 52
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 52,
+          "zero": 0
+        },
+        "known_profiles": 52,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 52,
+          "zero": 0
+        },
+        "maximum": 1512,
+        "median": 750.0,
+        "minimum": 241,
+        "profiles": 52,
+        "unknown_profiles": 0
+      }
+    }
+  },
+  "destination_count": {
+    "1": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 61,
+        "unknown_profiles": 61
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 61,
+          "zero": 0
+        },
+        "known_profiles": 61,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 61,
+          "zero": 0
+        },
+        "maximum": 1512,
+        "median": 345.0,
+        "minimum": 55,
+        "profiles": 61,
+        "unknown_profiles": 0
+      }
+    },
+    "2": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 70,
+        "unknown_profiles": 70
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 70,
+          "zero": 0
+        },
+        "known_profiles": 70,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 70,
+          "zero": 0
+        },
+        "maximum": 1512,
+        "median": 336.5,
+        "minimum": 55,
+        "profiles": 70,
+        "unknown_profiles": 0
+      }
+    },
+    "3": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 69,
+        "unknown_profiles": 69
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 69,
+          "zero": 0
+        },
+        "known_profiles": 69,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 69,
+          "zero": 0
+        },
+        "maximum": 1512,
+        "median": 328.0,
+        "minimum": 55,
+        "profiles": 69,
+        "unknown_profiles": 0
+      }
+    }
+  },
+  "partition": {
+    "development": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 60,
+        "unknown_profiles": 60
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 60,
+          "zero": 0
+        },
+        "known_profiles": 60,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 60,
+          "zero": 0
+        },
+        "maximum": 1512,
+        "median": 430.0,
+        "minimum": 143,
+        "profiles": 60,
+        "unknown_profiles": 0
+      }
+    },
+    "final_held_out": {
+      "commute_feasible": {
+        "bins": null,
+        "known_profiles": 0,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 0,
+          "zero": 0
+        },
+        "maximum": null,
+        "median": null,
+        "minimum": null,
+        "profiles": 140,
+        "unknown_profiles": 140
+      },
+      "hard_filter": {
+        "bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 140,
+          "zero": 0
+        },
+        "known_profiles": 140,
+        "known_subset_bins": {
+          "five_to_nine": 0,
+          "one_to_four": 0,
+          "ten_or_more": 140,
+          "zero": 0
+        },
+        "maximum": 1421,
+        "median": 308.0,
+        "minimum": 55,
+        "profiles": 140,
+        "unknown_profiles": 0
+      }
+    }
+  },
+  "strict_definition": "At least one destination has a maximum <=30 minutes; coverage descriptor, not a performance selection threshold"
+}

@@ -1,0 +1,144 @@
+{
+  "dataset": {
+    "bytes": 82422,
+    "identifier": "dhakanest-literature-registry-v1",
+    "path": "research/literature/paper_registry.json",
+    "sha256": "dcf189496036945b39576611114938c1c2f3ebbc5b5f53c77e78c9a04a65dc4d"
+  },
+  "dependencies": {
+    "python": "3.12.10"
+  },
+  "executed_at_utc": "2026-10-25T03:16:19.855817+00:00",
+  "execution_status": "completed_bounded_review_with_recorded_access_limits",
+  "experiment_id": "phase_2_critical_literature_review",
+  "git_commit": "45e4d040699c86ed535fa0c8582d77829503697d",
+  "input_configuration": {
+    "abstract_and_metadata_reviews": 3,
+    "external_access_limits": "Recorded in search protocol, registry and verification report",
+    "full_text_section_reviews": 26,
+    "human_data_collected": false,
+    "metadata_only_references": 2,
+    "phase": 2,
+    "prior_phase_artifacts_modified": false,
+    "production_experiments_executed": false,
+    "retained_publications": 31,
+    "screened_records": 40,
+    "search_date": "2026-10-25",
+    "search_scope": "Public scholarly discovery and primary-source reading; bounded structured review"
+  },
+  "manifest_schema_version": "1.0",
+  "outputs": [
+    {
+      "bytes": 1484,
+      "path": "literature/README.md",
+      "sha256": "8bdc09a0577e15035252b02bb5a33bf24d930ca592ffd4c7d5ac9a23376e0d00"
+    },
+    {
+      "bytes": 3968,
+      "path": "literature/search_protocol.json",
+      "sha256": "90793267d1a54eb1a58d597a5522963f1d114f17231f84fb260c18b3ac0ad79d"
+    },
+    {
+      "bytes": 82422,
+      "path": "literature/paper_registry.json",
+      "sha256": "dcf189496036945b39576611114938c1c2f3ebbc5b5f53c77e78c9a04a65dc4d"
+    },
+    {
+      "bytes": 2522,
+      "path": "literature/screening_additions.json",
+      "sha256": "b9450ce9c294ad47a27c6327357ba9c898e6a91191378020ff54934cca819283"
+    },
+    {
+      "bytes": 8487,
+      "path": "literature/screening_log.csv",
+      "sha256": "376ac889ac0077dac109c8c29011db39520cc6eae49b1232453357f9b27acfcb"
+    },
+    {
+      "bytes": 31217,
+      "path": "literature/literature_matrix.csv",
+      "sha256": "99a618887d2e6b0cb65fcb7cddc1f7aef122108c21f7e476a9f2aa685616585e"
+    },
+    {
+      "bytes": 14129,
+      "path": "literature/hypothesis_evidence_map.csv",
+      "sha256": "37a8bf16a48b9056a1909706ae2530f3074f016bb51bc248d92c1d8ba6614fea"
+    },
+    {
+      "bytes": 12640,
+      "path": "literature/references.bib",
+      "sha256": "2425a82e189d46beb445420b93de04d306ffa128123aa98785b0a4749c8b2ef6"
+    },
+    {
+      "bytes": 5916,
+      "path": "literature/export_literature.py",
+      "sha256": "50db01f4838281294df83b1120cea5b173c915b365d7f36375854bfeb2a0c7b9"
+    },
+    {
+      "bytes": 8673,
+      "path": "literature/validate_literature.py",
+      "sha256": "e83a9dc10eaf6ea7748797ddc0e935b9285a55e1dfda3fe96220ad9bc0ccd072"
+    },
+    {
+      "bytes": 2127,
+      "path": "literature/phase_2_config.json",
+      "sha256": "9be891718edd3f88ec3802123acbca435392c020e4c043d3817386e0bd00bea9"
+    },
+    {
+      "bytes": 3832,
+      "path": "tests/test_literature.py",
+      "sha256": "09fa5f6944db85400cbd21f8feb38273dcd9b576405748421893f544d8444917"
+    },
+    {
+      "bytes": 3788,
+      "path": "results/phase_2/search_and_screening_report.md",
+      "sha256": "abb71fb3c7c07bc03ce850de137ad7db513ee6f96312a5429ee03c99e8a60311"
+    },
+    {
+      "bytes": 32007,
+      "path": "results/phase_2/individual_paper_reviews.md",
+      "sha256": "81a88fad7f6a5a070282e8fe6a8c5d5245ba02a9d1154e80e00f5e7b328f3da7"
+    },
+    {
+      "bytes": 3286,
+      "path": "results/phase_2/thematic_synthesis.md",
+      "sha256": "c80f3a68ec3953caba61ab93ec58c448e65a4e0b9f0f7a6914cf78fc56e2c94e"
+    },
+    {
+      "bytes": 4721,
+      "path": "results/phase_2/comparative_literature_analysis.md",
+      "sha256": "5c5dbd9286233917b0d169b399a95c4faceea12620e7eb7eb6ece8bf735ad877"
+    },
+    {
+      "bytes": 3400,
+      "path": "results/phase_2/research_gap_analysis.md",
+      "sha256": "d806895136d4e0f4c0fee017060c0fa76d871581237c4e733a784a4fafd5f303"
+    },
+    {
+      "bytes": 4084,
+      "path": "results/phase_2/related_work_manuscript.md",
+      "sha256": "5c97fdf6e75fbdb4223aa3a189b73321d5fa34917e7d75da229a782fc27d5d27"
+    },
+    {
+      "bytes": 4743,
+      "path": "results/phase_2/xgboost_literature_review.md",
+      "sha256": "4eba82fb973177abab2062dc7dac17365df4aefd4f105bbfce6d598f56e7536f"
+    },
+    {
+      "bytes": 4218,
+      "path": "results/phase_2/phase_2_verification.md",
+      "sha256": "d01bd169e6294f741495affc16af72fdfa85f5ad221386a9cd55076b195bea52"
+    }
+  ],
+  "purpose": "Freeze the verified literature registry, critical analyses, research-gap synthesis, and supporting offline validation for DhakaNest Phase 2.",
+  "random_seed": 42,
+  "safety": {
+    "database_access": "none",
+    "production_writes": false
+  },
+  "versions": {
+    "literature_registry": "1.0.0",
+    "manifest_schema": "1.0",
+    "production_scoring_reference": "wsm_v4",
+    "search_protocol": "1.0.0"
+  }
+}

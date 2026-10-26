@@ -1,0 +1,1642 @@
+{
+  "registry_version": "1.0.0",
+  "search_date": "2026-10-25",
+  "missing_value_policy": "Use null for unavailable DOI; Not reported, Not accessible, or Unverified for evidence gaps. No DOI inferred from a template.",
+  "papers": [
+    {
+      "id": "P01",
+      "study_id": "re-recsys-2024",
+      "title": "RE-RecSys: An End-to-End system for recommending properties in Real-Estate domain",
+      "authors": [
+        "Venkatesh C",
+        "Harshit Oberoi",
+        "Anil Goyal",
+        "Nikhil Sikka"
+      ],
+      "year": 2024,
+      "venue": "CODS-COMAD 2024",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/3632410.3632487",
+      "url": "https://arxiv.org/html/2404.16553v1",
+      "metadata_url": "https://doi.org/10.1145/3632410.3632487",
+      "categories": [
+        "A",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2.0.1-2.0.5 and 3; Tables 2-3",
+      "problem": "Sparse and changing property-search histories",
+      "objective": "Serve different user-history cohorts",
+      "dataset_location": "Housing.com, India",
+      "dataset_size": "160,000 sampled user data across eight task/use-case groups; Section 3.0.3",
+      "methodology": "Rules, content cosine similarity, and collaborative factors by history cohort",
+      "algorithms": "Cosine similarity; matrix factorization",
+      "features": "Locality, price, apartment attributes, weighted interactions",
+      "approach": "Behavior-based property ranking",
+      "baselines": "Alternative history windows and interaction weight schemes",
+      "metrics": "MAP@6; NDCG; latency",
+      "quantitative_results": "Rent content model: MAP@6 0.856 and NDCG 0.636 for latest/next 10 minutes (Table 2)",
+      "contributions": "Operational cohort-specific hybrid pipeline",
+      "strengths": "Real platform and temporal evaluation",
+      "limitations": "Our assessment: logged engagement is not independent tenant suitability",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Operational hybrid comparator",
+      "difference_from_dhakanest": "Learns behavior within locality rather than eliciting commute constraints",
+      "rq_ids": [
+        "RQ1",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H4A",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_KNN_ONLY",
+        "B_FULL"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "The system switches among popularity rules, content profiles, and latent factors according to available history. India platform interactions support time-window and weighting comparisons, with MAP and NDCG measuring later engagement. Deployment evidence is a strength, but no independently annotated housing-decision outcome follows from those metrics. For DhakaNest, this is evidence that locality-based hybrids already exist; explicit needs and frozen relevance evaluation need separate justification. The published score cannot be compared numerically with DhakaNest's smaller, differently judged benchmark."
+    },
+    {
+      "id": "P02",
+      "study_id": "property-survey-2021",
+      "title": "Recommender Systems in the Real Estate Market-A Survey",
+      "authors": [
+        "Alireza Gharahighehi",
+        "Konstantinos Pliakos",
+        "Celine Vens"
+      ],
+      "year": 2021,
+      "venue": "Applied Sciences 11(16), 7502",
+      "publication_type": "journal_review",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.3390/app11167502",
+      "url": "https://pdfs.semanticscholar.org/3d6a/e7ee5627f59a1de3abce5dce9230c1d823c2.pdf",
+      "metadata_url": "https://www.mdpi.com/2076-3417/11/16/7502",
+      "categories": [
+        "A",
+        "C",
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-6; Section 4.4; Appendix A",
+      "problem": "Domain-specific recommendation challenges",
+      "objective": "Classify property recommenders and evaluation",
+      "dataset_location": "Literature corpus",
+      "dataset_size": "26 papers",
+      "methodology": "Structured literature classification",
+      "algorithms": "CB, CF, knowledge-based, MCDM, hybrid",
+      "features": "Property attributes and user preferences",
+      "approach": "Survey",
+      "baselines": "Not applicable",
+      "metrics": "Evidence taxonomy",
+      "quantitative_results": "13 journal and 13 conference papers",
+      "contributions": "Domain-specific method and evaluation taxonomy",
+      "strengths": "Traceable primary-study tables",
+      "limitations": "Our assessment: time-bounded corpus is not a census of current systems",
+      "authors_future_work": "Benchmarking and richer preference/evaluation directions",
+      "dhakanest_relevance": "Domain framing and citation tracing",
+      "difference_from_dhakanest": "Synthesizes systems instead of evaluating one",
+      "rq_ids": [
+        "RQ1",
+        "RQ2",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H2",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_AREA_FIRST",
+        "B_FULL"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "The review separates knowledge-based, collaborative, content, multi-criteria, and hybrid approaches rather than treating property search as one algorithmic task. Its tables connect inputs and evaluation choices to primary studies. In particular, its journey-aware references undermine a claim that destination-sensitive housing choice is unprecedented. The corpus is useful for finding comparators, but secondary descriptions cannot replace reading each primary study, and its 2021 coverage cannot establish absence of later methods. DhakaNest should use this taxonomy to describe its design and evaluation limits."
+    },
+    {
+      "id": "P03",
+      "study_id": "cold-property-2019",
+      "title": "A Recommender System for Cold-start Items: A Case Study in the Real Estate Industry",
+      "authors": [
+        "Qian Zhang",
+        "Di Zhang",
+        "Jie Lu",
+        "Guangquan Zhang",
+        "Wei Qu",
+        "Mark Cohen"
+      ],
+      "year": 2019,
+      "venue": "IEEE ISKE 2019, 1185-1192",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1109/ISKE47853.2019.9170411",
+      "url": "https://opus.lib.uts.edu.au/bitstream/10453/148303/2/Domain_ISKE_submit.pdf",
+      "metadata_url": "https://opus.lib.uts.edu.au/handle/10453/148303",
+      "categories": [
+        "A",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections III-IV; Tables III-VII",
+      "problem": "New property notification relevance",
+      "objective": "Find users for cold-start properties",
+      "dataset_location": "Domain, Australia",
+      "dataset_size": "Three subsets; total not extracted",
+      "methodology": "Content retrieval followed by interaction-probability filtering",
+      "algorithms": "Cosine similarity; XGBoost",
+      "features": "Encoded user/property attributes and behaviors",
+      "approach": "Two-stage notification recommendation",
+      "baselines": "Query-based method; first-stage only",
+      "metrics": "Precision; Recall; MAP",
+      "quantitative_results": "Data1 Precision@5: 0.0165 versus 0.0103 query baseline (Table III)",
+      "contributions": "Cold-item retrieval and learned reranking",
+      "strengths": "Stage and scenario comparisons",
+      "limitations": "Our assessment: notification clicks do not establish commute suitability",
+      "authors_future_work": "See Section V; not transcribed",
+      "dhakanest_relevance": "Strong two-stage content baseline precedent",
+      "difference_from_dhakanest": "Ranks users for new items; XGBoost predicts interaction, not rent",
+      "rq_ids": [
+        "RQ1",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H4A",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_KNN_ONLY",
+        "A_NO_KNN"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "One-hot content vectors retrieve users by cosine similarity; a second XGBoost stage estimates interaction probabilities to reduce irrelevant notifications. Australian property subsets and sale/rent scenarios are evaluated against query rules and first-stage retrieval. This directly precedes the idea of separating retrieval and ranking. Its strengths are staged evaluation and explicit cold-item scenarios. Our limitation assessment is that implicit interactions can miss latent housing needs. Its XGBoost role must not be confused with DhakaNest's stored rent estimate."
+    },
+    {
+      "id": "P04",
+      "study_id": "reach-2018",
+      "title": "HomeFinder Revisited: Finding Ideal Homes with Reachability-Centric Multi-Criteria Decision Making",
+      "authors": [
+        "Di Weng",
+        "Heming Zhu",
+        "Jie Bao",
+        "Yu Zheng",
+        "Yingcai Wu"
+      ],
+      "year": 2018,
+      "venue": "CHI 2018",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/3173574.3173821",
+      "url": "https://dwe.ng/pdf/reach.pdf",
+      "metadata_url": "https://doi.org/10.1145/3173574.3173821",
+      "categories": [
+        "A",
+        "B",
+        "C"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "System Architecture; Reachability Model; User Study; Discussion",
+      "problem": "Housing choice around daily journeys",
+      "objective": "Interactive reachability-sensitive home selection",
+      "dataset_location": "Chinese urban taxi trajectories and sale apartments",
+      "dataset_size": "1,927 sale properties; 14 evaluation participants",
+      "methodology": "Trajectory-derived probabilistic reachability and interactive multi-criteria views",
+      "algorithms": "Reachability indexing and routing",
+      "features": "Daily routines, POIs, journey limits, property criteria",
+      "approach": "Visual housing decision support",
+      "baselines": "Prior reachability algorithm; task-based user evaluation",
+      "metrics": "Complexity; task correctness; experience ratings",
+      "quantitative_results": "Mean task score 4.79/5",
+      "contributions": "Multi-place reachability-centered workflow",
+      "strengths": "Direct journeys and human tasks",
+      "limitations": "Authors: learnability and heatmap comparison difficulties",
+      "authors_future_work": "Better guidance and interactions",
+      "dhakanest_relevance": "Closest destination-first precedent",
+      "difference_from_dhakanest": "Probabilistic trajectory/routine model instead of static OSRM plus stored rent assessment",
+      "rq_ids": [
+        "RQ2",
+        "RQ3"
+      ],
+      "hypothesis_ids": [
+        "H2",
+        "H3"
+      ],
+      "comparison_ids": [
+        "B_AREA_FIRST",
+        "A_NO_COMMUTE_CONSTRAINTS"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "ReACH accepts daily routines and reachability requirements, computes trajectory-based reachable regions, and supports filtering and multi-criteria comparison. Its 14-person task study demonstrates usability under tested tasks. It provides stronger precedent for journey-centered housing choice than a generic proximity recommender. Authors report interface-learning and map-comparison difficulties. Our assessment is that task correctness does not establish superiority over the full set of modern rankers. DhakaNest needs a direct conceptual comparison and must explain its simpler routing assumptions and rent-assessment integration without claiming destination-first novelty."
+    },
+    {
+      "id": "P05",
+      "study_id": "dynamic-homefinder-1992",
+      "title": "The dynamic HomeFinder: evaluating dynamic queries in a real-estate information exploration system",
+      "authors": [
+        "Christopher Williamson",
+        "Ben Shneiderman"
+      ],
+      "year": 1992,
+      "venue": "SIGIR 1992, 338-346",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/133160.133216",
+      "url": "https://drum.lib.umd.edu/bitstreams/d1b73c1e-725b-4900-9cca-bd1aad078995/download",
+      "metadata_url": "https://doi.org/10.1145/133160.133216",
+      "categories": [
+        "A",
+        "B",
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 1.2 and 3, User Experiment",
+      "problem": "Slow property database exploration",
+      "objective": "Evaluate dynamic queries",
+      "dataset_location": "US real-estate exploration tasks",
+      "dataset_size": "18 undergraduate participants",
+      "methodology": "Within-subject counterbalanced comparison",
+      "algorithms": "Interactive attribute and distance filters",
+      "features": "Price, rooms, amenities, distance to markers",
+      "approach": "Interactive filtering",
+      "baselines": "Natural-language interface; paper listings",
+      "metrics": "Correct-answer time; satisfaction",
+      "quantitative_results": "18 subjects; faster dynamic-query performance reported",
+      "contributions": "Controlled housing-interface evidence",
+      "strengths": "Counterbalanced objective tasks",
+      "limitations": "Our assessment: dated interfaces and undergraduate sample limit transfer",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "User-study design and filtering baseline",
+      "difference_from_dhakanest": "Physical distance features, not road-network ranking",
+      "rq_ids": [
+        "RQ3"
+      ],
+      "hypothesis_ids": [
+        "H3"
+      ],
+      "comparison_ids": [
+        "B_FILTER",
+        "B_AREA_FIRST"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "Dynamic sliders and linked maps let users refine property searches immediately. Eighteen participants completed counterbalanced tasks using the interface, natural-language queries, and paper listings. Distance markers existed, but were deliberately omitted from the comparison because the controls lacked them. This is a useful fairness lesson: interface information must be matched before attributing a decision benefit to ranking. The study supports controlled task evaluation, while its historical hardware and sample prevent direct prediction of DhakaNest's effect size. Repository deposit date is not the publication year."
+    },
+    {
+      "id": "P06",
+      "study_id": "cfrecs-2026",
+      "title": "CFRecs: Counterfactual Recommendations on Real Estate User Listing Interaction Graphs",
+      "authors": [
+        "Seyedmasoud Mousavi",
+        "Ruomeng Xu",
+        "Xiaojing Zhu"
+      ],
+      "year": 2026,
+      "venue": "arXiv:2602.05861",
+      "publication_type": "preprint",
+      "peer_review_status": "unverified_preprint",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/2602.05861",
+      "metadata_url": "https://arxiv.org/abs/2602.05861",
+      "categories": [
+        "A",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-5; Table 2",
+      "problem": "Actionable property-interaction explanations",
+      "objective": "Generate counterfactual graph changes",
+      "dataset_location": "Zillow, US",
+      "dataset_size": "7,946 classifier graphs",
+      "methodology": "GNN classifier and Graph-VAE",
+      "algorithms": "GNN; variational autoencoder",
+      "features": "User preferences, listing prices and interaction edges",
+      "approach": "Counterfactual action recommendation",
+      "baselines": "Random graph modifications",
+      "metrics": "ROC-AUC; proximity; predicted lift",
+      "quantitative_results": "Test ROC-AUC 71.284%",
+      "contributions": "Action-oriented counterfactual explanations",
+      "strengths": "Real property interaction graphs",
+      "limitations": "Our assessment: model-predicted lift is not causal tenant welfare",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Modern explainable property comparator",
+      "difference_from_dhakanest": "Counterfactual graph intervention instead of criterion reasons",
+      "rq_ids": [
+        "RQ3",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H3",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_FULL"
+      ],
+      "verification_status": "verified_preprint_metadata",
+      "critical_analysis": "A graph classifier predicts transactional outcomes and a Graph-VAE proposes sparse changes to listing-user interaction graphs. Experiments use Zillow graphs and compare validity/proximity with random modifications. This offers a different explanation objective from reasons attached to a fixed rental ranking. Our assessment is that improving a classifier's predicted outcome does not establish causal benefit or decision quality. The accessible manuscript contains placeholder conference identifiers; it is retained as a clearly labeled 2026 preprint, with peer review unverified."
+    },
+    {
+      "id": "P07",
+      "study_id": "housing-compliance-2026",
+      "title": "Following the Preference, Missing the Optimum: Compliance Without Optimization in AI Housing Recommendation",
+      "authors": [
+        "Hsuan Lo"
+      ],
+      "year": 2026,
+      "venue": "arXiv:2609.10856",
+      "publication_type": "preprint",
+      "peer_review_status": "unverified_preprint",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/2609.10856",
+      "metadata_url": "https://arxiv.org/abs/2609.10856",
+      "categories": [
+        "A",
+        "B",
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 1-5 and 8; version status page",
+      "problem": "Feasible housing recommendations can still omit better options",
+      "objective": "Audit compliance and dominance separately",
+      "dataset_location": "New York City real listings, synthetic renter scenarios",
+      "dataset_size": "150 scenarios; 120 listings per pool",
+      "methodology": "Enumerated feasible sets and Pareto-dominance audit",
+      "algorithms": "LLM recommendation and oracle comparison",
+      "features": "Rent, bedrooms and transit commute",
+      "approach": "Audit",
+      "baselines": "Random selection and feasible alternatives",
+      "metrics": "Constraint violation; dominance rate",
+      "quantitative_results": "Reports 39.0% strictly dominated recommendations",
+      "contributions": "Separates feasibility from optimization",
+      "strengths": "Known alternative inventory",
+      "limitations": "Our assessment: synthetic scenarios and model/version dependence",
+      "authors_future_work": "See discussion; not extracted",
+      "dhakanest_relevance": "Opportunity-cost diagnostic",
+      "difference_from_dhakanest": "Audits conversational models, not WSM",
+      "rq_ids": [
+        "RQ1",
+        "RQ5"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H5"
+      ],
+      "comparison_ids": [
+        "B_FULL",
+        "B_RANDOM"
+      ],
+      "verification_status": "verified_preprint_metadata",
+      "critical_analysis": "The audit enumerates feasible alternatives using rent, bedrooms, and GTFS commute before checking model recommendations for strict dominance. It distinguishes satisfying a constraint from selecting a good feasible option. Results are author-reported experimental evidence, not independently replicated findings. Our assessment is that model-version and synthetic-profile choices limit transfer to Dhaka. The design nevertheless motivates an optional future Pareto diagnostic alongside NDCG and coverage. Such a diagnostic requires a controlled protocol revision and must not be inserted into the frozen Phase 1 metrics silently."
+    },
+    {
+      "id": "P08",
+      "study_id": "property-systematic-2025",
+      "title": "Recommender systems in real estate: a systematic review",
+      "authors": [
+        "Carlos Henriquez-Miranda",
+        "Jesus Rios-Perez",
+        "German Sanchez-Torres"
+      ],
+      "year": 2025,
+      "venue": "Bulletin of Electrical Engineering and Informatics 14(3)",
+      "publication_type": "journal_review",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.11591/eei.v14i3.8884",
+      "url": "https://www.beei.org/index.php/EEI/article/view/8884",
+      "metadata_url": "https://www.beei.org/index.php/EEI/article/view/8884",
+      "categories": [
+        "A",
+        "F"
+      ],
+      "evidence_access": "abstract_and_metadata_examined",
+      "source_location": "Publisher abstract; PDF retrieval timed out",
+      "problem": "Fragmented property recommendation evidence",
+      "objective": "Review approaches and challenges",
+      "dataset_location": "Literature",
+      "dataset_size": "Not accessible",
+      "methodology": "PRISMA review stated in abstract",
+      "algorithms": "Content, collaborative, knowledge and hybrid families",
+      "features": "Price, rooms, size, location",
+      "approach": "Review",
+      "baselines": "Not applicable",
+      "metrics": "Not accessible",
+      "quantitative_results": "Not accessible",
+      "contributions": "Recent domain synthesis",
+      "strengths": "Domain relevance",
+      "limitations": "Access limitation: extraction and quality assessment not checked",
+      "authors_future_work": "Hybrid models and explainability stated in abstract",
+      "dhakanest_relevance": "Recent coverage lead",
+      "difference_from_dhakanest": "Review, not implemented framework",
+      "rq_ids": [
+        "RQ1",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_FULL"
+      ],
+      "verification_status": "verified_metadata_limited_content",
+      "critical_analysis": "The publisher abstract identifies four recommendation families and highlights sparsity, cold start, and adaptive learning. This establishes topical relevance, but the PDF requests timed out, so screening details, study counts, and comparative findings remain unassessed. Retain as a limited-access reference; it does not count toward the substantive full-text target."
+    },
+    {
+      "id": "P09",
+      "study_id": "osrm-2011",
+      "title": "Real-time routing with OpenStreetMap data",
+      "authors": [
+        "Dennis Luxen",
+        "Christian Vetter"
+      ],
+      "year": 2011,
+      "venue": "ACM SIGSPATIAL GIS 2011, 513-516",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/2093973.2094062",
+      "url": "https://publikationen.bibliothek.kit.edu/1000028131",
+      "metadata_url": "https://dblp.org/rec/conf/gis/LuxenV11.html",
+      "categories": [
+        "B"
+      ],
+      "evidence_access": "metadata_only",
+      "source_location": "KIT and DBLP bibliographic records",
+      "problem": "Fast road-network routes",
+      "objective": "Not accessible in primary full text",
+      "dataset_location": "OpenStreetMap",
+      "dataset_size": "Not accessible",
+      "methodology": "Not accessible",
+      "algorithms": "Not extracted",
+      "features": "Road network",
+      "approach": "Routing infrastructure",
+      "baselines": "Not accessible",
+      "metrics": "Not accessible",
+      "quantitative_results": "Not accessible",
+      "contributions": "Verified OSRM citation identity",
+      "strengths": "Original routing citation",
+      "limitations": "Full text not retrieved",
+      "authors_future_work": "Not accessible",
+      "dhakanest_relevance": "Routing provenance citation",
+      "difference_from_dhakanest": "Routing engine rather than housing ranking",
+      "rq_ids": [
+        "RQ2",
+        "RQ5"
+      ],
+      "hypothesis_ids": [
+        "H2",
+        "H5"
+      ],
+      "comparison_ids": [
+        "A_NO_COMMUTE_CONSTRAINTS"
+      ],
+      "verification_status": "verified_metadata_only",
+      "critical_analysis": "KIT and DBLP verify the authors, venue, pages, and DOI. The record provides routing provenance, but no detailed algorithm or runtime claim is carried forward without the primary text. It is excluded from the deep-analysis count. Current OSRM profile behavior must be documented from the actual deployed configuration separately from this historical citation."
+    },
+    {
+      "id": "P10",
+      "study_id": "geomf-plus-2018",
+      "title": "GeoMF++: Scalable Location Recommendation via Joint Geographical Modeling and Matrix Factorization",
+      "authors": [
+        "Defu Lian",
+        "Kai Zheng",
+        "Yong Ge",
+        "Longbing Cao",
+        "Enhong Chen",
+        "Xing Xie"
+      ],
+      "year": 2018,
+      "venue": "ACM Transactions on Information Systems 36(3), 33",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1145/3182166",
+      "url": "https://datasciences.org/publication/GeoMF.pdf",
+      "metadata_url": "https://experts.arizona.edu/en/publications/geomf-scalable-location-recommendation-via-joint-geographical-mod/",
+      "categories": [
+        "B",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-6; Table 1; Figures 5-7; author manuscript",
+      "problem": "Sparse location check-ins",
+      "objective": "Joint geographical and implicit-feedback modeling",
+      "dataset_location": "Gowalla and Jiepang",
+      "dataset_size": "Filtered Gowalla: 3,487,258 check-ins; Jiepang: 2,985,136",
+      "methodology": "Activity/influence areas with factorization",
+      "algorithms": "Geographical matrix factorization",
+      "features": "Coordinates and visit frequencies",
+      "approach": "POI recommendation",
+      "baselines": "WRMF, GeoMF, GWMF, IRenMF",
+      "metrics": "NDCG; Recall; runtime",
+      "quantitative_results": "Segment-specific comparisons; no scalar transcribed",
+      "contributions": "Joint scalable geographical learning",
+      "strengths": "Warm/cold and parameter analyses",
+      "limitations": "Our assessment: check-in proximity does not represent road commute constraints",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Distinguishes geographic recommendation from journeys",
+      "difference_from_dhakanest": "Historical mobility instead of explicit destinations",
+      "rq_ids": [
+        "RQ2",
+        "RQ5"
+      ],
+      "hypothesis_ids": [
+        "H2",
+        "H5"
+      ],
+      "comparison_ids": [
+        "B_NO_DESTINATION"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "GeoMF++ jointly learns mobility-related geographical areas and implicit-feedback factors, evaluated on two check-in datasets with warm and cold scenarios. Its detailed parameter comparisons show that performance depends on sparsity and latent dimension. This is stronger evidence than a generic claim that adding coordinates helps. Our assessment is that geographic preference and destination-specific road travel are different constructs. The accessible manuscript predates the final 2018 metadata; the earlier GeoMF conference version is not counted as another independent study."
+    },
+    {
+      "id": "P11",
+      "study_id": "ahp-2008",
+      "title": "Decision making with the analytic hierarchy process",
+      "authors": [
+        "Thomas L. Saaty"
+      ],
+      "year": 2008,
+      "venue": "International Journal of Services Sciences 1(1), 83-98",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1504/IJSSCI.2008.017590",
+      "url": "https://untdfproyectos.wordpress.com/wp-content/uploads/2018/06/thomas-l-saaty-2008-decision-making-with-the-analytic-hierarchy-process.pdf",
+      "metadata_url": "https://doi.org/10.1504/IJSSCI.2008.017590",
+      "categories": [
+        "C"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Section 3; hierarchy and consistency examples",
+      "problem": "Eliciting tradeoffs between criteria",
+      "objective": "Explain pairwise priority derivation",
+      "dataset_location": "Illustrative decision examples",
+      "dataset_size": "Not applicable",
+      "methodology": "Pairwise comparison hierarchies",
+      "algorithms": "AHP",
+      "features": "Judgment ratios and criterion hierarchy",
+      "approach": "Decision weighting",
+      "baselines": "Not applicable",
+      "metrics": "Consistency of judgments",
+      "quantitative_results": "Illustrative examples, not housing performance",
+      "contributions": "Explicit weight elicitation",
+      "strengths": "Auditable judgment structure",
+      "limitations": "Our assessment: consistency is not independent preference validity",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Alternative weighting methodology",
+      "difference_from_dhakanest": "Pairwise ratios versus direct 1-5 priorities",
+      "rq_ids": [
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_WSM_ONLY"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "AHP decomposes a decision into a hierarchy and derives priorities from pairwise judgments, with inconsistency checks. Worked examples illustrate the computation rather than a rental-relevance experiment. The explicit elicitation structure is a useful strength; our assessment is that internally consistent judgments need not match observed housing decisions. DhakaNest's normalized 1-5 inputs are a different elicitation scheme. An AHP comparison would require a prospectively approved protocol and matched preference burden, not a silent replacement of production WSM."
+    },
+    {
+      "id": "P12",
+      "study_id": "multiobjective-survey-2023",
+      "title": "A survey on multi-objective recommender systems",
+      "authors": [
+        "Dietmar Jannach",
+        "Himan Abdollahpouri"
+      ],
+      "year": 2023,
+      "venue": "Frontiers in Big Data 6, 1157899",
+      "publication_type": "journal_review",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.3389/fdata.2023.1157899",
+      "url": "https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2023.1157899/full",
+      "metadata_url": "https://doi.org/10.3389/fdata.2023.1157899",
+      "categories": [
+        "C",
+        "E",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 1-5; tradeoffs and objective categories",
+      "problem": "Competing recommender objectives",
+      "objective": "Classify beyond-accuracy tradeoffs",
+      "dataset_location": "Literature synthesis",
+      "dataset_size": "Not extracted",
+      "methodology": "Conceptual review",
+      "algorithms": "Multiple-objective optimization families",
+      "features": "Quality, stakeholder, interface and engineering objectives",
+      "approach": "Survey",
+      "baselines": "Not applicable",
+      "metrics": "Accuracy and beyond-accuracy measures",
+      "quantitative_results": "No single pooled effect",
+      "contributions": "Objective and stakeholder distinctions",
+      "strengths": "Connects ranking to user and organizational value",
+      "limitations": "Our assessment: no universal tradeoff weights follow from the survey",
+      "authors_future_work": "Broader multi-objective evaluation",
+      "dhakanest_relevance": "Coverage/relevance and explanation-effort tradeoffs",
+      "difference_from_dhakanest": "Broad objectives versus five property criteria",
+      "rq_ids": [
+        "RQ3",
+        "RQ4",
+        "RQ5"
+      ],
+      "hypothesis_ids": [
+        "H3",
+        "H4B",
+        "H5"
+      ],
+      "comparison_ids": [
+        "B_FULL"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "The survey distinguishes competing quality, stakeholder, temporal, interface, and engineering objectives. This prevents conflating a multi-attribute rental utility with every form of multi-objective recommendation. Its strength is connecting accuracy to practical value; it supplies no universal optimal weighting. Our assessment is that DhakaNest should report constraint satisfaction and result coverage alongside relevance, and cognitive effort alongside explanations. Those tradeoffs require measured outcomes rather than assuming that more criteria or more explanation always helps."
+    },
+    {
+      "id": "P13",
+      "study_id": "hybrid-survey-2017",
+      "title": "Hybrid Recommender Systems: A Systematic Literature Review",
+      "authors": [
+        "Erion Cano",
+        "Maurizio Morisio"
+      ],
+      "year": 2017,
+      "venue": "Intelligent Data Analysis 21(6), 1487-1524",
+      "publication_type": "journal_review",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.3233/IDA-163209",
+      "url": "https://arxiv.org/pdf/1901.03888",
+      "metadata_url": "https://journals.sagepub.com/doi/10.3233/IDA-163209",
+      "categories": [
+        "F",
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-5; Table 4",
+      "problem": "Fragmented hybrid-system evidence",
+      "objective": "Classify hybrid strategies and evaluations",
+      "dataset_location": "Literature corpus",
+      "dataset_size": "76 primary studies",
+      "methodology": "Structured search and quality assessment",
+      "algorithms": "Hybrid recommendation families",
+      "features": "Multiple information sources",
+      "approach": "Systematic review",
+      "baselines": "Not applicable",
+      "metrics": "Evaluation-method classification",
+      "quantitative_results": "76 included studies",
+      "contributions": "Hybridization/evaluation taxonomy",
+      "strengths": "Selection and quality tables",
+      "limitations": "Authors: credible user-oriented evaluation remains difficult",
+      "authors_future_work": "Context and user-oriented evaluations",
+      "dhakanest_relevance": "Hybrid combinations already established",
+      "difference_from_dhakanest": "Cross-domain survey",
+      "rq_ids": [
+        "RQ1",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H4A",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_KNN_ONLY",
+        "B_WSM_ONLY"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "The authors screen and classify hybrid methods by problems, algorithms, combination strategy, and evaluation. Their corpus shows that combining recommenders is an established design family. A strength is transparent selection and quality assessment; the authors themselves identify weak user-oriented evidence. Our assessment is that the review supports testing separate retrieval and ranking stages, not asserting that their combination must improve relevance. The 2019 arXiv deposit and 2017 journal article represent one study and one registry entry."
+    },
+    {
+      "id": "P14",
+      "study_id": "xgboost-2016",
+      "title": "XGBoost: A Scalable Tree Boosting System",
+      "authors": [
+        "Tianqi Chen",
+        "Carlos Guestrin"
+      ],
+      "year": 2016,
+      "venue": "ACM KDD 2016",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/2939672.2939785",
+      "url": "https://arxiv.org/pdf/1603.02754",
+      "metadata_url": "https://github.com/dmlc/xgboost/blob/master/CITATION",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-5; objective Eq. 2",
+      "problem": "Scalable regularized tree boosting",
+      "objective": "Improve learning and systems efficiency",
+      "dataset_location": "Benchmark prediction tasks",
+      "dataset_size": "Multiple benchmark sizes; not transcribed",
+      "methodology": "Regularized additive trees and second-order optimization",
+      "algorithms": "XGBoost",
+      "features": "Tabular/sparse features",
+      "approach": "Supervised prediction",
+      "baselines": "Boosting-system comparisons",
+      "metrics": "Prediction quality; time; memory",
+      "quantitative_results": "Not transcribed across incompatible tasks",
+      "contributions": "Regularized objective, sparse splits and scalable implementation",
+      "strengths": "Algorithmic and systems analysis",
+      "limitations": "Our assessment: no housing-specific or universal superiority guarantee",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Explains selected rent model",
+      "difference_from_dhakanest": "Learning system versus rental decision framework",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "XGBoost minimizes prediction loss plus penalties for leaf count and leaf weights, using second-order tree updates, sparse split handling, and efficient data layouts. Benchmark quality and systems results support its practicality. They do not establish rental-market calibration or superiority over every learner. Our assessment is that DhakaNest must report its own preprocessing, depth, shrinkage, sampling, regularization, and validation selection. The original objective explains model complexity, while held-out residuals establish application reliability."
+    },
+    {
+      "id": "P15",
+      "study_id": "gradientboost-2001",
+      "title": "Greedy Function Approximation: A Gradient Boosting Machine",
+      "authors": [
+        "Jerome H. Friedman"
+      ],
+      "year": 2001,
+      "venue": "The Annals of Statistics 29(5), 1189-1232",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1214/aos/1013203451",
+      "url": "https://www.cse.iitb.ac.in/~soumen/readings/papers/Friedman1999GreedyFuncApprox.pdf",
+      "metadata_url": "https://doi.org/10.1214/aos/1013203451",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-7; 1999 author manuscript of published work",
+      "problem": "Flexible nonlinear function approximation",
+      "objective": "Derive boosting as functional optimization",
+      "dataset_location": "Simulations and classification/regression examples",
+      "dataset_size": "Not extracted",
+      "methodology": "Stagewise fitting to loss gradients",
+      "algorithms": "Gradient TreeBoost",
+      "features": "General predictors",
+      "approach": "Supervised learning",
+      "baselines": "Boosting variants",
+      "metrics": "Loss and prediction error",
+      "quantitative_results": "Not transcribed",
+      "contributions": "Functional gradient view and shrinkage tradeoffs",
+      "strengths": "Explicit loss-function framework",
+      "limitations": "Our assessment: chosen loss controls outlier sensitivity",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Boosting and model-complexity foundation",
+      "difference_from_dhakanest": "General estimator theory",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "The paper builds an additive predictor by descending in function space and derives regression/classification variants for different losses. It analyzes shrinkage and iteration count, explaining why model complexity cannot be summarized by tree count alone. Simulations and examples support the framework. Our assessment is that squared, absolute, and robust losses imply different responses to extreme rents; a log-transformed target does not eliminate that choice. DhakaNest should connect its fixed training configuration to this theory without treating theoretical flexibility as empirical market validation."
+    },
+    {
+      "id": "P16",
+      "study_id": "randomforests-2001",
+      "title": "Random Forests",
+      "authors": [
+        "Leo Breiman"
+      ],
+      "year": 2001,
+      "venue": "Machine Learning 45, 5-32",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1023/A:1010933404324",
+      "url": "https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf",
+      "metadata_url": "https://link.springer.com/article/10.1023/A:1010933404324",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-4, 10-12",
+      "problem": "Improve tree generalization through randomization",
+      "objective": "Combine strong decorrelated trees",
+      "dataset_location": "UCI, synthetic and regression benchmarks",
+      "dataset_size": "Multiple datasets, Table 1",
+      "methodology": "Bootstrap trees with randomized feature choices",
+      "algorithms": "Random Forest",
+      "features": "Tabular predictors",
+      "approach": "Bagging",
+      "baselines": "AdaBoost; individual trees",
+      "metrics": "Error; out-of-bag estimates; importance",
+      "quantitative_results": "Dataset-specific tables; no pooled number extracted",
+      "contributions": "Strength/correlation analysis",
+      "strengths": "Theory and empirical comparisons",
+      "limitations": "Our assessment: OOB estimates do not test geographic extrapolation",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Independent tree-ensemble comparison",
+      "difference_from_dhakanest": "Bagging rather than sequential boosting",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "Random forests average randomized trees and relate generalization to individual-tree strength and correlation. Out-of-bag estimates and importance measures support practical diagnostics. Classification and regression tables provide comparative evidence under specific datasets. Our assessment is that this justifies a serious bagging comparator, not an assumption that a forest is inferior to boosting. Out-of-bag accuracy also cannot substitute for a geographically distinct rental test. DhakaNest's RF validation result should be reported with the same split and comparable tuning effort."
+    },
+    {
+      "id": "P17",
+      "study_id": "catboost-2018",
+      "title": "CatBoost: unbiased boosting with categorical features",
+      "authors": [
+        "Liudmila Prokhorenkova",
+        "Gleb Gusev",
+        "Aleksandr Vorobev",
+        "Anna Veronika Dorogush",
+        "Andrey Gulin"
+      ],
+      "year": 2018,
+      "venue": "NeurIPS 2018",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/1706.09516",
+      "metadata_url": "https://proceedings.neurips.cc/paper/2018/hash/14491b756b3a51daac41c24863285549-Abstract.html",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-6; Table 2",
+      "problem": "Prediction shift and categorical target leakage",
+      "objective": "Reduce leakage through ordered learning",
+      "dataset_location": "Public tabular benchmarks",
+      "dataset_size": "Not extracted",
+      "methodology": "Ordered boosting and ordered target statistics",
+      "algorithms": "CatBoost",
+      "features": "Numerical and categorical variables",
+      "approach": "Supervised boosting",
+      "baselines": "Other boosting implementations",
+      "metrics": "Logloss; classification error",
+      "quantitative_results": "Task-specific comparisons, not rental MAE",
+      "contributions": "Permutation-based leakage mitigation",
+      "strengths": "Explicit leakage analysis and ablations",
+      "limitations": "Our assessment: classification benchmarks do not prove rental dominance",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Geographic-category comparator",
+      "difference_from_dhakanest": "Different encoding/boosting strategy",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "CatBoost addresses a specific statistical problem: using targets in category encoding and boosting can shift training predictions relative to test predictions. Ordered statistics and boosting mitigate that leakage. Benchmark and ablation evidence make this a principled alternative for high-cardinality location fields. Our assessment is that the reported classification comparisons cannot settle which model wins Dhaka rental regression. DhakaNest's selected XGBoost must therefore be described as the observed validation winner under its own preprocessing and tuning budget."
+    },
+    {
+      "id": "P18",
+      "study_id": "shap-2017",
+      "title": "A Unified Approach to Interpreting Model Predictions",
+      "authors": [
+        "Scott M. Lundberg",
+        "Su-In Lee"
+      ],
+      "year": 2017,
+      "venue": "NeurIPS 2017",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/1705.07874",
+      "metadata_url": "https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions.pdf",
+      "categories": [
+        "D",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-5; Theorems 1-2",
+      "problem": "Inconsistent prediction explanations",
+      "objective": "Unify additive feature attribution",
+      "dataset_location": "Synthetic and prediction/explanation examples",
+      "dataset_size": "Not extracted",
+      "methodology": "Additive explanation models and Shapley values",
+      "algorithms": "SHAP",
+      "features": "Model inputs and background distribution",
+      "approach": "Local prediction explanation",
+      "baselines": "Existing attribution methods",
+      "metrics": "Consistency and explanation experiments",
+      "quantitative_results": "No application-level rent result",
+      "contributions": "Axiomatic attribution framework",
+      "strengths": "Explicit properties and estimators",
+      "limitations": "Our assessment: attribution is conditional on model/background, not causality",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Saved-model explanation plan",
+      "difference_from_dhakanest": "Explains predictions, not ranking relevance",
+      "rq_ids": [
+        "RQ3",
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H3",
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "SHAP expresses explanations as additive feature contributions and derives a unique solution under specified properties. The theory and comparative examples support a principled alternative to unqualified importance rankings. Our assessment is that contributions explain a model relative to a chosen background representation; they neither establish causal rent effects nor certify the prediction. DhakaNest must preserve preprocessing and feature alignment when explaining the saved bundle, then evaluate recommendation explanations separately from prediction attributions."
+    },
+    {
+      "id": "P19",
+      "study_id": "tabular-benchmark-2022",
+      "title": "Why do tree-based models still outperform deep learning on typical tabular data?",
+      "authors": [
+        "Leo Grinsztajn",
+        "Edouard Oyallon",
+        "Gael Varoquaux"
+      ],
+      "year": 2022,
+      "venue": "NeurIPS 2022 Datasets and Benchmarks",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": null,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/0378c7692da36807bdec87ab043cdadc-Paper-Datasets_and_Benchmarks.pdf",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/0378c7692da36807bdec87ab043cdadc-Abstract-Datasets_and_Benchmarks.html",
+      "categories": [
+        "D",
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-5; feature/noise/rotation experiments",
+      "problem": "Unclear tabular learner comparisons",
+      "objective": "Benchmark tuning and inductive biases",
+      "dataset_location": "45 public datasets",
+      "dataset_size": "45 datasets",
+      "methodology": "Budgeted hyperparameter search and transformations",
+      "algorithms": "Trees, XGBoost and neural tabular models",
+      "features": "Tabular numerical/categorical inputs",
+      "approach": "Comparative benchmark",
+      "baselines": "Multiple tree and neural learners",
+      "metrics": "Normalized held-out prediction scores; tuning cost",
+      "quantitative_results": "45 datasets; medium-sized-data finding",
+      "contributions": "Controlled inductive-bias experiments",
+      "strengths": "Explicit tuning and dataset selection",
+      "limitations": "Our assessment: selected benchmark regime limits universal claims",
+      "authors_future_work": "Tabular-specific inductive biases",
+      "dhakanest_relevance": "Justifies trees as candidates",
+      "difference_from_dhakanest": "Cross-domain prediction rather than rental decisions",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "The study compares tree and neural models with substantial hyperparameter search and investigates smoothness, irrelevant features, and rotation. Its 45-dataset design supports tree ensembles for the tested medium-sized tabular regime. A strength is examining mechanisms and tuning rather than a single leaderboard. Our assessment is that this is a conditional empirical finding, not universal XGBoost superiority. It supports DhakaNest's candidate selection while leaving local validation, location support, and temporal drift to project-specific evidence."
+    },
+    {
+      "id": "P20",
+      "study_id": "dhaka-explain-rent-2023",
+      "title": "Transparency in House Rent of Dhaka: Explainable AI Based Predictive Framework",
+      "authors": [
+        "Taeef Najib",
+        "Fahim Muntasir",
+        "Wasif Al Wazed Wasi"
+      ],
+      "year": 2023,
+      "venue": "6th IEOM Bangladesh Conference",
+      "publication_type": "conference",
+      "peer_review_status": "proceedings_verified_review_process_unverified",
+      "doi": null,
+      "url": "https://ieomsociety.org/proceedings/2023dhaka/146.pdf",
+      "metadata_url": "https://index.ieomsociety.org/index.cfm/item/53946",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 3-5, especially Section 4 Data Collection; abstract results",
+      "problem": "Dhaka rent estimation and interpretation",
+      "objective": "Compare regressors and explain predictions",
+      "dataset_location": "Bproperty Dhaka listings, 8 February-8 April 2022",
+      "dataset_size": "28,800 raw rental listings",
+      "methodology": "Model comparison and voting ensemble with SHAP",
+      "algorithms": "RF, XGBoost, other regressors, voting",
+      "features": "Location, size and room-related variables",
+      "approach": "Rent prediction",
+      "baselines": "Multiple regression learners",
+      "metrics": "MAE; RMSE; R2; MAPE",
+      "quantitative_results": "Ensemble MAE 2536.77, RMSE 4398.23, R2 0.86, MAPE 11%",
+      "contributions": "Local explanation-oriented rent study",
+      "strengths": "Local market and model comparisons",
+      "limitations": "Our assessment: scaling rationale and generalization evidence need caution",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Local rent/explanation predecessor; motivates testing rather than assuming ranking benefit",
+      "difference_from_dhakanest": "Voting prediction, no demonstrated rental-relevance ranking",
+      "rq_ids": [
+        "RQ4",
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H4C",
+        "H6"
+      ],
+      "comparison_ids": [
+        "A_NO_RENT_FAIRNESS"
+      ],
+      "verification_status": "verified_content_review_status_limited",
+      "critical_analysis": "The authors compare regressors, choose a tree-model voting ensemble, and use SHAP to interpret Dhaka rents. They report four predictive metrics. Local context and competing models are useful, but different splits prevent a valid numeric ranking against DhakaNest. Our assessment flags the text's claim that Random Forest needs MinMax scaling: that rationale requires scrutiny and should not be copied as a general fact. Published prediction accuracy also does not demonstrate rental recommendation relevance. Proceedings identity is verified; the review process was not independently verified."
+    },
+    {
+      "id": "P21",
+      "study_id": "cumulated-gain-2002",
+      "title": "Cumulated Gain-based Evaluation of IR Techniques",
+      "authors": [
+        "Kalervo Jarvelin",
+        "Jaana Kekalainen"
+      ],
+      "year": 2002,
+      "venue": "ACM Transactions on Information Systems 20(4), 422-446",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1145/582415.582418",
+      "url": "https://researchportal.tuni.fi/en/publications/cumulated-gain-based-evaluation-of-ir-techniques/",
+      "metadata_url": "https://researchportal.tuni.fi/en/publications/cumulated-gain-based-evaluation-of-ir-techniques/",
+      "categories": [
+        "E"
+      ],
+      "evidence_access": "metadata_only",
+      "source_location": "Tampere record; secondary-host full-text retrieval failed",
+      "problem": "Graded ranking evaluation",
+      "objective": "Foundational gain-based evaluation",
+      "dataset_location": "Not accessible",
+      "dataset_size": "Not accessible",
+      "methodology": "Not deeply assessed",
+      "algorithms": "Gain-based evaluation",
+      "features": "Graded relevance",
+      "approach": "Metric foundation",
+      "baselines": "Not accessible",
+      "metrics": "Cumulated gain",
+      "quantitative_results": "Not accessible",
+      "contributions": "Verified foundational citation",
+      "strengths": "Foundational relevance",
+      "limitations": "Full text not retrieved",
+      "authors_future_work": "Not accessible",
+      "dhakanest_relevance": "NDCG provenance",
+      "difference_from_dhakanest": "IR metric research",
+      "rq_ids": [
+        "RQ1"
+      ],
+      "hypothesis_ids": [
+        "H1"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified_metadata_only",
+      "critical_analysis": "The institutional record verifies the article identity and peer-reviewed publication. Full-text retrieval failed, so the review does not attribute the exact exponential-gain variant to this paper. DhakaNest's explicit gain and discount conventions are preserved as protocol choices. This foundational citation does not count toward the full-text target."
+    },
+    {
+      "id": "P22",
+      "study_id": "herlocker-evaluation-2004",
+      "title": "Evaluating Collaborative Filtering Recommender Systems",
+      "authors": [
+        "Jonathan L. Herlocker",
+        "Joseph A. Konstan",
+        "Loren G. Terveen",
+        "John T. Riedl"
+      ],
+      "year": 2004,
+      "venue": "ACM Transactions on Information Systems 22(1), 5-53",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": null,
+      "url": "https://cs.brynmawr.edu/Courses/cs380/fall2006/Herlocker2004.pdf",
+      "metadata_url": "https://cs.brynmawr.edu/Courses/cs380/fall2006/Herlocker2004.pdf",
+      "categories": [
+        "E"
+      ],
+      "evidence_access": "abstract_and_metadata_examined",
+      "source_location": "Indexed paper first page and abstract; direct PDF timed out",
+      "problem": "Incomparable recommender evaluations",
+      "objective": "Connect tasks, datasets and quality measures",
+      "dataset_location": "Not assessed",
+      "dataset_size": "Not accessible",
+      "methodology": "Evaluation review and metric comparison",
+      "algorithms": "Collaborative filtering evaluation",
+      "features": "Tasks and recommendation outcomes",
+      "approach": "Evaluation methodology",
+      "baselines": "Not accessible",
+      "metrics": "Accuracy and user evaluation",
+      "quantitative_results": "Not transcribed",
+      "contributions": "Task-sensitive evaluation framing",
+      "strengths": "Explicit task/evidence distinctions",
+      "limitations": "Access limitation: detailed empirical sections not examined",
+      "authors_future_work": "Not accessible",
+      "dhakanest_relevance": "Metric/task alignment",
+      "difference_from_dhakanest": "General evaluation study",
+      "rq_ids": [
+        "RQ1",
+        "RQ3"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H3"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified_metadata_limited_content",
+      "critical_analysis": "The accessible first page and abstract connect evaluation to user tasks, datasets, accuracy measures, and whole-system user studies. They support treating prediction accuracy and user outcomes as separate constructs. Direct PDF requests timed out, so empirical details and reported metric correlations were not critically assessed. This record remains useful background but is excluded from the deep-analysis count."
+    },
+    {
+      "id": "P23",
+      "study_id": "dacrema-progress-2019",
+      "title": "Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches",
+      "authors": [
+        "Maurizio Ferrari Dacrema",
+        "Paolo Cremonesi",
+        "Dietmar Jannach"
+      ],
+      "year": 2019,
+      "venue": "ACM RecSys 2019",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/3298689.3347058",
+      "url": "https://arxiv.org/pdf/1907.06902",
+      "metadata_url": "https://doi.org/10.1145/3298689.3347058",
+      "categories": [
+        "E",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-4; baseline tuning and reproduction",
+      "problem": "Weak baselines and irreproducible gains",
+      "objective": "Reevaluate neural top-N methods",
+      "dataset_location": "Published recommendation benchmarks",
+      "dataset_size": "18 methods inspected, 7 reproduced",
+      "methodology": "Reproduction and tuned baseline comparison",
+      "algorithms": "Neural, neighborhood and graph methods",
+      "features": "Historical interactions",
+      "approach": "Evaluation audit",
+      "baselines": "Tuned simple recommenders",
+      "metrics": "Top-N quality measures",
+      "quantitative_results": "6 of 7 reproduced methods often beaten by simple baselines",
+      "contributions": "Evidence for stronger comparison practice",
+      "strengths": "Public reproduction and tuning details",
+      "limitations": "Our assessment: findings apply to studied methods and datasets",
+      "authors_future_work": "Improved scientific practice",
+      "dhakanest_relevance": "Operational and tuned baseline justification",
+      "difference_from_dhakanest": "Audits established algorithms",
+      "rq_ids": [
+        "RQ1",
+        "RQ4"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H4A",
+        "H4B"
+      ],
+      "comparison_ids": [
+        "B_RANDOM",
+        "B_KNN_ONLY",
+        "B_WSM_ONLY"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "The authors reproduce available neural recommenders and tune simpler alternatives under comparable evaluation. The resulting reversals show that a complex method's reported gain can depend on weak controls and metric choices. Reproducible code and explicit tuning are strengths. Our assessment is that the findings do not establish universal neural inferiority or prove DhakaNest's simple hybrid wins. They justify equal tuning effort, clear metric conventions, and reporting all prespecified comparisons, including unfavorable outcomes."
+    },
+    {
+      "id": "P24",
+      "study_id": "rendle-sampling-2019",
+      "title": "Evaluation Metrics for Item Recommendation under Sampling",
+      "authors": [
+        "Steffen Rendle"
+      ],
+      "year": 2019,
+      "venue": "arXiv:1912.02263",
+      "publication_type": "preprint",
+      "peer_review_status": "unverified_preprint",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/1912.02263",
+      "metadata_url": "https://arxiv.org/abs/1912.02263",
+      "categories": [
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-5; exact versus sampled metric derivation",
+      "problem": "Sampled metrics alter algorithm comparisons",
+      "objective": "Analyze metric consistency",
+      "dataset_location": "Analytical and illustrative rankings",
+      "dataset_size": "Not applicable",
+      "methodology": "Expected sampled-rank analysis",
+      "algorithms": "Ranking metric estimators",
+      "features": "Rank and candidate sample size",
+      "approach": "Metric theory",
+      "baselines": "Exact full-catalog metrics",
+      "metrics": "Precision; Recall; AP; NDCG; AUC",
+      "quantitative_results": "Inconsistency established analytically",
+      "contributions": "Sampling warning",
+      "strengths": "Shows effects even in expectation",
+      "limitations": "Our assessment: does not directly quantify DhakaNest pooling bias",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Candidate-universe integrity",
+      "difference_from_dhakanest": "Metric analysis, not housing ranking",
+      "rq_ids": [
+        "RQ1",
+        "RQ5"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H5"
+      ],
+      "comparison_ids": [
+        "B_FULL"
+      ],
+      "verification_status": "verified_preprint_metadata",
+      "critical_analysis": "The paper derives how ranking a relevant item against sampled distractors changes expected evaluation metrics and can reverse relative algorithm conclusions. The analytical argument is stronger than a single observed leaderboard reversal. Our assessment is that human annotation pooling is related but not identical: sampling unobserved alternatives still changes the scope of the estimand. DhakaNest should identify the judged pool explicitly and avoid presenting pooled NDCG as full-market performance. The related later publication is not counted as another version of this study."
+    },
+    {
+      "id": "P25",
+      "study_id": "candidate-sampling-2023",
+      "title": "Candidate Set Sampling for Evaluating Top-N Recommendation",
+      "authors": [
+        "Ngozi Ihemelandu",
+        "Michael D. Ekstrand"
+      ],
+      "year": 2023,
+      "venue": "IEEE/WIC WI-IAT 2023",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1109/WI-IAT59888.2023.00018",
+      "url": "https://arxiv.org/pdf/2309.11723",
+      "metadata_url": "https://arxiv.org/abs/2309.11723",
+      "categories": [
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections II-IV; candidate sampling and simulation",
+      "problem": "Candidate sampling and popularity bias",
+      "objective": "Evaluate sampling behavior under incomplete data",
+      "dataset_location": "Recommendation datasets including Yahoo!R3",
+      "dataset_size": "Not extracted",
+      "methodology": "Alternative decoy distributions and simulations",
+      "algorithms": "Recommendation evaluators",
+      "features": "Exposure and item popularity",
+      "approach": "Evaluation bias analysis",
+      "baselines": "Full-candidate evaluation and sampling alternatives",
+      "metrics": "Ranking estimates and bias",
+      "quantitative_results": "Not transcribed",
+      "contributions": "Sampling/popularity interaction",
+      "strengths": "Known-ground-truth simulation",
+      "limitations": "Our assessment: simulated exposure assumptions affect transfer",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Annotation-pool sensitivity",
+      "difference_from_dhakanest": "Logged-feedback setting",
+      "rq_ids": [
+        "RQ1",
+        "RQ5"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H5"
+      ],
+      "comparison_ids": [
+        "B_RANDOM",
+        "B_FULL"
+      ],
+      "verification_status": "verified",
+      "critical_analysis": "The study varies candidate-selection distributions and uses simulation to examine popularity-related bias relative to more complete evidence. It shows why choosing distractors is part of the evaluation method rather than a harmless speed optimization. Its strength is testing interactions between observed data and sampling. Our assessment is that rental annotation pools need source accounting and sensitivity checks because their bias cannot be inferred directly from movie or music datasets. This supports recording method-pooled, random, and hard-negative contributions separately."
+    },
+    {
+      "id": "P26",
+      "study_id": "userexperience-2012",
+      "title": "Explaining the user experience of recommender systems",
+      "authors": [
+        "Bart P. Knijnenburg",
+        "Martijn C. Willemsen",
+        "Zeno Gantner",
+        "Hakan Soncu",
+        "Chris Newell"
+      ],
+      "year": 2012,
+      "venue": "User Modeling and User-Adapted Interaction 22, 441-504",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1007/s11257-011-9118-4",
+      "url": "https://link.springer.com/content/pdf/10.1007/s11257-011-9118-4.pdf",
+      "metadata_url": "https://link.springer.com/article/10.1007/s11257-011-9118-4",
+      "categories": [
+        "E",
+        "F"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Framework and validation studies; SEM appendix",
+      "problem": "Accuracy only partly explains user experience",
+      "objective": "Link system properties, perceptions and behavior",
+      "dataset_location": "Multiple field/controlled studies",
+      "dataset_size": "Four field trials and two controlled experiments",
+      "methodology": "User-centric framework and structural equation modeling",
+      "algorithms": "Experimental recommendation conditions",
+      "features": "Perceptions, context, behavior and satisfaction",
+      "approach": "User evaluation",
+      "baselines": "Study-specific system conditions",
+      "metrics": "Behavior and validated experience constructs",
+      "quantitative_results": "No pooled effect transcribed",
+      "contributions": "Mediated user-experience model",
+      "strengths": "Multiple validation settings",
+      "limitations": "Our assessment: causal direction requires experimental support",
+      "authors_future_work": "Context-sensitive user evaluation",
+      "dhakanest_relevance": "Objective versus self-reported outcomes",
+      "difference_from_dhakanest": "General user-experience framework",
+      "rq_ids": [
+        "RQ3"
+      ],
+      "hypothesis_ids": [
+        "H3"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "The framework links objective system aspects to perceptions, experienced process/outcome quality, and behavior while accounting for personal and situational differences. Several field and controlled studies test these links with structural equation models. That breadth is a strength. Our assessment is that modeled mediation alone cannot establish every causal relationship. DhakaNest should measure decision relevance and time separately from trust and satisfaction, control task ordering, and avoid treating favorable ratings as evidence of objectively better housing choices."
+    },
+    {
+      "id": "P27",
+      "study_id": "structured-cv-2017",
+      "title": "Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure",
+      "authors": [
+        "David R. Roberts",
+        "Volker Bahn",
+        "Simone Ciuti",
+        "Mark S. Boyce",
+        "Jane Elith",
+        "Gurutzeta Guillera-Arroita",
+        "Severin Hauenstein",
+        "Jose J. Lahoz-Monfort",
+        "Boris Schroder",
+        "Wilfried Thuiller",
+        "David I. Warton",
+        "Brendan A. Wintle",
+        "Florian Hartig",
+        "Carsten F. Dormann"
+      ],
+      "year": 2017,
+      "venue": "Ecography 40(8), 913-929",
+      "publication_type": "journal_review",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1111/ecog.02881",
+      "url": "https://nsojournals.onlinelibrary.wiley.com/doi/10.1111/ecog.02881",
+      "metadata_url": "https://research.wright.edu/en/publications/cross-validation-strategies-for-data-with-temporal-spatial-hierar/",
+      "categories": [
+        "D",
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Simulation sections; blocking recommendations",
+      "problem": "Dependent data make random-split error optimistic",
+      "objective": "Match validation design to prediction task",
+      "dataset_location": "Ecological simulations and cases",
+      "dataset_size": "Spatial simulation includes 50 by 50 grid",
+      "methodology": "Random versus structured validation",
+      "algorithms": "Predictive models and blocked resampling",
+      "features": "Spatial/temporal/group structure",
+      "approach": "Validation methodology",
+      "baselines": "Random cross-validation",
+      "metrics": "Prediction error and extrapolation behavior",
+      "quantitative_results": "No housing-specific effect",
+      "contributions": "Task-dependent blocking guidance",
+      "strengths": "Analyzes both optimistic and pessimistic bias",
+      "limitations": "Authors: blocking can induce unintended extrapolation",
+      "authors_future_work": "Prediction-task-aware validation",
+      "dhakanest_relevance": "Geographic and temporal rent reliability",
+      "difference_from_dhakanest": "Ecological data, transferable validation reasoning",
+      "rq_ids": [
+        "RQ5",
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H5",
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "Simulations and case studies compare random and blocked validation for dependent observations. Blocking can reduce overly optimistic error when predicting new space or time, but can also induce extrapolation and overstate interpolation error. That balanced argument is a strength. Our assessment is that random Dhaka property splits estimate a narrower task than transfer to unseen neighborhoods or future markets. New geographic/temporal analyses should identify the intended deployment task and preserve the official historical split rather than retroactively replacing it."
+    },
+    {
+      "id": "P28",
+      "study_id": "benchmark-variance-2021",
+      "title": "Accounting for Variance in Machine Learning Benchmarks",
+      "authors": [
+        "Xavier Bouthillier",
+        "Pierre Delaunay",
+        "Mirko Bronzi",
+        "Assya Trofimov",
+        "Brennan Nichyporuk",
+        "Justin Szeto",
+        "Naz Sepah",
+        "Edward Raff",
+        "Kanika Madan",
+        "Vikram Voleti",
+        "Samira Ebrahimi Kahou",
+        "Vincent Michalski",
+        "Dmitriy Serdyuk",
+        "Tal Arbel",
+        "Chris Pal",
+        "Gael Varoquaux",
+        "Pascal Vincent"
+      ],
+      "year": 2021,
+      "venue": "Proceedings of Machine Learning and Systems 3",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": null,
+      "url": "https://proceedings.mlsys.org/paper_files/paper/2021/file/0184b0cd3cfb185989f858a1d9f5c1eb-Paper.pdf",
+      "metadata_url": "https://proceedings.mlsys.org/paper_files/paper/2021/hash/0184b0cd3cfb185989f858a1d9f5c1eb-Abstract.html",
+      "categories": [
+        "E"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-5; paper author list differs from landing-page list",
+      "problem": "Uncontrolled benchmark variance",
+      "objective": "Model sources of variation in comparisons",
+      "dataset_location": "Five learning tasks",
+      "dataset_size": "Five tasks/architectures",
+      "methodology": "Variance decomposition and simulation",
+      "algorithms": "Benchmark estimators",
+      "features": "Sampling, initialization, hyperparameter choices",
+      "approach": "Statistical benchmark analysis",
+      "baselines": "Point and averaged comparison rules",
+      "metrics": "Error in detecting improvements",
+      "quantitative_results": "No DhakaNest-specific uncertainty estimate",
+      "contributions": "Practical variance-aware comparisons",
+      "strengths": "Includes tuning variance",
+      "limitations": "Our assessment: fixed output bootstrap cannot measure training-pipeline variance",
+      "authors_future_work": "Better budgeted benchmarks",
+      "dhakanest_relevance": "Seeds and confidence intervals",
+      "difference_from_dhakanest": "General benchmarking",
+      "rq_ids": [
+        "RQ1",
+        "RQ5",
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H5",
+        "H6"
+      ],
+      "comparison_ids": [
+        "B_RANDOM"
+      ],
+      "verification_status": "verified_author_list_discrepancy_recorded",
+      "critical_analysis": "The paper models data sampling, initialization, and tuning as distinct variation sources and compares practical estimators of algorithm performance. Its strength is showing why a single favorable run or seed can mislead. Our assessment is that bootstrapping DhakaNest's frozen predictions measures conditional test uncertainty, not uncertainty in retraining or hyperparameter selection. These should be labeled separately. The registry follows the PDF author list and records its disagreement with the proceedings landing-page list instead of silently merging names."
+    },
+    {
+      "id": "P29",
+      "study_id": "cqr-2019",
+      "title": "Conformalized Quantile Regression",
+      "authors": [
+        "Yaniv Romano",
+        "Evan Patterson",
+        "Emmanuel J. Candes"
+      ],
+      "year": 2019,
+      "venue": "NeurIPS 2019",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": null,
+      "url": "https://arxiv.org/pdf/1905.03222",
+      "metadata_url": "https://papers.neurips.cc/paper_files/paper/2019/hash/5103c3584b063c431bd1268e9b5e76fb-Abstract.html",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-4 and 6",
+      "problem": "Adaptive prediction intervals",
+      "objective": "Combine quantiles with finite-sample coverage",
+      "dataset_location": "Public regression datasets",
+      "dataset_size": "11 datasets, 20 random splits; 2,200 comparisons",
+      "methodology": "Quantile fitting with held-out conformity calibration",
+      "algorithms": "Conformalized quantile regression",
+      "features": "Features, responses and calibration residuals",
+      "approach": "Predictive uncertainty",
+      "baselines": "Alternative conformal intervals",
+      "metrics": "Coverage and interval length",
+      "quantitative_results": "No rent-specific coverage result",
+      "contributions": "Heteroscedasticity-adaptive marginal intervals",
+      "strengths": "Explicit assumptions and coverage theorem",
+      "limitations": "Assumes exchangeability; marginal is not subgroup-conditional coverage",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Honest uncertainty limits",
+      "difference_from_dhakanest": "Requires calibration beyond current point model",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "CQR fits conditional quantiles and uses held-out conformity scores to calibrate prediction intervals. Theory and regression experiments examine coverage and length, including heteroscedastic settings. The key strength is an explicit marginal guarantee under exchangeability. Our assessment is that this does not guarantee neighborhood-specific or future-market coverage. DhakaNest currently has point predictions and should not describe residual spread as a calibrated interval. Adopting CQR later would require separate data allocation and authorization, with no official-test tuning."
+    },
+    {
+      "id": "P30",
+      "study_id": "jackknifeplus-2021",
+      "title": "Predictive inference with the jackknife+",
+      "authors": [
+        "Rina Foygel Barber",
+        "Emmanuel J. Candes",
+        "Aaditya Ramdas",
+        "Ryan J. Tibshirani"
+      ],
+      "year": 2021,
+      "venue": "The Annals of Statistics 49(1), 486-507",
+      "publication_type": "journal",
+      "peer_review_status": "journal_publication_verified",
+      "doi": "10.1214/20-AOS1965",
+      "url": "https://arxiv.org/pdf/1905.02928",
+      "metadata_url": "https://doi.org/10.1214/20-AOS1965",
+      "categories": [
+        "D"
+      ],
+      "evidence_access": "full_text_examined",
+      "source_location": "Sections 2-4; coverage theorems and simulations",
+      "problem": "Unreliable naive residual intervals",
+      "objective": "Account for fitted-model variation",
+      "dataset_location": "Theory and predictive examples",
+      "dataset_size": "Not extracted",
+      "methodology": "Leave-one-out predictions with residuals",
+      "algorithms": "Jackknife+; CV+",
+      "features": "Resampled predictions and residuals",
+      "approach": "Predictive inference",
+      "baselines": "Jackknife and conformal variants",
+      "metrics": "Coverage; interval length",
+      "quantitative_results": "Theoretical guarantees; no rental experiment",
+      "contributions": "Distribution-free predictive inference under assumptions",
+      "strengths": "Examines instability and failure modes",
+      "limitations": "Exchangeability and fitting cost; guarantee is not individual certainty",
+      "authors_future_work": "Not extracted",
+      "dhakanest_relevance": "Prediction uncertainty foundation",
+      "difference_from_dhakanest": "Requires resampling fits rather than existing point artifact",
+      "rq_ids": [
+        "RQ6"
+      ],
+      "hypothesis_ids": [
+        "H6"
+      ],
+      "comparison_ids": [],
+      "verification_status": "verified",
+      "critical_analysis": "Jackknife+ combines leave-one-out residuals with predictions for the new point, addressing fitted-model variability omitted by naive jackknife intervals. Coverage theory and empirical analysis clarify stability assumptions and costs. Our assessment is that this gives DhakaNest an uncertainty research direction, not a guarantee already possessed by its fixed XGBoost bundle. The paper's marginal coverage statements should not be restated as exact conditional protection for a particular rental or neighborhood. No resampling fits are authorized in this phase."
+    },
+    {
+      "id": "P31",
+      "study_id": "journey-housing-2014",
+      "title": "Multi-criteria journey aware housing recommender system",
+      "authors": [
+        "Elizabeth M. Daly",
+        "Adi Botea",
+        "Akihiro Kishimoto",
+        "Radu Marinescu"
+      ],
+      "year": 2014,
+      "venue": "ACM RecSys 2014, 325-328",
+      "publication_type": "conference",
+      "peer_review_status": "conference_publication_verified",
+      "doi": "10.1145/2645710.2645764",
+      "url": "https://research.ibm.com/publications/multi-criteria-journey-aware-housing-recommender-system",
+      "metadata_url": "https://dblp.uni-trier.de/rec/conf/recsys/DalyBKM14.html",
+      "categories": [
+        "A",
+        "B",
+        "C"
+      ],
+      "evidence_access": "abstract_and_metadata_examined",
+      "source_location": "IBM author abstract; survey P02 Section 4.4 is secondary context only",
+      "problem": "Housing decisions trade rent against journeys",
+      "objective": "Support multi-criteria home choice",
+      "dataset_location": "Not accessible",
+      "dataset_size": "Not accessible",
+      "methodology": "Multihop journey calculator and multi-criteria optimal solutions",
+      "algorithms": "Not verified in primary full text",
+      "features": "Home features and user-specified locations",
+      "approach": "Journey-aware housing recommendation",
+      "baselines": "Not accessible",
+      "metrics": "User study stated; measures not accessible",
+      "quantitative_results": "Not accessible",
+      "contributions": "Direct journey-aware MCDM precedent",
+      "strengths": "Close conceptual comparison",
+      "limitations": "Access limitation: primary experimental details unavailable",
+      "authors_future_work": "Not accessible",
+      "dhakanest_relevance": "Required missing baseline discussion",
+      "difference_from_dhakanest": "Exact differences require full paper",
+      "rq_ids": [
+        "RQ1",
+        "RQ2",
+        "RQ3"
+      ],
+      "hypothesis_ids": [
+        "H1",
+        "H2",
+        "H3"
+      ],
+      "comparison_ids": [
+        "B_AREA_FIRST",
+        "B_FULL"
+      ],
+      "verification_status": "verified_metadata_limited_content",
+      "critical_analysis": "The author-hosted abstract explicitly combines rent, transport links to user-specified locations, multihop journey calculation, and multi-criteria solution selection, and states a user study. This is enough to reject an absolute destination-first novelty claim. Full-text experimental details remain unavailable, so no dataset size, effect size, or detailed feature absence is inferred. It is a priority comparator for primary-text retrieval and a later journey-aware baseline specification, but does not count toward the deep-analysis target."
+    }
+  ]
+}

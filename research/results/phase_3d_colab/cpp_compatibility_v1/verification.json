@@ -1,0 +1,60 @@
+{
+  "added_sources": {
+    "research/notebooks/DhakaNest_Phase3D_Colab_OSRM_v7.ipynb": "1b16fa68935c1e59a7f04d9c3f0a248c0e07f516cf1aeabe098ad4d2c861de2a",
+    "research/routing/osrm_colab/COMPATIBILITY_V7.md": "948f853206da9a7adc592350fe6d6a5c10e9b2f47aa139f60f95460d2b904972",
+    "research/routing/osrm_colab/build_v4.py": "0ba8658ec179c8085bc8161876087a1b7e5e2e41a5626d3b93b2684c796cf20a",
+    "research/routing/osrm_colab/compatibility-v1.json": "54332afbd40aba3cc0a06c97f2ee3912ff2fd9a39b2c611c0bde5bc6ab136f79",
+    "research/routing/osrm_colab/compatibility_v1.py": "cc491db948471b2f7017f3220d5ea418be7bb36368dac2898b1cffe8f7a2346e",
+    "research/routing/osrm_colab/gcc11_compat.cmake": "994acce2ab5da8080980c81a708d46bda0471ef2a6c83cc04e584b649e32d7b7",
+    "research/routing/osrm_colab/native_build_v4.py": "f5421c447bd7080c28edba704be2b736d0e4b8beddbbc214886e7127a3b29ded",
+    "research/routing/osrm_colab/notebook_compatibility.py": "597c5e5cde7a9ab92be04497e6a6d401b3a2d3040529a753d222a8f17f833e14",
+    "research/routing/osrm_colab/verify_cpp_repair.py": "2766bed125bfd75a55b657b2ed72387914b946229f065c1f6a7326aa8e878bf1",
+    "research/tests/test_colab_cpp_compatibility.py": "b5e6ba879e48ff5e8a196a14449f1df922cb0b197d1f54979a083338b80b0f98"
+  },
+  "at_utc": "2026-10-25T11:24:43.735283+00:00",
+  "compatibility_policy_sha256": "54332afbd40aba3cc0a06c97f2ee3912ff2fd9a39b2c611c0bde5bc6ab136f79",
+  "confirmed_probe_failure": "coordinate.hpp:66 std::int32_t missing (recovered before actual build)",
+  "confirmed_terminal_failure": "GCC 11 free-nonheap-object in allocator via Mapbox variant destruction in OSRM::Route; osrm-routed target",
+  "false_positive_proven": false,
+  "historical": {
+    "recovery_outputs_verified": 9,
+    "sealed_phases": {
+      "historical": {
+        "historical": {
+          "historical": {
+            "manifest_revision": 2,
+            "phase_3_output_hashes_verified": 51,
+            "prior_output_hashes_verified": 44
+          },
+          "phase_3b_output_hashes_verified": 52
+        },
+        "phase_3c_hashes_verified": 30
+      },
+      "phase_3d_hashes_verified": 26
+    }
+  },
+  "host_smoke_scope": "Windows GNU C++ standard-header forced include only; NOT Linux OSRM/Boost",
+  "linux_compilation_succeeded": false,
+  "linux_limitation": "Ubuntu WSL start failed with HCS_E_SERVICE_NOT_AVAILABLE",
+  "original_full_log_available": false,
+  "osrm_targets_compiled_locally": [],
+  "routing_executed": false,
+  "tests": {
+    "backend_regression": {
+      "evidence_sha256": "782cd9fe4e5d97baac4bdd3e1de49a391c099fc842fac892db3a86494ec789e0",
+      "passed": 104
+    },
+    "research": {
+      "evidence_sha256": "69ba7c16ac1d5bacf0eaad09e19d8de43b98506e97bcbaf9a0f0e36160467c74",
+      "passed": 256
+    }
+  },
+  "unchanged_v6_members": 474,
+  "upstream_hashes_verified_over_https": {
+    "cmake/warnings.cmake": "76719432644394a2f879beb20338192909ed0d051008a61cd633f8e3d4eab79b",
+    "include/util/coordinate.hpp": "3effbc646484885e53150589c3287852c3133a85fe258de4035eddf08c9c4361"
+  },
+  "user_reported_log_sha256": "4871e777c71a3df501917dbaa23f0f333dd8775007d0a738226a51744424a3cd",
+  "v6_archive_sha256": "7797c6013442480f4ba392a1c04c38de56a78f46e8a30ed42f2903fa7b68d29c",
+  "warning_hook_sha256": "994acce2ab5da8080980c81a708d46bda0471ef2a6c83cc04e584b649e32d7b7"
+}

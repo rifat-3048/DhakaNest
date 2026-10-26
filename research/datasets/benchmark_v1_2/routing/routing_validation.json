@@ -1,0 +1,14 @@
+{
+  "complete": false,
+  "logical_pairs": 30000,
+  "missing_logical_pairs": 30000,
+  "physical_keys": 30000,
+  "statuses": {
+    "invalid_request": 0,
+    "missing": 30000,
+    "temporary_provider_failure": 0,
+    "unreachable": 0,
+    "unverified_response": 0,
+    "valid": 0
+  }
+}

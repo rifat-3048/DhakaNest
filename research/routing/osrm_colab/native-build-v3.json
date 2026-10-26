@@ -1,0 +1,14 @@
+{
+  "id": "osrm-5.27.1-native-v3-additive-apt",
+  "osrm_version": "5.27.1",
+  "commit": "4f3ee609ec1af40eb1f445c6706cfa5beb04c990",
+  "tag": "v5.27.1",
+  "platform": "Ubuntu 22.04/24.04 amd64",
+  "boost_policy": "Retain installed 1.83 or 1.74; no replacement or downgrade; full build validation required",
+  "compiler_policy": "Prefer existing GNU >=11 if original OSRM header probe passes; try GCC 11 only after probe failure or compiler absence",
+  "apt_policy": "Two simulations, exact new-version pins, reject removals/upgrades/downgrades/conflicts, verify installed inventory preserved",
+  "cpp_standard": 17,
+  "build_parallelism": 1,
+  "source_patches": false,
+  "validation_status": "Offline orchestration tests only; Linux/Colab APT simulations, probes and native compilation are not yet executed"
+}
